@@ -1,0 +1,7 @@
+[gd_resource type="PhysicsMaterial" load_steps=2 format=3 uid="uid://bmb53ufnx4d4p"]
+
+[sub_resource type="CSharpScript" id="CSharpScript_g5bwe"]
+
+[resource]
+bounce = 1.0
+script = SubResource("CSharpScript_g5bwe")

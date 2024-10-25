@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://ce2jybdwc04bx"]
+
+[ext_resource type="PhysicsMaterial" uid="uid://bmb53ufnx4d4p" path="res://physics/asteroid_physics.tres" id="1_ftyis"]
+
+[node name="Player" type="Node2D"]
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+physics_material_override = ExtResource("1_ftyis")
