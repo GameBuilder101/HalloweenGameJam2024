@@ -13,7 +13,7 @@ config_version=5
 config/name="HalloweenGameJam2024"
 config/version="1.0.0"
 run/main_scene="res://main_scene.tscn"
-config/features=PackedStringArray("4.3", "Forward Plus")
+config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [display]
@@ -26,3 +26,8 @@ window/stretch/mode="viewport"
 [dotnet]
 
 project/assembly_name="HalloweenGameJam2024"
+
+[editor]
+
+version_control/plugin_name="GitPlugin"
+version_control/autoload_on_startup=true
