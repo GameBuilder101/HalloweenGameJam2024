@@ -31,17 +31,12 @@ radiusInrement = 10.0
 position = Vector2(-18, 4000)
 
 [node name="Camera" type="Camera2D" parent="." node_paths=PackedStringArray("TrackTarget")]
-zoom = Vector2(0.1, 0.1)
 script = ExtResource("3_6hycs")
 TrackTarget = NodePath("../Player")
 
 [node name="UIRenderLayer" type="CanvasLayer" parent="."]
 
 [node name="UI" parent="UIRenderLayer" instance=ExtResource("7_ola7h")]
-
-[node name="BlackHolePointer" parent="UIRenderLayer/UI/PointerArea" index="0" node_paths=PackedStringArray("_positionReference", "_guidanceTarget")]
-_positionReference = NodePath("../../../../Player")
-_guidanceTarget = NodePath("../../../../BlackHole")
 
 [node name="DespoitPoint" parent="." instance=ExtResource("8_thndi")]
 
