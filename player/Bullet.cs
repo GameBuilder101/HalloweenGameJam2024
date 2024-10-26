@@ -22,7 +22,7 @@ public partial class Bullet : RigidBody2D, IDamageable
 
 	public void OnBulletBodyEntered(Node body)
 	{
-		if (body is IDamageable && !(body is Player))
+		if (body is IDamageable)
 		{
 			(body as IDamageable).ChangeHealth(-damage);
 			QueueFree();
