@@ -18,6 +18,8 @@ _player = NodePath("../Player")
 asteroidPrefab = ExtResource("2_kceje")
 minAsteroidSpeed = 100.0
 maxAsteroidSpeed = 500.0
+minAsteroidScale = 0.1
+maxAsteroidScale = 1.0
 minRadius = 1500.0
 maxRadius = 7000.0
 
