@@ -134,6 +134,11 @@ public partial class Player : RigidBody2D, IDamageable
         {
             if (PickedUpAsteroid == null && InRadiusOfAsteroid)
                 PickUpAsteroid(_asteroidsInRadius[0]);
+            else if (PickedUpAsteroid != null && IsInDropOffRadius)
+            {
+                PickedUpAsteroid.QueueFree();
+                PickedUpAsteroid = null;
+            }
             else if (PickedUpAsteroid != null)
                 DropAsteroid();
         }
@@ -157,6 +162,8 @@ public partial class Player : RigidBody2D, IDamageable
 
         PickedUpAsteroid.Reparent(GetTree().Root);
         PickedUpAsteroid.Freeze = false;
+
+        PickedUpAsteroid = null;
     }
 
     public void SpinOut(double duration)

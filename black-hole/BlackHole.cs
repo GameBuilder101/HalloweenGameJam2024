@@ -12,8 +12,15 @@ public partial class BlackHole : Node2D
 	
 	private const long HoleImageSize = 1; 
 	
+	private float rad = 0.0f;
+	
+	public float GetRadius() {
+		return rad;
+	}
+	
 	
 	public void SetRadius(float holeRad, float fieldRad) {
+		rad = holeRad;
 		float HoleScale = holeRad / HoleImageSize;
 		
 		AttractingArea.Radius = fieldRad;

@@ -1,34 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://ndav4jyl4cl0"]
+[gd_scene load_steps=5 format=3 uid="uid://ndav4jyl4cl0"]
 
 [ext_resource type="Script" path="res://black-hole/BlackHole.cs" id="1_xma48"]
 [ext_resource type="Shape2D" uid="uid://bi4im350t36mr" path="res://black-hole/gravity_range.tres" id="2_6be06"]
 [ext_resource type="Shape2D" uid="uid://bswumxnkbdvod" path="res://black-hole/black_hole_radius.tres" id="3_ol2gd"]
 [ext_resource type="Texture2D" uid="uid://b7d8m8v1bgji6" path="res://black-hole/black-hole.svg" id="5_qhba8"]
-
-[sub_resource type="CSharpScript" id="CSharpScript_0pcu6"]
-script/source = "using Godot;
-using System;
-
-public partial class BlackHoleCollision : Area2D
-{
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-	
-	public void _on_area_body_entered(Node2D body) {
-		if (!(body is IDamageable))
-			return;
-		IDamageable damageable = (IDamageable)body;
-        damageable.Kill();
-    }
-}
-"
 
 [node name="BlackHole" type="Node2D" node_paths=PackedStringArray("BlackHoleImage")]
 script = ExtResource("1_xma48")
@@ -53,7 +28,6 @@ debug_color = Color(0, 0.388235, 0.454902, 0.176471)
 [node name="BlackHole" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 3
-script = SubResource("CSharpScript_0pcu6")
 
 [node name="BlackHole" type="Sprite2D" parent="BlackHole"]
 scale = Vector2(1.66, 1.66)

@@ -25,7 +25,8 @@ public partial class GameManager : Node
 
 	[Export] private BlackHole _blackHole;
 	[Export] private Player _player;
-	[Export] private Camera2D _camera;
+    [Export] private DepositPoint _depositPoint;
+    [Export] private Camera2D _camera;
 	private List<Asteroid> _asteroids;
 
 	/// <summary>
@@ -37,6 +38,11 @@ public partial class GameManager : Node
 	/// Gets a reference to the player
 	/// </summary>
 	public Player Player { get { return _player; } }
+
+	/// <summary>
+	/// Gets a reference to the deposit point
+	/// </summary>
+	public DepositPoint DepositPoint { get { return _depositPoint; } }
 
 	/// <summary>
 	/// Gets the list of asteroids in the scene
