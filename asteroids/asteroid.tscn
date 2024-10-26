@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://cydpa3f5dvkxe"]
+[gd_scene load_steps=5 format=3 uid="uid://cydpa3f5dvkxe"]
 
 [ext_resource type="Script" path="res://asteroids/Asteroid.cs" id="1_664pe"]
+[ext_resource type="PackedScene" uid="uid://du2huf3l5mlml" path="res://fuel/fuel.tscn" id="2_dm2ya"]
 [ext_resource type="Texture2D" uid="uid://cruipnuk58mhc" path="res://asteroids/asteriod-1-nobackdrop.svg" id="2_fjsen"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pj61m"]
@@ -16,6 +17,7 @@ max_contacts_reported = 8
 linear_damp_mode = 1
 angular_damp_mode = 1
 script = ExtResource("1_664pe")
+FuelScene = ExtResource("2_dm2ya")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_fjsen")

@@ -133,15 +133,12 @@ public partial class GameManager : Node
 
 		float randomScale = (float)GD.RandRange(minAsteroidScale, maxAsteroidScale);
 
-		RigidBody2D asteroid = (RigidBody2D)asteroidPrefab.Instantiate();
+		Asteroid asteroid = (Asteroid)asteroidPrefab.Instantiate();
 		asteroid.Position = position;
 		asteroid.LinearVelocity = velocity;
 		asteroid.AngularVelocity = angularVelocity;
 
-		foreach(Node2D child in asteroid.GetChildren())
-		{
-			child.Scale = new Vector2(child.Scale.X * randomScale, child.Scale.Y * randomScale);
-		}
+		asteroid.SetScale(randomScale);
 		
 		GetParent().CallDeferred("add_child", asteroid);
 	}
