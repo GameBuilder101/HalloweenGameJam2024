@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://crv5t88bt5spr"]
+[gd_scene load_steps=9 format=3 uid="uid://crv5t88bt5spr"]
 
 [ext_resource type="Script" path="res://gameplay/GameManager.cs" id="1_acxl8"]
 [ext_resource type="PackedScene" uid="uid://cwobamcwcxxdw" path="res://player/player.tscn" id="1_fegoe"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://player/DynamicCamera.cs" id="3_6hycs"]
 [ext_resource type="PackedScene" uid="uid://67iw8fmle87t" path="res://black-hole/black_hole.tscn" id="4_cfu0t"]
 [ext_resource type="PackedScene" uid="uid://3kgfug7qq7hc" path="res://ui/ui.tscn" id="7_ola7h"]
+[ext_resource type="PackedScene" uid="uid://36kc6d68wpac" path="res://deposit-point/despoit_point.tscn" id="8_thndi"]
 
 [node name="Gameplay" type="Node"]
 
@@ -30,8 +31,6 @@ position = Vector2(-18, 4000)
 script = ExtResource("3_6hycs")
 TrackTarget = NodePath("../Player")
 
-[node name="BlackHole" parent="." instance=ExtResource("4_cfu0t")]
-
 [node name="UIRenderLayer" type="CanvasLayer" parent="."]
 
 [node name="UI" parent="UIRenderLayer" instance=ExtResource("7_ola7h")]
@@ -39,5 +38,9 @@ TrackTarget = NodePath("../Player")
 [node name="BlackHolePointer" parent="UIRenderLayer/UI/PointerArea" index="0" node_paths=PackedStringArray("_positionReference", "_guidanceTarget")]
 _positionReference = NodePath("../../../../Player")
 _guidanceTarget = NodePath("../../../../BlackHole")
+
+[node name="BlackHole" parent="." instance=ExtResource("4_cfu0t")]
+
+[node name="DespoitPoint" parent="." instance=ExtResource("8_thndi")]
 
 [editable path="UIRenderLayer/UI"]

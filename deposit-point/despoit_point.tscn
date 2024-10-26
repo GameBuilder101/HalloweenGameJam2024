@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://36kc6d68wpac"]
+
+[ext_resource type="Script" path="res://deposit-point/DepositPoint.cs" id="1_qmjlm"]
+[ext_resource type="Texture2D" uid="uid://c205dlrvua2y4" path="res://icon.svg" id="2_rxomu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_afnyh"]
+radius = 130.0
+
+[node name="DespoitPoint" type="RigidBody2D"]
+freeze = true
+freeze_mode = 1
+script = ExtResource("1_qmjlm")
+_speed = 0.01
+OrbitRadius = 4400.0
+CurrentObritAngle = 0.5
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_afnyh")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+rotation = 3.14159
+scale = Vector2(2, 2)
+texture = ExtResource("2_rxomu")
