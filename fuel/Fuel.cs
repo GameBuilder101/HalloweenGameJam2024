@@ -10,7 +10,10 @@ public partial class Fuel : RigidBody2D, IDamageable
 		if (Target != null) {
 			Vector2 TargetPos = Target.Position;
 			Vector2 PosDiff = TargetPos - Position;
-			state.ApplyForce(PosDiff.Normalized() * PullStrength / (PosDiff.Dot(PosDiff)) * state.Step);
+			state.ApplyForce(PosDiff.Normalized()  * PullStrength / Math.Max(
+				(PosDiff.Dot(PosDiff)),
+				1
+			) * state.Step);
 		}
 	}
 	
