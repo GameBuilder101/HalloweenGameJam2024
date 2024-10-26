@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://3kgfug7qq7hc"]
+
+[ext_resource type="Texture2D" uid="uid://dgeq2h11amc4o" path="res://ui/black-hole-pointer-placeholder.png" id="1_cgttk"]
+[ext_resource type="Script" path="res://ui/UIDirPointer.cs" id="2_20vai"]
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PointerArea" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_right = 100.0
+offset_bottom = 200.0
+grow_horizontal = 2
+pivot_offset = Vector2(100, 0)
+
+[node name="BlackHolePointer" type="TextureRect" parent="PointerArea" node_paths=PackedStringArray("_positionReference", "_guidanceTarget")]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 150.0
+offset_bottom = 150.0
+pivot_offset = Vector2(50, 50)
+texture = ExtResource("1_cgttk")
+expand_mode = 4
+script = ExtResource("2_20vai")
+_positionReference = NodePath("")
+_guidanceTarget = NodePath("")
