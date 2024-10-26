@@ -137,7 +137,12 @@ public partial class GameManager : Node
 		asteroid.Position = position;
 		asteroid.LinearVelocity = velocity;
 		asteroid.AngularVelocity = angularVelocity;
-		asteroid.Scale = new Vector2(randomScale, randomScale);
+
+		foreach(Node2D child in asteroid.GetChildren())
+		{
+			child.Scale = new Vector2(child.Scale.X * randomScale, child.Scale.Y * randomScale);
+		}
+		
 		GetParent().CallDeferred("add_child", asteroid);
 	}
 
