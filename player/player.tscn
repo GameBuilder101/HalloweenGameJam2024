@@ -7,18 +7,18 @@
 [ext_resource type="Shape2D" uid="uid://olo13apwvx3u" path="res://player/player_pickup_radius.tres" id="5_ug1nb"]
 
 [node name="Player" type="RigidBody2D" node_paths=PackedStringArray("_pickedUpPivot")]
-gravity_scale = 0.1
+gravity_scale = 0.2
 contact_monitor = true
 max_contacts_reported = 8
 linear_damp_mode = 1
 linear_damp = 1.0
-angular_damp = 4.0
+angular_damp = 8.0
 script = ExtResource("1_y2ncu")
 MaxFuel = 30.0
 Fuel = 30.0
-Speed = 200.0
-BoostSpeed = 900.0
-AngularSpeed = 16000.0
+Speed = 400.0
+BoostSpeed = 500.0
+AngularSpeed = 17000.0
 BreakDamp = 2.0
 ShootDelay = 0.5
 _bulletScene = ExtResource("2_5xnwp")
@@ -48,7 +48,7 @@ shape = ExtResource("5_ug1nb")
 shape = ExtResource("5_ug1nb")
 
 [node name="PickedUpAsteroidPivot" type="Node2D" parent="."]
-position = Vector2(0, 95)
+position = Vector2(0, 66)
 
 [node name="FuelCollection" type="Area2D" parent="."]
 collision_layer = 0
