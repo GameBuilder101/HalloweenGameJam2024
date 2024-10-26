@@ -26,6 +26,12 @@ public partial class Asteroid : RigidBody2D, IDamageable
     public override void _Process(double delta)
 	{
         base._Process(delta);
+
+        // if the asteroid goes outside the game radius, destroy it
+        if (Position.Length() > GameManager.Instance.GameBoundsRadius) 
+        {
+            QueueFree();
+        }
 	}
 
     public void ChangeHealth(float value)

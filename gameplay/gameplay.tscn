@@ -19,13 +19,16 @@ _player = NodePath("../Player")
 _depositPoint = NodePath("../DespoitPoint")
 _camera = NodePath("../Camera")
 asteroidPrefab = ExtResource("2_kceje")
-minAsteroidSpeed = 100.0
-maxAsteroidSpeed = 500.0
+minAsteroidSpeed = 500.0
+maxAsteroidSpeed = 1000.0
+minAsteroidAngularVelocity = 0.0
+maxAsteroidAngularVelocity = 5.0
 minAsteroidScale = 0.1
 maxAsteroidScale = 1.0
-startRadius = 5000.0
-gameBoundsRadius = 6000.0
+asteroidSpawnStartRadius = 8000.0
+gameBoundsStartRadius = 6000.0
 radiusInrement = 10.0
+blackHoleStartRadius = 1000.0
 
 [node name="Player" parent="." instance=ExtResource("1_fegoe")]
 position = Vector2(-18, 4000)

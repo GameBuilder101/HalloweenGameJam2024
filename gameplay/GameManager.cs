@@ -61,11 +61,14 @@ public partial class GameManager : Node
 	[Export] private float minAsteroidScale = 0.5f;
 	[Export] private float maxAsteroidScale = 5;
 
-	[Export] private float startRadius; // radius the game starts at
-	[Export] private float gameBoundsRadius; // kill wall
+	[Export] private float asteroidSpawnStartRadius; // radius the ateroid spawn area starts at
+	[Export] private float gameBoundsStartRadius; // radius the bounds start at
 	[Export] private float radiusInrement; // amount the radius grows per second
-	[Export] private float blackHoleScale = 0.2f; // scale of the black hole compared to the game radius
-	private float AsteroidSpawnRadius; // current within which asteroids spawn
+	[Export] private float blackHoleStartRadius; // radius the black hole starts at
+
+	private float asteroidSpawnRadius; // current radius within which asteroids spawn
+	private float gameBoundsRadius; // current radius of the bounds
+	private float blackHoleRadius; // current radius of the black hole
 
 	/// <summary>
 	/// Gets the outer bounds of the map
@@ -83,7 +86,9 @@ public partial class GameManager : Node
 		_asteroids = new List<Asteroid>();
 		currentState = GameState.GamePlay;
 		score = 0;
-		AsteroidSpawnRadius = startRadius;
+		asteroidSpawnRadius = asteroidSpawnStartRadius;
+		gameBoundsRadius = gameBoundsStartRadius;
+		blackHoleRadius = blackHoleStartRadius;
 		gameTime = 0;
 
 		for (int i = 0; i < maxAsteroids; i++)
@@ -105,13 +110,13 @@ public partial class GameManager : Node
 		}
 
 		//grow game radius
-		AsteroidSpawnRadius += radiusInrement * (float)delta;
+		asteroidSpawnRadius += radiusInrement * (float)delta;
 		gameBoundsRadius += radiusInrement * (float)delta;
-		GD.Print("gameRadius" + AsteroidSpawnRadius);
-
+		blackHoleRadius += radiusInrement * (float)delta;
+		
 		// grow the black hole
-		_blackHole.SetRadius(AsteroidSpawnRadius * blackHoleScale, gameBoundsRadius);
-		GD.Print("blackHoleRadius" + _blackHole.BlackHoleRadius);
+		_blackHole.SetRadius(blackHoleRadius, gameBoundsRadius);
+		//GD.Print("blackHoleRadius" + _blackHole.BlackHoleRadius);
 	}
 
 	/// <summary>
@@ -158,7 +163,7 @@ public partial class GameManager : Node
 			// random angle to spawn the asteroid
 			randomPositionAngle = (float)GD.RandRange(0, 2 * MathF.PI);
 			// create a random vector 2 with a bias towards positions near the center
-			float distanceToCenter = GD.Randf() * GD.Randf() * GD.Randf() * (AsteroidSpawnRadius - _blackHole.BlackHoleRadius) + _blackHole.BlackHoleRadius;
+			float distanceToCenter = GD.Randf() * GD.Randf() * GD.Randf() * (asteroidSpawnRadius - _blackHole.BlackHoleRadius) + _blackHole.BlackHoleRadius;
 			position = new Vector2(MathF.Cos(randomPositionAngle) * distanceToCenter, MathF.Sin(randomPositionAngle) * distanceToCenter);
 		} while (bufferRect.HasPoint(position));
 
@@ -167,6 +172,12 @@ public partial class GameManager : Node
 
 		// create a random speed
 		float speed = (float)GD.RandRange(minAsteroidSpeed, maxAsteroidSpeed);
+
+		// speed multiplier is a number from 0-1 based on the position compared to the upper and lower bounds of the asteroid spawn area
+		float speedMultiplier = position.Length() / (asteroidSpawnRadius - _blackHole.BlackHoleRadius);
+
+		// speed should be greater the closer an asteroid spawns to the edge of the black hole
+		speed *= speedMultiplier;
 
 		// create a velocity
 		Vector2 velocity = new Vector2(MathF.Cos(randomVelocityAngle) * speed, MathF.Sin(randomVelocityAngle) * speed);
