@@ -1,11 +1,11 @@
 [gd_scene load_steps=9 format=3 uid="uid://crv5t88bt5spr"]
 
 [ext_resource type="Script" path="res://gameplay/GameManager.cs" id="1_acxl8"]
-[ext_resource type="PackedScene" path="res://player/player.tscn" id="1_fegoe"]
-[ext_resource type="PackedScene" path="res://asteroids/asteroid.tscn" id="2_kceje"]
+[ext_resource type="PackedScene" uid="uid://cwobamcwcxxdw" path="res://player/player.tscn" id="1_fegoe"]
+[ext_resource type="PackedScene" uid="uid://cydpa3f5dvkxe" path="res://asteroids/asteroid.tscn" id="2_kceje"]
 [ext_resource type="PackedScene" uid="uid://d3kxaks48ej1m" path="res://game-over/game_over.tscn" id="2_mqs8h"]
 [ext_resource type="Script" path="res://player/DynamicCamera.cs" id="3_6hycs"]
-[ext_resource type="PackedScene" path="res://black-hole/black_hole.tscn" id="4_cfu0t"]
+[ext_resource type="PackedScene" uid="uid://67iw8fmle87t" path="res://black-hole/black_hole.tscn" id="4_cfu0t"]
 [ext_resource type="Script" path="res://ui/UIDirPointer.cs" id="6_7o017"]
 [ext_resource type="Texture2D" uid="uid://dgeq2h11amc4o" path="res://ui/black-hole-pointer-placeholder.png" id="6_017g6"]
 

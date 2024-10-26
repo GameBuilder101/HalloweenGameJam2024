@@ -67,6 +67,7 @@ public partial class Player : RigidBody2D, IDamageable
     private void UpdateMovement(double delta)
     {
         bool isBoosting = Input.IsActionPressed("boost") && !IsFuelEmpty;
+        bool isBreaking = Input.IsActionPressed("break");
 
         float speed = Speed;
         if (isBoosting)
@@ -78,6 +79,11 @@ public partial class Player : RigidBody2D, IDamageable
         }
         else if (Fuel <= 0.0f)
             speed = EmptySpeed;
+
+        if (isBreaking)
+            LinearDamp = BreakDamp;
+        else
+            LinearDamp = 0.0f;
 
         float input = Input.GetAxis("backward", "forward");
         ApplyForce(Transform.BasisXform(Vector2.Up) * input * speed);
@@ -106,7 +112,7 @@ public partial class Player : RigidBody2D, IDamageable
         Bullet bullet = (Bullet)_bulletScene.Instantiate();
         bullet.Position = Position;
         bullet.Rotation = Rotation;
-        bullet.LinearVelocity = Transform.BasisXform(Vector2.Up) * _bulletSpeed;
+        bullet.LinearVelocity = Transform.BasisXform(Vector2.Up) * _bulletSpeed + LinearVelocity;
 
         GetParent().AddChild(bullet);
     }
