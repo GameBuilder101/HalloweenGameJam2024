@@ -5,7 +5,7 @@ using System;
 public partial class Bullet : RigidBody2D, IDamageable
 {
 	[Export] float damage;
-
+	[Export] double lifetime;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -14,11 +14,15 @@ public partial class Bullet : RigidBody2D, IDamageable
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		lifetime -= delta;
+		if (lifetime <= 0) {
+			Kill();
+		}
 	}
 
 	public void OnBulletBodyEntered(Node body)
 	{
-		if (body is IDamageable && !(body is Player))
+		if (body is IDamageable)
 		{
 			(body as IDamageable).ChangeHealth(-damage);
 			QueueFree();
