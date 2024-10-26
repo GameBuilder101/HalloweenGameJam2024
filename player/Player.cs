@@ -106,7 +106,7 @@ public partial class Player : RigidBody2D, IDamageable
         if (Position.DistanceTo(Vector2.Zero) > 4500.0f)
         {
             Position = Position.Normalized() * 4500.0f;
-            LinearVelocity = -Position.Normalized() * 800.0f;
+            LinearVelocity = -Position.Normalized() * 500.0f;
         }
     }
 
