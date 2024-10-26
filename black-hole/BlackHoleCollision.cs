@@ -13,8 +13,10 @@ public partial class BlackHoleCollision : Area2D
 	{
 	}
 	
-	public void _on_area_entered(Area2D area) {
-		GameBodyArea gameBodyArea = (GameBodyArea) area;
-		gameBodyArea.Die();
-	}
+	public void _on_area_body_entered(Node2D body) {
+		if (!(body is IDamageable))
+			return;
+		IDamageable damageable = (IDamageable)body;
+        damageable.Kill();
+    }
 }

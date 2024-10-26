@@ -1,17 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cump1yu0dyjbk"]
+[gd_scene load_steps=2 format=3 uid="uid://cump1yu0dyjbk"]
 
-[ext_resource type="Script" path="res://player/Bullet.cs" id="1_3kf1f"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_pwyny"]
+[ext_resource type="PackedScene" uid="uid://dnto3k50i7fyw" path="res://player/bullet.tscn" id="1_g4ea3"]
 
 [node name="BulletTest" type="Node2D"]
 
-[node name="Bullet" type="RigidBody2D" parent="."]
-script = ExtResource("1_3kf1f")
-damage = 1.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bullet"]
-scale = Vector2(8, 8)
-shape = SubResource("CircleShape2D_pwyny")
-
-[connection signal="body_entered" from="Bullet" to="Bullet" method="OnBulletBodyEntered"]
+[node name="Bullet" parent="." instance=ExtResource("1_g4ea3")]

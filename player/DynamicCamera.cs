@@ -1,11 +1,12 @@
 using Godot;
 using System;
 
-public partial class GameBodyArea : Area2D
+[GlobalClass]
+public partial class DynamicCamera : Camera2D
 {
 	[Export]
-	GameBody gameBody;
-	
+	private Node2D TrackTarget { get; set; }
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -14,9 +15,9 @@ public partial class GameBodyArea : Area2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-	}
-	
-	public void Die() {
-		gameBody.Die();
-	}
+		Vector2 pos = Position;
+        pos.X = TrackTarget.Position.X;
+        pos.Y = TrackTarget.Position.Y;
+		Position = pos;
+    }
 }

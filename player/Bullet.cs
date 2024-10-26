@@ -18,7 +18,7 @@ public partial class Bullet : RigidBody2D
 
 	public void OnBulletBodyEntered(Node body)
 	{
-		if (body is IDamageable)
+		if (body is IDamageable && !(body is Player))
 		{
 			(body as IDamageable).ChangeHealth(-damage);
 			QueueFree();

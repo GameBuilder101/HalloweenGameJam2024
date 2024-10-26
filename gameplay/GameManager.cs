@@ -4,34 +4,25 @@ using System;
 public enum GameState
 {
 	GamePlay,
-	Pause,
-	GameOver
+	Paused
 }
 
 [GlobalClass]
 public partial class GameManager : Node
 {
 	#region singleton
-	private static GameManager instance;
+	private static GameManager _instance;
 
 	/// <summary>
 	/// Gets the instance of the singleton
 	/// </summary>
-	public static GameManager Instance
-	{
-		get
-		{
-			if (instance == null)
-			{
-				instance = new GameManager();
-			}
-			return instance;
-		}
-	}
+	public static GameManager Instance { get { return _instance; } }
 	#endregion
 
 	private GameState currentState;
-	private int score;
+    [Export] private PackedScene _gameOverScene;
+
+    private int score;
 
 	[Export] private PackedScene asteroidPrefab;
 
@@ -44,21 +35,29 @@ public partial class GameManager : Node
 	[Export] private float minAsteroidScale;
 	[Export] private float maxAsteroidScale;
 
-	[Export] private float startRadius;
+    [Export] private float minRadius;
+    [Export] private float maxRadius;
 	private float gameRadius;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		_instance = this;
+
 		// initial values
 		currentState = GameState.GamePlay;
 		score = 0;
-		gameRadius = startRadius;
+
+		for (int i = 0; i < 100; i++)
+		{
+			SpawnAsteroid();
+		}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+
 	}
 
 	/// <summary>
@@ -76,33 +75,45 @@ public partial class GameManager : Node
 		uint randomAsteroidCount = (uint)GD.RandRange(minAsteroids, maxAsteroids);
 		for(uint i = 0; i < randomAsteroidCount; i++)
 		{
-			// random angle to spawn the asteroid
-			float randomPositionAngle = (float)GD.RandRange(0, 2 * MathF.PI);
-
-			// create a random vector 2 on the circumfrence
-			Vector2 position = new Vector2(MathF.Cos(randomPositionAngle) * gameRadius, MathF.Sin(randomPositionAngle) * gameRadius);
-
-			// create a random angle within 90 degrees in either direction of the oppositr of the random angle
-			float randomVelocityAngle = randomPositionAngle + (MathF.PI * 2) + (float)GD.RandRange(-MathF.PI, MathF.PI);
-
-			// create a random speed
-			float speed = (float)GD.RandRange(minAsteroidSpeed, maxAsteroidSpeed);
-
-			// create a velocity
-			Vector2 velocity = new Vector2(MathF.Cos(randomVelocityAngle) * speed, MathF.Sin(randomVelocityAngle) * speed);
-
-			// create a random angular velocity
-			float angularVelocity = (float)GD.RandRange(minAsteroidAngularVelocity, maxAsteroidAngularVelocity);
-
-			// create a random scale
-
-			float randomScale = (float)GD.RandRange(minAsteroidScale, maxAsteroidScale);
-
-			RigidBody2D asteroid = (RigidBody2D)asteroidPrefab.Instantiate();
-			asteroid.Position = position;
-			asteroid.LinearVelocity = velocity;
-			asteroid.AngularVelocity = angularVelocity;
-			asteroid.Scale = new Vector2(randomScale, randomScale);
+			
 		}
+	}
+
+	public void SpawnAsteroid()
+	{
+        // random angle to spawn the asteroid
+        float randomPositionAngle = (float)GD.RandRange(0, 2 * MathF.PI);
+
+		// create a random vector 2 with a bias towards positions near the center
+		float distanceToCenter = GD.Randf() * GD.Randf() * GD.Randf() * (maxRadius - minRadius) + minRadius;
+        Vector2 position = new Vector2(MathF.Cos(randomPositionAngle) * distanceToCenter, MathF.Sin(randomPositionAngle) * distanceToCenter);
+
+        // create a random angle within 90 degrees in either direction of the opposite of the random angle
+        float randomVelocityAngle = randomPositionAngle + (MathF.PI * 2) + (float)GD.RandRange(-MathF.PI, MathF.PI);
+
+        // create a random speed
+        float speed = (float)GD.RandRange(minAsteroidSpeed, maxAsteroidSpeed);
+
+        // create a velocity
+        Vector2 velocity = new Vector2(MathF.Cos(randomVelocityAngle) * speed, MathF.Sin(randomVelocityAngle) * speed);
+
+        // create a random angular velocity
+        float angularVelocity = (float)GD.RandRange(minAsteroidAngularVelocity, maxAsteroidAngularVelocity);
+
+        // create a random scale
+
+        float randomScale = (float)GD.RandRange(minAsteroidScale, maxAsteroidScale);
+
+        RigidBody2D asteroid = (RigidBody2D)asteroidPrefab.Instantiate();
+        asteroid.Position = position;
+        asteroid.LinearVelocity = velocity;
+        asteroid.AngularVelocity = angularVelocity;
+        asteroid.Scale = new Vector2(randomScale, randomScale);
+		GetParent().CallDeferred("add_child", asteroid);
+    }
+
+	public void LoadGameOver()
+	{
+		GetTree().CallDeferred("change_scene_to_packed", _gameOverScene);
 	}
 }

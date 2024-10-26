@@ -1,24 +1,29 @@
-[gd_scene load_steps=4 format=3 uid="uid://ce2jybdwc04bx"]
+[gd_scene load_steps=5 format=3 uid="uid://cwobamcwcxxdw"]
 
 [ext_resource type="Script" path="res://player/Player.cs" id="1_y2ncu"]
-[ext_resource type="Texture2D" uid="uid://c205dlrvua2y4" path="res://icon.svg" id="2_dge7x"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_1h8x1"]
-radius = 50.0
+[ext_resource type="PackedScene" uid="uid://dnto3k50i7fyw" path="res://player/bullet.tscn" id="2_5xnwp"]
+[ext_resource type="Shape2D" uid="uid://dt28udpdk42m8" path="res://player/player_radius.tres" id="2_b7m2q"]
+[ext_resource type="Texture2D" uid="uid://ggdf7tya7lk7" path="res://player/ship-nobackdrop.svg" id="2_onl10"]
 
 [node name="Player" type="RigidBody2D"]
-gravity_scale = 0.0
 linear_damp = 2.0
 angular_damp = 2.0
 script = ExtResource("1_y2ncu")
+MaxFuel = 15.0
+Fuel = 15.0
 Speed = 800.0
+BoostSpeed = 2000.0
+AngularSpeed = 12000.0
+ShootDelay = 0.5
+_bulletScene = ExtResource("2_5xnwp")
+_bulletSpeed = 1000.0
+SpinOutSpeed = 10000.0
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_1h8x1")
+shape = ExtResource("2_b7m2q")
 
 [node name="Sprite" type="Sprite2D" parent="."]
-rotation = -1.5708
-scale = Vector2(0.75, 0.75)
-texture = ExtResource("2_dge7x")
+scale = Vector2(0.65, 0.65)
+texture = ExtResource("2_onl10")
 
-[node name="Camera" type="Camera2D" parent="."]
+[node name="CameraTrackTarget" type="Node2D" parent="."]

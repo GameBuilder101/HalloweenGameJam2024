@@ -1,8 +1,10 @@
 using Godot;
 
 [GlobalClass]
-public partial class Player : GameBody
+public partial class Player : RigidBody2D, IDamageable
 {
+    public float Health { get; private set; } = 1.0f;
+
     [Export]
     public float MaxFuel { get; private set; }
     [Export]
@@ -20,6 +22,8 @@ public partial class Player : GameBody
 
     [Export]
     public double ShootDelay { get; private set; }
+    [Export] private PackedScene _bulletScene;
+    [Export] private float _bulletSpeed;
     private double _remainingShootDelay;
 
     public double RemainingSpinOutTime { get; private set; }
@@ -40,6 +44,7 @@ public partial class Player : GameBody
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
+        
         if (!IsSpinningOut)
         {
             UpdateMovement(delta);
@@ -69,7 +74,7 @@ public partial class Player : GameBody
             speed = EmptySpeed;
 
         float input = Input.GetAxis("backward", "forward");
-        ApplyForce(Transform.BasisXform(Vector2.Right) * input * speed);
+        ApplyForce(Transform.BasisXform(Vector2.Up) * input * speed);
 
         input = Input.GetAxis("left", "right");
         ApplyTorque(input * AngularSpeed);
@@ -92,7 +97,12 @@ public partial class Player : GameBody
 
     public void Shoot()
     {
-        GD.Print("Pew pew :3");
+        Bullet bullet = (Bullet)_bulletScene.Instantiate();
+        bullet.Position = Position;
+        bullet.Rotation = Rotation;
+        bullet.ConstantForce = Transform.BasisXform(Vector2.Up) * _bulletSpeed;
+
+        GetParent().AddChild(bullet);
     }
 
     private void UpdateAsteroidPickUp(double delta)
@@ -124,7 +134,15 @@ public partial class Player : GameBody
         RemainingSpinOutTime = 0.0f;
         AngularDamp = _origAngularDamp;
     }
+
+    public void ChangeHealth(float value)
+    {
+        Health += value;
+        if (Health <= 0.0f)
+            Kill();
+    }
 	
-	public override void Die() {
+	public void Kill() {
+        GameManager.Instance.LoadGameOver();
 	}
 }

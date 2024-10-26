@@ -1,6 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://cydpa3f5dvkxe"]
+[gd_scene load_steps=4 format=3 uid="uid://cydpa3f5dvkxe"]
 
-[ext_resource type="PhysicsMaterial" uid="uid://bmb53ufnx4d4p" path="res://physics/asteroid_physics.tres" id="1_f78j3"]
+[ext_resource type="Script" path="res://asteroids/Asteroid.cs" id="1_664pe"]
+[ext_resource type="Texture2D" uid="uid://cruipnuk58mhc" path="res://asteroids/asteriod-1-nobackdrop.svg" id="2_fjsen"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pj61m"]
+radius = 75.58
 
 [node name="Asteroid" type="RigidBody2D"]
-physics_material_override = ExtResource("1_f78j3")
+gravity_scale = 0.05
+script = ExtResource("1_664pe")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_fjsen")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_pj61m")

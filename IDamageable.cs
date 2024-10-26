@@ -5,5 +5,7 @@ public interface IDamageable
 {
 	public float Health { get; }
 
-	public void ChangeHealth(float health);
+	public void ChangeHealth(float value);
+
+	public void Kill();
 }
