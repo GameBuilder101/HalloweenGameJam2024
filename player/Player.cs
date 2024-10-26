@@ -38,6 +38,7 @@ public partial class Player : RigidBody2D, IDamageable
     private float _origAngularDamp;
 
     private List<Asteroid> _asteroidsInRadius = new List<Asteroid>();
+    public bool InRadiusOfAsteroid { get { return _asteroidsInRadius.Count > 0; } }
     public Asteroid PickedUpAsteroid { get; private set; }
     [Export]
     private Node2D _pickedUpPivot;
@@ -121,7 +122,7 @@ public partial class Player : RigidBody2D, IDamageable
     {
         if (Input.IsActionJustPressed("interact"))
         {
-            if (PickedUpAsteroid == null && _asteroidsInRadius.Count > 0)
+            if (PickedUpAsteroid == null && InRadiusOfAsteroid)
                 PickUpAsteroid(_asteroidsInRadius[0]);
             else if (PickedUpAsteroid != null)
                 DropAsteroid();
