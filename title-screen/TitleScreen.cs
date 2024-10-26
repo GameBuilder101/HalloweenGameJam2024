@@ -4,11 +4,11 @@ using System;
 public partial class TitleScreen : Control
 {
 	[Export]
-	private PackedScene _gameplay;
+	private string _gameplay;
 
 	public void Start()
 	{
-        GetTree().CallDeferred("change_scene_to_packed", _gameplay);
+        GetTree().CallDeferred("change_scene_to_file", _gameplay);
     }
 
 	public void Quit()
