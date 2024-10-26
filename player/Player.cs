@@ -1,7 +1,7 @@
 using Godot;
 
 [GlobalClass]
-public partial class Player : RigidBody2D
+public partial class Player : GameBody
 {
     [Export]
     public float MaxFuel { get; private set; }
@@ -124,4 +124,7 @@ public partial class Player : RigidBody2D
         RemainingSpinOutTime = 0.0f;
         AngularDamp = _origAngularDamp;
     }
+	
+	public override void Die() {
+	}
 }

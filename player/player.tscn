@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cwobamcwcxxdw"]
+[gd_scene load_steps=4 format=3 uid="uid://ce2jybdwc04bx"]
 
 [ext_resource type="Script" path="res://player/Player.cs" id="1_y2ncu"]
 [ext_resource type="Texture2D" uid="uid://c205dlrvua2y4" path="res://icon.svg" id="2_dge7x"]
@@ -11,13 +11,7 @@ gravity_scale = 0.0
 linear_damp = 2.0
 angular_damp = 2.0
 script = ExtResource("1_y2ncu")
-MaxFuel = 15.0
-Fuel = 15.0
 Speed = 800.0
-BoostSpeed = 2000.0
-AngularSpeed = 12000.0
-ShootDelay = 0.5
-SpinOutSpeed = 10000.0
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_1h8x1")

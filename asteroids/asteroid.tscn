@@ -2,7 +2,5 @@
 
 [ext_resource type="PhysicsMaterial" uid="uid://bmb53ufnx4d4p" path="res://physics/asteroid_physics.tres" id="1_f78j3"]
 
-[node name="Asteroid" type="Node2D"]
-
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
+[node name="Asteroid" type="RigidBody2D"]
 physics_material_override = ExtResource("1_f78j3")
