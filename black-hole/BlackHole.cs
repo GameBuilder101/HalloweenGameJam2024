@@ -9,7 +9,10 @@ public partial class BlackHole : Node2D
 	private CircleShape2D BlackHoleArea;
 	[Export]
 	private Sprite2D BlackHoleImage;
-	
+	[Export]
+	private AudioStreamPlayer2D BlackHoleAudio;
+
+
 	private const long HoleImageSize = 1; 
 	
 	
@@ -34,5 +37,10 @@ public partial class BlackHole : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+	}
+
+	public void PlayAudio()
+	{
+		BlackHoleAudio.Play();
 	}
 }
