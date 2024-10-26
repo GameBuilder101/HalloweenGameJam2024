@@ -67,6 +67,7 @@ public partial class Player : RigidBody2D, IDamageable
 
     private void UpdateMovement(double delta)
     {
+        float input = Input.GetAxis("backward", "forward");
         bool isBoosting = Input.IsActionPressed("boost") && !IsFuelEmpty;
         bool isBreaking = Input.IsActionPressed("break");
 
@@ -74,19 +75,21 @@ public partial class Player : RigidBody2D, IDamageable
         if (isBoosting)
         {
             speed = BoostSpeed;
-            Fuel -= (float)delta;
-            if (Fuel < 0.0f)
-                Fuel = 0.0f;
+            Fuel -= (float)delta * _boostFuelConsumption;
         }
         else if (Fuel <= 0.0f)
             speed = EmptySpeed;
+        else if (input != 0.0f)
+            Fuel -= (float)delta;
+
+        if (Fuel < 0.0f)
+            Fuel = 0.0f;
 
         if (isBreaking)
             LinearDamp = BreakDamp;
         else
             LinearDamp = 0.0f;
 
-        float input = Input.GetAxis("backward", "forward");
         ApplyForce(Transform.BasisXform(Vector2.Up) * input * speed);
 
         input = Input.GetAxis("left", "right");

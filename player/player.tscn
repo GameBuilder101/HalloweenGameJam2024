@@ -14,13 +14,13 @@ contact_monitor = true
 max_contacts_reported = 8
 linear_damp_mode = 1
 linear_damp = 0.02
-angular_damp = 2.0
+angular_damp = 4.0
 script = ExtResource("1_y2ncu")
 MaxFuel = 30.0
 Fuel = 30.0
-Speed = 300.0
-BoostSpeed = 2000.0
-AngularSpeed = 12000.0
+Speed = 150.0
+BoostSpeed = 900.0
+AngularSpeed = 16000.0
 BreakDamp = 2.0
 ShootDelay = 0.5
 _bulletScene = ExtResource("2_5xnwp")
@@ -44,7 +44,7 @@ texture = ExtResource("2_onl10")
 shape = SubResource("CircleShape2D_icm5p")
 
 [node name="PickedUpAsteroidPivot" type="Node2D" parent="."]
-position = Vector2(0, 113)
+position = Vector2(0, 95)
 
 [connection signal="body_entered" from="PickUpArea" to="." method="PickUpAreaBodyEntered"]
 [connection signal="body_exited" from="PickUpArea" to="." method="PickUpAreaBodyExited"]
