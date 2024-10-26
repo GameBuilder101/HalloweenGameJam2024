@@ -55,12 +55,9 @@ public partial class GameManager : Node
 	[Export] private float minAsteroidScale = 0.5f;
 	[Export] private float maxAsteroidScale = 5;
 
-	[Export] private float minRadius = 1500;
+	[Export] private float minRadius;
 	[Export] private float maxRadius;
-	[Export] private float growthRate;
 	private float gameRadius;
-
-	private float gameTime;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -72,7 +69,6 @@ public partial class GameManager : Node
 		currentState = GameState.GamePlay;
 		score = 0;
 		gameRadius = minRadius;
-		gameTime = 0;
 
 		for (int i = 0; i < maxAsteroids; i++)
 		{
@@ -83,6 +79,7 @@ public partial class GameManager : Node
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		
 		// spawn asteroids until the number of asteroids is equal to the max
 		for(uint i = 0; i < maxAsteroids - _asteroids.Count; i++)
 		{

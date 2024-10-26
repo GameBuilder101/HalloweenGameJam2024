@@ -1,8 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://cump1yu0dyjbk"]
 
-[ext_resource type="PackedScene" path="res://player/bullet.tscn" id="1_g4ea3"]
+[ext_resource type="PackedScene" uid="uid://dnto3k50i7fyw" path="res://player/bullet.tscn" id="1_g4ea3"]
 
 [node name="BulletTest" type="Node2D"]
 
 [node name="Bullet" parent="." instance=ExtResource("1_g4ea3")]
-lifetime = 0.0

@@ -5,10 +5,15 @@
 [ext_resource type="PackedScene" path="res://asteroids/asteroid.tscn" id="2_kceje"]
 [ext_resource type="PackedScene" uid="uid://d3kxaks48ej1m" path="res://game-over/game_over.tscn" id="2_mqs8h"]
 [ext_resource type="Script" path="res://player/DynamicCamera.cs" id="3_6hycs"]
+<<<<<<< HEAD
 
 [ext_resource type="PackedScene" uid="uid://ndav4jyl4cl0" path="res://black-hole/black_hole.tscn" id="4_cfu0t"]
 [ext_resource type="PackedScene" uid="uid://3kgfug7qq7hc" path="res://ui/ui.tscn" id="7_ola7h"]
 [ext_resource type="PackedScene" uid="uid://36kc6d68wpac" path="res://deposit-point/despoit_point.tscn" id="8_thndi"]
+=======
+[ext_resource type="PackedScene" path="res://black-hole/black_hole.tscn" id="4_cfu0t"]
+[ext_resource type="PackedScene" path="res://ui/ui.tscn" id="7_ola7h"]
+>>>>>>> parent of 2b95d29 (merge commit)
 
 [node name="Gameplay" type="Node"]
 
@@ -27,15 +32,6 @@ _player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("1_fegoe")]
 position = Vector2(-18, 4000)
-MaxFuel = 0.0
-Fuel = 0.0
-BoostSpeed = 0.0
-AngularSpeed = 0.0
-BreakDamp = 0.0
-ShootDelay = 0.0
-_bulletScene = null
-_bulletSpeed = 0.0
-SpinOutSpeed = 0.0
 
 [node name="Camera" type="Camera2D" parent="." node_paths=PackedStringArray("TrackTarget")]
 zoom = Vector2(0.5, 0.5)
