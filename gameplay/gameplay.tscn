@@ -13,8 +13,6 @@
 [node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("_blackHole", "_player")]
 script = ExtResource("1_acxl8")
 _gameOverScene = ExtResource("2_mqs8h")
-_blackHole = NodePath("../BlackHole")
-_player = NodePath("../Player")
 asteroidPrefab = ExtResource("2_kceje")
 minAsteroidSpeed = 100.0
 maxAsteroidSpeed = 500.0
@@ -22,6 +20,8 @@ minAsteroidScale = 0.1
 maxAsteroidScale = 1.0
 minRadius = 1500.0
 maxRadius = 7000.0
+_blackHole = NodePath("../BlackHole")
+_player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("1_fegoe")]
 position = Vector2(-18, 4000)

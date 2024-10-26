@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Fuel" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.1 23.1">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        stroke: #fff;
+        stroke-miterlimit: 10;
+      }
+    </style>
+  </defs>
+  <circle class="cls-1" cx="11.55" cy="11.55" r="11.05"/>
+</svg>
