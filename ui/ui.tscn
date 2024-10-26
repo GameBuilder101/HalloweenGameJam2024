@@ -1,7 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://3kgfug7qq7hc"]
+[gd_scene load_steps=5 format=3 uid="uid://3kgfug7qq7hc"]
 
 [ext_resource type="Texture2D" uid="uid://dgeq2h11amc4o" path="res://ui/black-hole-pointer-placeholder.png" id="1_cgttk"]
 [ext_resource type="Script" path="res://ui/UIDirPointer.cs" id="2_20vai"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p27ut"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w7npl"]
+bg_color = Color(1, 1, 1, 1)
+border_color = Color(0, 0, 0, 1)
 
 [node name="UI" type="Control"]
 layout_mode = 3
@@ -22,7 +34,7 @@ offset_bottom = 200.0
 grow_horizontal = 2
 pivot_offset = Vector2(100, 0)
 
-[node name="BlackHolePointer" type="TextureRect" parent="PointerArea" node_paths=PackedStringArray("_positionReference", "_guidanceTarget")]
+[node name="BlackHolePointer" type="TextureRect" parent="PointerArea"]
 layout_mode = 0
 offset_left = 50.0
 offset_top = 50.0
@@ -32,5 +44,22 @@ pivot_offset = Vector2(50, 50)
 texture = ExtResource("1_cgttk")
 expand_mode = 4
 script = ExtResource("2_20vai")
-_positionReference = NodePath("")
-_guidanceTarget = NodePath("")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = 60.0
+offset_right = 75.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(75, 0)
+theme_override_styles/background = SubResource("StyleBoxFlat_p27ut")
+theme_override_styles/fill = SubResource("StyleBoxFlat_w7npl")
+value = 49.23
+show_percentage = false

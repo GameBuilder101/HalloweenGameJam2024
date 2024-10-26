@@ -33,3 +33,9 @@ TrackTarget = NodePath("../Player")
 [node name="UIRenderLayer" type="CanvasLayer" parent="."]
 
 [node name="UI" parent="UIRenderLayer" instance=ExtResource("7_ola7h")]
+
+[node name="BlackHolePointer" parent="UIRenderLayer/UI/PointerArea" index="0" node_paths=PackedStringArray("_positionReference", "_guidanceTarget")]
+_positionReference = NodePath("../../../../Player")
+_guidanceTarget = NodePath("../../../../BlackHole")
+
+[editable path="UIRenderLayer/UI"]
