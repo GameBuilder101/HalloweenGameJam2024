@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dnto3k50i7fyw"]
 
 [ext_resource type="Script" path="res://player/Bullet.cs" id="1_3odw3"]
-[ext_resource type="Texture2D" uid="uid://c205dlrvua2y4" path="res://icon.svg" id="2_8lbws"]
+[ext_resource type="Texture2D" uid="uid://elsk3wp82ob7" path="res://player/Bullet4pt.svg" id="2_qdn1s"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pwyny"]
 radius = 2.0
@@ -22,7 +22,7 @@ lifetime = 50.0
 [node name="BulletImage" type="Sprite2D" parent="."]
 rotation = 3.14159
 scale = Vector2(0.2, 0.2)
-texture = ExtResource("2_8lbws")
+texture = ExtResource("2_qdn1s")
 
 [node name="BulletCollision" type="CollisionShape2D" parent="."]
 scale = Vector2(8, 8)
