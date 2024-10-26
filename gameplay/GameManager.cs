@@ -25,7 +25,6 @@ public partial class GameManager : Node
 
 	[Export] private BlackHole _blackHole;
 	[Export] private Player _player;
-	[Export] private Camera2D _camera;
 	private List<Asteroid> _asteroids;
 
 	/// <summary>
@@ -111,30 +110,12 @@ public partial class GameManager : Node
 
 	public void SpawnAsteroid()
 	{
-		//get the viewport bounding box
-		Vector2 viewportSize = GetViewport().GetVisibleRect().Size;
-		Vector2 camPosition = _camera.Position;
-		Vector2 halfSize = (viewportSize / 2.0f) * _camera.Zoom;
-		Rect2 boundingBox = new Rect2(camPosition - halfSize, viewportSize * _camera.Zoom);
+		// random angle to spawn the asteroid
+		float randomPositionAngle = (float)GD.RandRange(0, 2 * MathF.PI);
 
-		// Scale the bounding box to add extra buffer
-		Vector2 newSize = boundingBox.Size * 1.5f;
-		Vector2 newPosition = camPosition - (newSize / 2.0f);
-
-		// rectangle that asteroids can't spawn in
-		Rect2 bufferRect = new Rect2(newPosition, newSize);
-
-		// keep trying to create a position until one is created outside the buffer rectangle
-		float randomPositionAngle;
-		Vector2 position;
-		do
-		{
-			// random angle to spawn the asteroid
-			randomPositionAngle = (float)GD.RandRange(0, 2 * MathF.PI);
-			// create a random vector 2 with a bias towards positions near the center
-			float distanceToCenter = GD.Randf() * GD.Randf() * GD.Randf() * (maxRadius - minRadius) + minRadius;
-			position = new Vector2(MathF.Cos(randomPositionAngle) * distanceToCenter, MathF.Sin(randomPositionAngle) * distanceToCenter);
-		} while (bufferRect.HasPoint(position));
+		// create a random vector 2 with a bias towards positions near the center
+		float distanceToCenter = GD.Randf() * GD.Randf() * GD.Randf() * (maxRadius - minRadius) + minRadius;
+		Vector2 position = new Vector2(MathF.Cos(randomPositionAngle) * distanceToCenter, MathF.Sin(randomPositionAngle) * distanceToCenter);
 
 		// create a random angle within 90 degrees in either direction of the opposite of the random angle
 		float randomVelocityAngle = randomPositionAngle + (MathF.PI / 2) + (float)GD.RandRange(-MathF.PI / 4, MathF.PI / 4);
@@ -152,15 +133,12 @@ public partial class GameManager : Node
 
 		float randomScale = (float)GD.RandRange(minAsteroidScale, maxAsteroidScale);
 
-		RigidBody2D asteroid = (RigidBody2D)asteroidPrefab.Instantiate();
+		Asteroid asteroid = (Asteroid)asteroidPrefab.Instantiate();
 		asteroid.Position = position;
 		asteroid.LinearVelocity = velocity;
 		asteroid.AngularVelocity = angularVelocity;
 
-		foreach(Node2D child in asteroid.GetChildren())
-		{
-			child.Scale = new Vector2(child.Scale.X * randomScale, child.Scale.Y * randomScale);
-		}
+		asteroid.SetScale(randomScale);
 		
 		GetParent().CallDeferred("add_child", asteroid);
 	}
