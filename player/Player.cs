@@ -46,6 +46,8 @@ public partial class Player : RigidBody2D, IDamageable
     [Export]
     private Node2D _pickedUpPivot;
 
+    public bool IsInDropOffRadius { get; private set; }
+
     public override void _Ready()
     {
         base._Ready();
@@ -90,8 +92,10 @@ public partial class Player : RigidBody2D, IDamageable
 
         if (isBreaking)
             LinearDamp = BreakDamp;
-        else
+        else if (isBoosting)
             LinearDamp = 0.0f;
+        else
+            LinearDamp = 1.0f;
 
         ApplyForce(Transform.BasisXform(Vector2.Up) * input * speed);
 
@@ -197,8 +201,20 @@ public partial class Player : RigidBody2D, IDamageable
         if (node is Asteroid)
             _asteroidsInRadius.Remove((Asteroid)node);
     }
-	
-	private void _on_fuel_start_tracking_body_entered(Node2D node) {
+
+    private void OnDropOffAreaBodyEntered(Node node)
+    {
+        if (node is DepositPoint)
+            IsInDropOffRadius = true;
+    }
+
+    private void OnDropOffAreaBodyExited(Node node)
+    {
+        if (node is DepositPoint)
+            IsInDropOffRadius = false;
+    }
+
+    private void _on_fuel_start_tracking_body_entered(Node2D node) {
 		((Fuel) node).SetTarget(this);
 	}
 	

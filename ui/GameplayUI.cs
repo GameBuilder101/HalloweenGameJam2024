@@ -7,9 +7,11 @@ public partial class GameplayUI : Control
 	private ProgressBar _fuelBar;
 	[Export]
 	private RichTextLabel _pickUpLabel;
+    [Export]
+    private RichTextLabel _dropOffLabel;
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+    // Called when the node enters the scene tree for the first time.
+    public override void _Ready()
 	{
 	}
 
@@ -21,5 +23,6 @@ public partial class GameplayUI : Control
         _fuelBar.MaxValue = player.MaxFuel;
 		_fuelBar.Value = player.Fuel;
 		_pickUpLabel.Visible = player.InRadiusOfAsteroid && player.PickedUpAsteroid == null && !player.IsSpinningOut;
+		_dropOffLabel.Visible = player.IsInDropOffRadius && player.PickedUpAsteroid != null && !player.IsSpinningOut;
 	}
 }

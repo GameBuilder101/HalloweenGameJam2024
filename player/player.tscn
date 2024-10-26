@@ -4,19 +4,19 @@
 [ext_resource type="PackedScene" uid="uid://dnto3k50i7fyw" path="res://player/bullet.tscn" id="2_5xnwp"]
 [ext_resource type="Shape2D" uid="uid://dt28udpdk42m8" path="res://player/player_radius.tres" id="2_b7m2q"]
 [ext_resource type="Texture2D" uid="uid://daspphthhq6ao" path="res://player/ship-nobackdrop2pt.svg" id="4_vlqdv"]
-[ext_resource type="Shape2D" uid="uid://cn8pjp5lskece" path="res://player/player_pickup_radius.tres" id="5_ug1nb"]
+[ext_resource type="Shape2D" path="res://player/player_pickup_radius.tres" id="5_ug1nb"]
 
 [node name="Player" type="RigidBody2D" node_paths=PackedStringArray("_pickedUpPivot")]
 gravity_scale = 0.1
 contact_monitor = true
 max_contacts_reported = 8
 linear_damp_mode = 1
-linear_damp = 0.02
+linear_damp = 1.0
 angular_damp = 4.0
 script = ExtResource("1_y2ncu")
 MaxFuel = 30.0
 Fuel = 30.0
-Speed = 150.0
+Speed = 200.0
 BoostSpeed = 900.0
 AngularSpeed = 16000.0
 BreakDamp = 2.0
@@ -42,6 +42,11 @@ texture = ExtResource("4_vlqdv")
 [node name="Collision" type="CollisionShape2D" parent="PickUpArea"]
 shape = ExtResource("5_ug1nb")
 
+[node name="DropOffArea" type="Area2D" parent="."]
+
+[node name="Collision" type="CollisionShape2D" parent="DropOffArea"]
+shape = ExtResource("5_ug1nb")
+
 [node name="PickedUpAsteroidPivot" type="Node2D" parent="."]
 position = Vector2(0, 95)
 
@@ -61,5 +66,7 @@ shape = ExtResource("5_ug1nb")
 
 [connection signal="body_entered" from="PickUpArea" to="." method="PickUpAreaBodyEntered"]
 [connection signal="body_exited" from="PickUpArea" to="." method="PickUpAreaBodyExited"]
+[connection signal="body_entered" from="DropOffArea" to="." method="OnDropOffAreaBodyEntered"]
+[connection signal="body_exited" from="DropOffArea" to="." method="OnDropOffAreaBodyExited"]
 [connection signal="body_entered" from="FuelCollection" to="." method="_on_fuel_collection_body_entered"]
 [connection signal="body_entered" from="FuelStartTracking" to="." method="_on_fuel_start_tracking_body_entered"]
