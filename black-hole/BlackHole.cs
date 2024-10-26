@@ -10,21 +10,20 @@ public partial class BlackHole : Node2D
 	[Export]
 	private Sprite2D BlackHoleImage;
 	
-	private const long HoleImageSize = 1; 
+	private const long HoleImageSize = 600; 
 	
-	private float rad = 0.0f;
+	//private float rad = 0.0f;
 	
-	public float GetRadius() {
-		return rad;
-	}
+	public float GravityRadius { get { return AttractingArea.Radius; } }
+	public float BlackHoleRadius { get { return BlackHoleArea.Radius; } }
 	
 	
-	public void SetRadius(float holeRad, float fieldRad) {
-		rad = holeRad;
-		float HoleScale = holeRad / HoleImageSize;
+	public void SetRadius(float blackHoleRadius, float gravityRadius) {
+		//rad = blackHoleRadius;
+		float HoleScale = blackHoleRadius / HoleImageSize;
 		
-		AttractingArea.Radius = fieldRad;
-		BlackHoleArea.Radius = HoleScale;
+		AttractingArea.Radius = gravityRadius;
+		BlackHoleArea.Radius = blackHoleRadius;
 		Vector2 scale = BlackHoleImage.Scale;
 		scale.X = HoleScale;
 		scale.Y = HoleScale;
@@ -45,6 +44,6 @@ public partial class BlackHole : Node2D
 		if (!(body is IDamageable))
 			return;
 		IDamageable damageable = (IDamageable)body;
-        damageable.Kill();
-    }
+		damageable.Kill();
+	}
 }
