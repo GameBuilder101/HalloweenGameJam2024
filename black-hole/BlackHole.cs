@@ -13,13 +13,11 @@ public partial class BlackHole : Node2D
 	private const long HoleImageSize = 1; 
 	
 	
-	public void SetRadius(float rad) {
-		float GameRadius = rad;
-		float HoleRadius = rad / 5;
-		float HoleScale = HoleRadius / HoleImageSize;
+	public void SetRadius(float holeRad, float fieldRad) {
+		float HoleScale = holeRad / HoleImageSize;
 		
-		AttractingArea.Radius = (float) GameRadius;
-		BlackHoleArea.Radius = HoleRadius;
+		AttractingArea.Radius = fieldRad;
+		BlackHoleArea.Radius = HoleScale;
 		Vector2 scale = BlackHoleImage.Scale;
 		scale.X = HoleScale;
 		scale.Y = HoleScale;
@@ -35,4 +33,11 @@ public partial class BlackHole : Node2D
 	public override void _Process(double delta)
 	{
 	}
+	
+	public void _on_area_body_entered(Node2D body) {
+		if (!(body is IDamageable))
+			return;
+		IDamageable damageable = (IDamageable)body;
+        damageable.Kill();
+    }
 }
