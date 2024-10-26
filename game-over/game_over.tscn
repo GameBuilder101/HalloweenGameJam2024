@@ -1,4 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://d3kxaks48ej1m"]
+[gd_scene load_steps=5 format=3 uid="uid://d3kxaks48ej1m"]
+
+[ext_resource type="Script" path="res://game-over/GameOver.cs" id="1_1ac1j"]
+[ext_resource type="PackedScene" uid="uid://crv5t88bt5spr" path="res://gameplay/gameplay.tscn" id="2_2t58v"]
+[ext_resource type="PackedScene" uid="uid://b887seo13ynl2" path="res://title-screen/title_screen.tscn" id="3_y58f6"]
 
 [sub_resource type="Theme" id="Theme_7cxh7"]
 default_font_size = 140
@@ -14,6 +18,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_1ac1j")
+_gameplay = ExtResource("2_2t58v")
+_titleScreen = ExtResource("3_y58f6")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="UIRenderLayer/UI"]
 layout_mode = 1
@@ -24,3 +31,23 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_7cxh7")
 text = "u ded lmao"
+
+[node name="RestartButton" type="Button" parent="UIRenderLayer/UI"]
+layout_mode = 0
+offset_left = 170.0
+offset_top = 549.0
+offset_right = 570.0
+offset_bottom = 629.0
+text = "Restart"
+
+[node name="BackToTitleButton" type="Button" parent="UIRenderLayer/UI"]
+layout_mode = 0
+offset_left = 170.0
+offset_top = 660.0
+offset_right = 570.0
+offset_bottom = 740.0
+text = "Back to Title
+"
+
+[connection signal="pressed" from="UIRenderLayer/UI/RestartButton" to="UIRenderLayer/UI" method="Restart"]
+[connection signal="pressed" from="UIRenderLayer/UI/BackToTitleButton" to="UIRenderLayer/UI" method="BackToTitle"]

@@ -1,0 +1,54 @@
+[gd_scene load_steps=4 format=3 uid="uid://b887seo13ynl2"]
+
+[ext_resource type="Script" path="res://title-screen/TitleScreen.cs" id="1_eu04y"]
+[ext_resource type="PackedScene" uid="uid://crv5t88bt5spr" path="res://gameplay/gameplay.tscn" id="2_8an1i"]
+
+[sub_resource type="Theme" id="Theme_7cxh7"]
+default_font_size = 140
+
+[node name="TitleScreen" type="Node"]
+
+[node name="UIRenderLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="UIRenderLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_eu04y")
+_gameplay = ExtResource("2_8an1i")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UIRenderLayer/UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_7cxh7")
+text = "title screen :)"
+
+[node name="StartButton" type="Button" parent="UIRenderLayer/UI"]
+layout_mode = 0
+offset_left = 170.0
+offset_top = 549.0
+offset_right = 570.0
+offset_bottom = 629.0
+text = "Start"
+
+[node name="QuitButton" type="Button" parent="UIRenderLayer/UI"]
+layout_mode = 0
+offset_left = 170.0
+offset_top = 660.0
+offset_right = 570.0
+offset_bottom = 740.0
+text = "Quit"
+
+[connection signal="pressed" from="UIRenderLayer/UI/StartButton" to="UIRenderLayer/UI" method="Start"]
+[connection signal="pressed" from="UIRenderLayer/UI/QuitButton" to="UIRenderLayer/UI" method="Quit"]
