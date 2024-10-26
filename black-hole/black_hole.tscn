@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://67iw8fmle87t"]
+[gd_scene load_steps=7 format=3 uid="uid://ndav4jyl4cl0"]
 
 [ext_resource type="Script" path="res://black-hole/BlackHole.cs" id="1_xma48"]
-[ext_resource type="Shape2D" uid="uid://bi4im350t36mr" path="res://black-hole/gravity_range.tres" id="2_6be06"]
-[ext_resource type="Shape2D" uid="uid://bswumxnkbdvod" path="res://black-hole/black_hole_radius.tres" id="3_ol2gd"]
+[ext_resource type="Shape2D" path="res://black-hole/gravity_range.tres" id="2_6be06"]
+[ext_resource type="Shape2D" path="res://black-hole/black_hole_radius.tres" id="3_ol2gd"]
 [ext_resource type="Script" path="res://black-hole/BlackHoleCollision.cs" id="4_nlpeq"]
 [ext_resource type="Texture2D" uid="uid://b7d8m8v1bgji6" path="res://black-hole/black-hole.svg" id="5_qhba8"]
+[ext_resource type="AudioStream" uid="uid://cwptkpkag6vty" path="res://black-hole/BlackHole.mp3" id="6_o8038"]
 
 [node name="BlackHole" type="Node2D" node_paths=PackedStringArray("BlackHoleImage")]
 script = ExtResource("1_xma48")
@@ -38,5 +39,10 @@ texture = ExtResource("5_qhba8")
 [node name="BlackHoleCollision" type="CollisionShape2D" parent="BlackHole"]
 shape = ExtResource("3_ol2gd")
 debug_color = Color(0.989531, 0, 0.289342, 0.42)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="BlackHole"]
+stream = ExtResource("6_o8038")
+autoplay = true
+attenuation = 2.0
 
 [connection signal="body_entered" from="BlackHole" to="BlackHole" method="_on_area_body_entered"]
