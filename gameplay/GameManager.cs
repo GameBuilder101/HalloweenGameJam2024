@@ -25,8 +25,8 @@ public partial class GameManager : Node
 
 	[Export] private BlackHole _blackHole;
 	[Export] private Player _player;
-    [Export] private DepositPoint _depositPoint;
-    [Export] private Camera2D _camera;
+	[Export] private DepositPoint _depositPoint;
+	[Export] private Camera2D _camera;
 	private List<Asteroid> _asteroids;
 
 	/// <summary>
@@ -61,9 +61,18 @@ public partial class GameManager : Node
 	[Export] private float minAsteroidScale = 0.5f;
 	[Export] private float maxAsteroidScale = 5;
 
-	[Export] private float minRadius;
-	[Export] private float maxRadius;
-	private float gameRadius;
+	[Export] private float startRadius; // radius the game starts at
+	[Export] private float gameBoundsRadius; // kill wall
+	[Export] private float radiusInrement; // amount the radius grows per second
+	[Export] private float blackHoleScale = 0.2f; // scale of the black hole compared to the game radius
+	private float AsteroidSpawnRadius; // current within which asteroids spawn
+
+	/// <summary>
+	/// Gets the outer bounds of the map
+	/// </summary>
+	public float GameBoundsRadius { get { return gameBoundsRadius; } }
+
+	private float gameTime;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -74,7 +83,8 @@ public partial class GameManager : Node
 		_asteroids = new List<Asteroid>();
 		currentState = GameState.GamePlay;
 		score = 0;
-		gameRadius = minRadius;
+		AsteroidSpawnRadius = startRadius;
+		gameTime = 0;
 
 		for (int i = 0; i < maxAsteroids; i++)
 		{
@@ -85,13 +95,23 @@ public partial class GameManager : Node
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		
+		// increment game time
+		gameTime += (float)delta;
+
 		// spawn asteroids until the number of asteroids is equal to the max
 		for(uint i = 0; i < maxAsteroids - _asteroids.Count; i++)
 		{
 			SpawnAsteroid();
 		}
-		
+
+		//grow game radius
+		AsteroidSpawnRadius += radiusInrement * (float)delta;
+		gameBoundsRadius += radiusInrement * (float)delta;
+		GD.Print("gameRadius" + AsteroidSpawnRadius);
+
+		// grow the black hole
+		_blackHole.SetRadius(AsteroidSpawnRadius * blackHoleScale, gameBoundsRadius);
+		GD.Print("blackHoleRadius" + _blackHole.BlackHoleRadius);
 	}
 
 	/// <summary>
@@ -138,7 +158,7 @@ public partial class GameManager : Node
 			// random angle to spawn the asteroid
 			randomPositionAngle = (float)GD.RandRange(0, 2 * MathF.PI);
 			// create a random vector 2 with a bias towards positions near the center
-			float distanceToCenter = GD.Randf() * GD.Randf() * GD.Randf() * (maxRadius - minRadius) + minRadius;
+			float distanceToCenter = GD.Randf() * GD.Randf() * GD.Randf() * (AsteroidSpawnRadius - _blackHole.BlackHoleRadius) + _blackHole.BlackHoleRadius;
 			position = new Vector2(MathF.Cos(randomPositionAngle) * distanceToCenter, MathF.Sin(randomPositionAngle) * distanceToCenter);
 		} while (bufferRect.HasPoint(position));
 
