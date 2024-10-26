@@ -118,7 +118,7 @@ public partial class GameManager : Node
 		Vector2 position = new Vector2(MathF.Cos(randomPositionAngle) * distanceToCenter, MathF.Sin(randomPositionAngle) * distanceToCenter);
 
 		// create a random angle within 90 degrees in either direction of the opposite of the random angle
-		float randomVelocityAngle = randomPositionAngle + (MathF.PI * 2) + (float)GD.RandRange(-MathF.PI, MathF.PI);
+		float randomVelocityAngle = randomPositionAngle + (MathF.PI / 2) + (float)GD.RandRange(-MathF.PI / 4, MathF.PI / 4);
 
 		// create a random speed
 		float speed = (float)GD.RandRange(minAsteroidSpeed, maxAsteroidSpeed);
