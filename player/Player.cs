@@ -10,6 +10,9 @@ public partial class Player : RigidBody2D, IDamageable
     public float MaxFuel { get; private set; }
     [Export]
     public float Fuel { get; private set; }
+
+	public const float FuelParticleWorth = 1.0f;
+
     public bool IsFuelEmpty { get { return Fuel <= 0.0f; } }
 
     [Export]
@@ -194,4 +197,17 @@ public partial class Player : RigidBody2D, IDamageable
         if (node is Asteroid)
             _asteroidsInRadius.Remove((Asteroid)node);
     }
+	
+	private void _on_fuel_start_tracking_body_entered(Node2D node) {
+		((Fuel) node).SetTarget(this);
+	}
+	
+	private void _on_fuel_collection_body_entered(Node2D node) {
+		if (Fuel > MaxFuel) {
+			return;
+		}
+		((IDamageable) node).Kill();
+		Fuel += FuelParticleWorth;
+		
+	}
 }
