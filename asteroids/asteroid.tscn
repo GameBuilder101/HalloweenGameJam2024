@@ -12,6 +12,8 @@ gravity_scale = 0.05
 freeze_mode = 1
 contact_monitor = true
 max_contacts_reported = 8
+linear_damp_mode = 1
+angular_damp_mode = 1
 script = ExtResource("1_664pe")
 
 [node name="Sprite" type="Sprite2D" parent="."]
