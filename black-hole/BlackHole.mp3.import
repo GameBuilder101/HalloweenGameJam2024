@@ -2,7 +2,11 @@
 
 importer="mp3"
 type="AudioStreamMP3"
+<<<<<<< ours
 uid="uid://cwptkpkag6vty"
+=======
+uid="uid://d3budarjqcbej"
+>>>>>>> theirs
 path="res://.godot/imported/BlackHole.mp3-24aac3c0244cf3b0bc4e486b3a5203c8.mp3str"
 
 [deps]
@@ -13,7 +17,12 @@ dest_files=["res://.godot/imported/BlackHole.mp3-24aac3c0244cf3b0bc4e486b3a5203c
 [params]
 
 loop=false
+<<<<<<< ours
 loop_offset=0.0
 bpm=80.0
+=======
+loop_offset=0
+bpm=0
+>>>>>>> theirs
 beat_count=0
 bar_beats=4

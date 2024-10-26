@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://crv5t88bt5spr"]
+[gd_scene load_steps=9 format=3 uid="uid://crv5t88bt5spr"]
 
 [ext_resource type="Script" path="res://gameplay/GameManager.cs" id="1_acxl8"]
 [ext_resource type="PackedScene" path="res://player/player.tscn" id="1_fegoe"]
@@ -8,15 +8,19 @@
 
 [ext_resource type="PackedScene" uid="uid://ndav4jyl4cl0" path="res://black-hole/black_hole.tscn" id="4_cfu0t"]
 [ext_resource type="PackedScene" uid="uid://3kgfug7qq7hc" path="res://ui/ui.tscn" id="7_ola7h"]
+[ext_resource type="PackedScene" uid="uid://36kc6d68wpac" path="res://deposit-point/despoit_point.tscn" id="8_thndi"]
 
 [node name="Gameplay" type="Node"]
 
 [node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("_blackHole", "_player", "_camera")]
 script = ExtResource("1_acxl8")
 _gameOverScene = ExtResource("2_mqs8h")
+<<<<<<< ours
 _blackHole = NodePath("../BlackHole")
 _player = NodePath("../Player")
 _camera = NodePath("../Camera")
+=======
+>>>>>>> theirs
 asteroidPrefab = ExtResource("2_kceje")
 minAsteroidSpeed = 100.0
 maxAsteroidSpeed = 500.0
@@ -24,6 +28,8 @@ minAsteroidScale = 0.1
 maxAsteroidScale = 1.0
 minRadius = 1500.0
 maxRadius = 7000.0
+_blackHole = NodePath("../BlackHole")
+_player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("1_fegoe")]
 position = Vector2(-18, 4000)
@@ -42,8 +48,6 @@ zoom = Vector2(0.5, 0.5)
 script = ExtResource("3_6hycs")
 TrackTarget = NodePath("../Player")
 
-[node name="BlackHole" parent="." instance=ExtResource("4_cfu0t")]
-
 [node name="UIRenderLayer" type="CanvasLayer" parent="."]
 
 [node name="UI" parent="UIRenderLayer" instance=ExtResource("7_ola7h")]
@@ -51,5 +55,9 @@ TrackTarget = NodePath("../Player")
 [node name="BlackHolePointer" parent="UIRenderLayer/UI/PointerArea" index="0" node_paths=PackedStringArray("_positionReference", "_guidanceTarget")]
 _positionReference = NodePath("../../../../Player")
 _guidanceTarget = NodePath("../../../../BlackHole")
+
+[node name="BlackHole" parent="." instance=ExtResource("4_cfu0t")]
+
+[node name="DespoitPoint" parent="." instance=ExtResource("8_thndi")]
 
 [editable path="UIRenderLayer/UI"]
