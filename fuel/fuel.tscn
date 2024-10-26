@@ -8,8 +8,8 @@
 [node name="Fuel" type="RigidBody2D"]
 z_index = -1
 collision_layer = 8
-collision_mask = 2
-gravity_scale = 0.05
+collision_mask = 4
+gravity_scale = 0.2
 linear_damp_mode = 1
 linear_damp = 2.0
 script = ExtResource("1_eh2xj")
