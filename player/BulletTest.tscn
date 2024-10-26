@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cump1yu0dyjbk"]
+
+[ext_resource type="Script" path="res://player/Bullet.cs" id="1_3kf1f"]
+
+[node name="BulletTest" type="Node2D"]
+
+[node name="Bullet" type="RigidBody2D" parent="."]
+script = ExtResource("1_3kf1f")
+
+[connection signal="body_entered" from="Bullet" to="Bullet" method="OnBulletBodyEntered"]
