@@ -69,7 +69,7 @@ public partial class GameManager : Node
 		score = 0;
 		gameRadius = minRadius;
 
-		for (int i = 0; i < 100; i++)
+		for (int i = 0; i < maxAsteroids; i++)
 		{
 			SpawnAsteroid();
 		}
@@ -78,11 +78,13 @@ public partial class GameManager : Node
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		
 		// spawn asteroids until the number of asteroids is equal to the max
-		while(_asteroids.Count < maxAsteroids)
+		for(uint i = 0; i < maxAsteroids - _asteroids.Count; i++)
 		{
 			SpawnAsteroid();
 		}
+		
 	}
 
 	/// <summary>

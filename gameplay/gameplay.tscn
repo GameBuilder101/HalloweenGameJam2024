@@ -17,7 +17,8 @@ _gameOverScene = ExtResource("2_mqs8h")
 _blackHole = NodePath("../BlackHole")
 _player = NodePath("../Player")
 asteroidPrefab = ExtResource("2_kceje")
-maxAsteroids = 40
+minAsteroidSpeed = 100.0
+maxAsteroidSpeed = 500.0
 minRadius = 1500.0
 maxRadius = 7000.0
 
