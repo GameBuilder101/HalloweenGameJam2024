@@ -35,11 +35,20 @@ public partial class Asteroid : RigidBody2D, IDamageable
             Kill();
     }
 
+	private static RandomNumberGenerator rng = new RandomNumberGenerator();
+
     public void Kill()
     {
-		int numFuel = (int) _Scale;
+		int numFuel = (int) (_Scale * 5);
+		float maxVel = (_Scale * 100);
 		for (int i = 0; i < numFuel; i++) {
 			Fuel fuel = (Fuel) FuelScene.Instantiate();
+			fuel.SetPosAndVel(
+				Position,
+				LinearVelocity + Vector2.FromAngle(
+					rng.RandfRange(0, (float) (2 * Math.PI))) * (50 + rng.RandfRange(0, maxVel))
+			);
+			GetParent().CallDeferred("add_child", fuel);
 		}
         QueueFree();
     }

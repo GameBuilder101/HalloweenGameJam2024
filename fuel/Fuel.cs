@@ -19,6 +19,11 @@ public partial class Fuel : RigidBody2D, IDamageable
 	
 	public float Health {get; private set;} = 1.0f;
 	
+	public void SetPosAndVel(Vector2 pos, Vector2 vel) {
+		Position = pos;
+		LinearVelocity = vel;
+	}
+	
 	public void ChangeHealth(float hp) {
 		Health -= hp;
 		if (Health <= 0) {
