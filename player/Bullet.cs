@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 [GlobalClass]
-public partial class Bullet : RigidBody2D
+public partial class Bullet : RigidBody2D, IDamageable
 {
 	[Export] float damage;
 
@@ -24,4 +24,18 @@ public partial class Bullet : RigidBody2D
 			QueueFree();
 		}
 	}
+	
+	public float Health {get; private set;} = 1.0f;
+	
+	public void ChangeHealth(float hp) {
+		Health -= hp;
+		if (Health <= 0) {
+			Kill();
+		}
+	}
+	
+	public void Kill()
+    {
+        QueueFree();
+    }
 }
