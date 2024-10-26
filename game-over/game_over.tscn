@@ -1,15 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://d3kxaks48ej1m"]
+[gd_scene load_steps=4 format=3 uid="uid://d3kxaks48ej1m"]
 
 [ext_resource type="Script" path="res://game-over/GameOver.cs" id="1_1ac1j"]
 
 [sub_resource type="Theme" id="Theme_7cxh7"]
 default_font_size = 140
 
+[sub_resource type="Theme" id="Theme_mj1n1"]
+default_font_size = 45
+
 [node name="GameOver" type="Node"]
 
 [node name="UIRenderLayer" type="CanvasLayer" parent="."]
 
-[node name="UI" type="Control" parent="UIRenderLayer"]
+[node name="UI" type="Control" parent="UIRenderLayer" node_paths=PackedStringArray("_statsLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,8 +22,9 @@ grow_vertical = 2
 script = ExtResource("1_1ac1j")
 _gameplay = "res://gameplay/gameplay.tscn"
 _titleScreen = "res://title-screen/title_screen.tscn"
+_statsLabel = NodePath("Stats Label")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UIRenderLayer/UI"]
+[node name="Heading Label" type="RichTextLabel" parent="UIRenderLayer/UI"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -29,6 +33,21 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_7cxh7")
 text = "u ded lmao"
+
+[node name="Stats Label" type="RichTextLabel" parent="UIRenderLayer/UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 191.525
+offset_bottom = 191.525
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_mj1n1")
+text = "Score: 0
+Time Survived: 0
+Asteroids Collected: 0
+Asteroids Shot: 0"
 
 [node name="RestartButton" type="Button" parent="UIRenderLayer/UI"]
 layout_mode = 0
