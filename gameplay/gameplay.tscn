@@ -11,11 +11,12 @@
 
 [node name="Gameplay" type="Node"]
 
-[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("_blackHole", "_player", "_camera")]
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("_blackHole", "_player", "_depositPoint", "_camera")]
 script = ExtResource("1_acxl8")
 _gameOverScene = ExtResource("2_mqs8h")
 _blackHole = NodePath("../BlackHole")
 _player = NodePath("../Player")
+_depositPoint = NodePath("../DespoitPoint")
 _camera = NodePath("../Camera")
 asteroidPrefab = ExtResource("2_kceje")
 minAsteroidSpeed = 100.0

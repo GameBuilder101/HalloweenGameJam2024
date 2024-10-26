@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://ndav4jyl4cl0"]
 
 [ext_resource type="Script" path="res://black-hole/BlackHole.cs" id="1_xma48"]
-[ext_resource type="Shape2D" path="res://black-hole/gravity_range.tres" id="2_6be06"]
-[ext_resource type="Shape2D" path="res://black-hole/black_hole_radius.tres" id="3_ol2gd"]
+[ext_resource type="Shape2D" uid="uid://bi4im350t36mr" path="res://black-hole/gravity_range.tres" id="2_6be06"]
+[ext_resource type="Shape2D" uid="uid://bswumxnkbdvod" path="res://black-hole/black_hole_radius.tres" id="3_ol2gd"]
 [ext_resource type="Script" path="res://black-hole/BlackHoleCollision.cs" id="4_nlpeq"]
 [ext_resource type="Texture2D" uid="uid://b7d8m8v1bgji6" path="res://black-hole/black-hole.svg" id="5_qhba8"]
 
