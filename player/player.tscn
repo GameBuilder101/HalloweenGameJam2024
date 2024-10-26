@@ -6,17 +6,22 @@
 [ext_resource type="Texture2D" uid="uid://ggdf7tya7lk7" path="res://player/ship-nobackdrop.svg" id="2_onl10"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_icm5p"]
-radius = 40.0
+radius = 120.71
 
 [node name="Player" type="RigidBody2D" node_paths=PackedStringArray("_pickedUpPivot")]
-linear_damp = 2.0
+gravity_scale = 0.1
+contact_monitor = true
+max_contacts_reported = 8
+linear_damp_mode = 1
+linear_damp = 0.02
 angular_damp = 2.0
 script = ExtResource("1_y2ncu")
-MaxFuel = 15.0
-Fuel = 15.0
-Speed = 800.0
+MaxFuel = 30.0
+Fuel = 30.0
+Speed = 300.0
 BoostSpeed = 2000.0
 AngularSpeed = 12000.0
+BreakDamp = 2.0
 ShootDelay = 0.5
 _bulletScene = ExtResource("2_5xnwp")
 _bulletSpeed = 1000.0
@@ -33,7 +38,6 @@ texture = ExtResource("2_onl10")
 [node name="CameraTrackTarget" type="Node2D" parent="."]
 
 [node name="PickUpArea" type="Area2D" parent="."]
-position = Vector2(0, 94)
 
 [node name="Collision" type="CollisionShape2D" parent="PickUpArea"]
 shape = SubResource("CircleShape2D_icm5p")
