@@ -101,6 +101,13 @@ public partial class Player : RigidBody2D, IDamageable
 
         input = Input.GetAxis("left", "right");
         ApplyTorque(input * AngularSpeed);
+
+
+        if (Position.DistanceTo(Vector2.Zero) > 4500.0f)
+        {
+            Position = Position.Normalized() * 4500.0f;
+            LinearVelocity = -Position.Normalized() * 500.0f;
+        }
     }
 
     private void UpdateShooting(double delta)
@@ -152,6 +159,7 @@ public partial class Player : RigidBody2D, IDamageable
 
         PickedUpAsteroid.Reparent(_pickedUpPivot, false);
         asteroid.Position = _pickedUpPivot.Position;
+        asteroid.Rotation = 0.0f;
         PickedUpAsteroid.Freeze = true;
     }
 
