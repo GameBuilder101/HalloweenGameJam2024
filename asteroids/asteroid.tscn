@@ -8,6 +8,8 @@ radius = 75.58
 
 [node name="Asteroid" type="RigidBody2D"]
 gravity_scale = 0.05
+freeze_mode = 1
+contact_monitor = true
 script = ExtResource("1_664pe")
 
 [node name="Sprite" type="Sprite2D" parent="."]
@@ -15,3 +17,5 @@ texture = ExtResource("2_fjsen")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_pj61m")
+
+[connection signal="body_entered" from="." to="." method="PickUpAreaBodyEntered"]

@@ -1,11 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://cwobamcwcxxdw"]
+[gd_scene load_steps=6 format=3 uid="uid://cwobamcwcxxdw"]
 
 [ext_resource type="Script" path="res://player/Player.cs" id="1_y2ncu"]
 [ext_resource type="PackedScene" uid="uid://dnto3k50i7fyw" path="res://player/bullet.tscn" id="2_5xnwp"]
 [ext_resource type="Shape2D" uid="uid://dt28udpdk42m8" path="res://player/player_radius.tres" id="2_b7m2q"]
 [ext_resource type="Texture2D" uid="uid://ggdf7tya7lk7" path="res://player/ship-nobackdrop.svg" id="2_onl10"]
 
-[node name="Player" type="RigidBody2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_icm5p"]
+radius = 40.0
+
+[node name="Player" type="RigidBody2D" node_paths=PackedStringArray("_pickedUpPivot")]
 linear_damp = 2.0
 angular_damp = 2.0
 script = ExtResource("1_y2ncu")
@@ -18,6 +21,7 @@ ShootDelay = 0.5
 _bulletScene = ExtResource("2_5xnwp")
 _bulletSpeed = 1000.0
 SpinOutSpeed = 10000.0
+_pickedUpPivot = NodePath("PickedUpAsteroidPivot")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 shape = ExtResource("2_b7m2q")
@@ -27,3 +31,15 @@ scale = Vector2(0.65, 0.65)
 texture = ExtResource("2_onl10")
 
 [node name="CameraTrackTarget" type="Node2D" parent="."]
+
+[node name="PickUpArea" type="Area2D" parent="."]
+position = Vector2(0, 94)
+
+[node name="Collision" type="CollisionShape2D" parent="PickUpArea"]
+shape = SubResource("CircleShape2D_icm5p")
+
+[node name="PickedUpAsteroidPivot" type="Node2D" parent="."]
+position = Vector2(0, 113)
+
+[connection signal="body_entered" from="PickUpArea" to="." method="PickUpAreaBodyEntered"]
+[connection signal="body_exited" from="PickUpArea" to="." method="PickUpAreaBodyExited"]

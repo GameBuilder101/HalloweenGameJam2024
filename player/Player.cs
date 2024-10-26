@@ -1,4 +1,5 @@
 using Godot;
+using System.Collections.Generic;
 
 [GlobalClass]
 public partial class Player : RigidBody2D, IDamageable
@@ -16,9 +17,13 @@ public partial class Player : RigidBody2D, IDamageable
     [Export]
     public float BoostSpeed { get; set; }
     [Export]
+    private float _boostFuelConsumption = 2.0f;
+    [Export]
     public float EmptySpeed { get; set; }
     [Export]
     public float AngularSpeed { get; set; }
+    [Export]
+    public float BreakDamp { get; set; }
 
     [Export]
     public double ShootDelay { get; private set; }
@@ -32,12 +37,16 @@ public partial class Player : RigidBody2D, IDamageable
     private float SpinOutSpeed { get; set; }
     private float _origAngularDamp;
 
+    private List<Asteroid> _asteroidsInRadius = new List<Asteroid>();
+    public Asteroid PickedUpAsteroid { get; private set; }
+    [Export]
+    private Node2D _pickedUpPivot;
+
     public override void _Ready()
     {
         base._Ready();
 
         Fuel = MaxFuel;
-
         _origAngularDamp = AngularDamp;
     }
 
@@ -53,9 +62,6 @@ public partial class Player : RigidBody2D, IDamageable
         }
         else
             UpdateSpinOut(delta);
-
-        /*if (!IsSpinningOut && Input.IsActionPressed("shoot"))
-            SpinOut(3.0);*/
     }
 
     private void UpdateMovement(double delta)
@@ -100,19 +106,40 @@ public partial class Player : RigidBody2D, IDamageable
         Bullet bullet = (Bullet)_bulletScene.Instantiate();
         bullet.Position = Position;
         bullet.Rotation = Rotation;
-        bullet.ConstantForce = Transform.BasisXform(Vector2.Up) * _bulletSpeed;
+        bullet.LinearVelocity = Transform.BasisXform(Vector2.Up) * _bulletSpeed;
 
         GetParent().AddChild(bullet);
     }
 
     private void UpdateAsteroidPickUp(double delta)
     {
-        if (Input.IsActionPressed("interact")) { }
+        if (Input.IsActionJustPressed("interact"))
+        {
+            if (PickedUpAsteroid == null && _asteroidsInRadius.Count > 0)
+                PickUpAsteroid(_asteroidsInRadius[0]);
+            else if (PickedUpAsteroid != null)
+                DropAsteroid();
+        }
     }
 
-    public void PickUpAsteroid()
+    public void PickUpAsteroid(Asteroid asteroid)
     {
+        if (PickedUpAsteroid != null)
+            return;
+        PickedUpAsteroid = asteroid;
 
+        PickedUpAsteroid.Reparent(_pickedUpPivot, false);
+        asteroid.Position = _pickedUpPivot.Position;
+        PickedUpAsteroid.Freeze = true;
+    }
+
+    public void DropAsteroid()
+    {
+        if (PickedUpAsteroid == null)
+            return;
+
+        PickedUpAsteroid.Reparent(GetTree().Root);
+        PickedUpAsteroid.Freeze = false;
     }
 
     public void SpinOut(double duration)
@@ -145,4 +172,16 @@ public partial class Player : RigidBody2D, IDamageable
 	public void Kill() {
         GameManager.Instance.LoadGameOver();
 	}
+
+    private void PickUpAreaBodyEntered(Node node)
+    {
+        if (node is Asteroid)
+            _asteroidsInRadius.Add((Asteroid)node);
+    }
+
+    private void PickUpAreaBodyExited(Node node)
+    {
+        if (node is Asteroid)
+            _asteroidsInRadius.Remove((Asteroid)node);
+    }
 }
