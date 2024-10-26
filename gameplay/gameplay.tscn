@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://d3kxaks48ej1m" path="res://game-over/game_over.tscn" id="2_mqs8h"]
 [ext_resource type="Script" path="res://player/DynamicCamera.cs" id="3_6hycs"]
 [ext_resource type="PackedScene" uid="uid://67iw8fmle87t" path="res://black-hole/black_hole.tscn" id="4_cfu0t"]
-[ext_resource type="PackedScene" uid="uid://3kgfug7qq7hc" path="res://ui/ui.tscn" id="7_ola7h"]
+[ext_resource type="PackedScene" path="res://ui/ui.tscn" id="7_ola7h"]
 
 [node name="Gameplay" type="Node"]
 
