@@ -51,7 +51,8 @@ public partial class GameManager : Node
 	public List<Asteroid> Asteroids {  get { return _asteroids; } }
 
 	[Export] private PackedScene asteroidPrefab;
-	[Export] private Texture2D[] textures;
+	[Export] private Texture2D[] asteroidtextures;
+	[Export] private Texture2D[] specialAsteroidTextures;
 
 	[Export] private int maxAsteroids = 100;
 	[Export] private float minAsteroidSpeed = 10;
@@ -60,6 +61,9 @@ public partial class GameManager : Node
 	[Export] private float maxAsteroidAngularVelocity = 10;
 	[Export] private float minAsteroidScale = 0.5f;
 	[Export] private float maxAsteroidScale = 5;
+	[Export] private float specialAsteroidChance = 0.1f;
+	[Export] private float baseAsteroidScore = 100;
+	[Export] private float baseSpecialAsteroidScore = 1000;
 
 	[Export] private float asteroidSpawnStartRadius; // radius the ateroid spawn area starts at
 	[Export] private float gameBoundsStartRadius; // radius the bounds start at
@@ -151,6 +155,18 @@ public partial class GameManager : Node
 
 	public void SpawnAsteroid()
 	{
+		// decide if the spawned asteroid is special
+		bool isSpecial;
+		if(GD.Randf() < specialAsteroidChance)
+		{
+			isSpecial = true;
+		}
+		else
+		{
+			isSpecial = false;
+		}
+
+		// decide whether this asteroid will be special
 		//get the viewport bounding box
 		Vector2 viewportSize = GetViewport().GetVisibleRect().Size;
 		Vector2 camPosition = _camera.Position;
@@ -172,7 +188,18 @@ public partial class GameManager : Node
 			// random angle to spawn the asteroid
 			randomPositionAngle = (float)GD.RandRange(0, 2 * MathF.PI);
 			// create a random vector 2 with a bias towards positions near the center
-			float distanceToCenter = GD.Randf() * GD.Randf() * (asteroidSpawnRadius - _blackHole.BlackHoleRadius) + _blackHole.BlackHoleRadius;
+			float distanceToCenter; 
+			//if the asteroid is special, devide position by 2
+			if(isSpecial)
+			{
+				// create a random vector 2 with a bias towards positions near the center
+				distanceToCenter = GD.Randf() * GD.Randf() * (asteroidSpawnRadius / 2 - _blackHole.BlackHoleRadius) + _blackHole.BlackHoleRadius;
+			}
+			else
+			{
+				// create a random vector 2 with a bias towards positions near the center
+				distanceToCenter = GD.Randf() * GD.Randf() * (asteroidSpawnRadius - _blackHole.BlackHoleRadius) + _blackHole.BlackHoleRadius;
+			}
 			position = new Vector2(MathF.Cos(randomPositionAngle) * distanceToCenter, MathF.Sin(randomPositionAngle) * distanceToCenter);
 		} while (bufferRect.HasPoint(position));
 
@@ -205,11 +232,23 @@ public partial class GameManager : Node
 
 		asteroid.SetScale(randomScale);
 
-		int randomTextureIndex = GD.RandRange(0, textures.Length - 1);
+		
 
-		asteroid.GetChild<Sprite2D>(0, true).Texture = textures[randomTextureIndex];
+		// if the asteroid is special use the special textures and give a higher score
+		if(isSpecial)
+		{
+			int randomTextureIndex = GD.RandRange(0, specialAsteroidTextures.Length - 1);
+			asteroid.GetChild<Sprite2D>(0, true).Texture = specialAsteroidTextures[randomTextureIndex];
+			asteroid.Score = (int)(baseSpecialAsteroidScore * randomScale);
+		}
+		else
+		{
+			int randomTextureIndex = GD.RandRange(0, asteroidtextures.Length - 1);
+			asteroid.GetChild<Sprite2D>(0, true).Texture = asteroidtextures[randomTextureIndex];
+			asteroid.Score = (int)(baseAsteroidScore * randomScale);
+		}
 
-		asteroid.Score = (int)(asteroid.Score * randomScale);
+		
 
 		GetParent().CallDeferred("add_child", asteroid);
 	}

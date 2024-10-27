@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://crv5t88bt5spr"]
+[gd_scene load_steps=16 format=3 uid="uid://crv5t88bt5spr"]
 
 [ext_resource type="Script" path="res://gameplay/GameManager.cs" id="1_acxl8"]
 [ext_resource type="PackedScene" uid="uid://cwobamcwcxxdw" path="res://player/player.tscn" id="1_fegoe"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://enemy/EnemyManager.cs" id="4_eeysb"]
 [ext_resource type="Texture2D" uid="uid://dini1jdtbxv7a" path="res://asteroids/asteriod-2-nobackdrop.svg" id="5_npl61"]
 [ext_resource type="Texture2D" uid="uid://dlgf0qnl6g8hy" path="res://asteroids/asteriod-3-nobackdrop.svg" id="6_54lmk"]
+[ext_resource type="Texture2D" uid="uid://c205dlrvua2y4" path="res://icon.svg" id="7_6myi8"]
 [ext_resource type="PackedScene" uid="uid://3kgfug7qq7hc" path="res://ui/ui.tscn" id="7_ola7h"]
 [ext_resource type="PackedScene" uid="uid://36kc6d68wpac" path="res://deposit-point/despoit_point.tscn" id="8_thndi"]
 [ext_resource type="PackedScene" uid="uid://4iacv1wcdwdp" path="res://enemy/enemy.tscn" id="9_omad1"]
@@ -26,7 +27,8 @@ _depositPoint = NodePath("../DespoitPoint")
 _camera = NodePath("../Camera")
 _boundarySprite = NodePath("../BoundarySprite")
 asteroidPrefab = ExtResource("2_kceje")
-textures = Array[Texture2D]([ExtResource("4_dicts"), ExtResource("5_npl61"), ExtResource("6_54lmk")])
+asteroidtextures = Array[Texture2D]([ExtResource("4_dicts"), ExtResource("5_npl61"), ExtResource("6_54lmk")])
+specialAsteroidTextures = Array[Texture2D]([ExtResource("7_6myi8")])
 maxAsteroids = 140
 minAsteroidSpeed = 500.0
 maxAsteroidSpeed = 1000.0
