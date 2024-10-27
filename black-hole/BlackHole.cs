@@ -10,9 +10,11 @@ public partial class BlackHole : Node2D
 	[Export]
 	private Sprite2D BlackHoleImage;
 	[Export]
+	private Sprite2D AccretionDiskImage;
+	[Export]
 	private Area2D gravityArea;
 	
-	private const long HoleImageSize = 600; 
+	private const long HoleImageSize = 429; 
 	
 	//private float rad = 0.0f;
 	
@@ -26,10 +28,10 @@ public partial class BlackHole : Node2D
 		
 		AttractingArea.Radius = gravityRadius;
 		BlackHoleArea.Radius = blackHoleRadius;
-		Vector2 scale = BlackHoleImage.Scale;
-		scale.X = HoleScale;
-		scale.Y = HoleScale;
+		Vector2 scale = new Vector2(HoleScale, HoleScale);
 		BlackHoleImage.Scale = scale;
+		AccretionDiskImage.Scale = scale;
+		
 
 		// set the new gravity
 		gravityArea.GravityPointUnitDistance = blackHoleRadius;

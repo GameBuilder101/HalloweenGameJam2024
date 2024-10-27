@@ -1,15 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://ndav4jyl4cl0"]
+[gd_scene load_steps=6 format=3 uid="uid://ndav4jyl4cl0"]
 
 [ext_resource type="Script" path="res://black-hole/BlackHole.cs" id="1_xma48"]
 [ext_resource type="Shape2D" uid="uid://bi4im350t36mr" path="res://black-hole/gravity_range.tres" id="2_6be06"]
 [ext_resource type="Shape2D" uid="uid://bswumxnkbdvod" path="res://black-hole/black_hole_radius.tres" id="3_ol2gd"]
-[ext_resource type="Texture2D" uid="uid://b7d8m8v1bgji6" path="res://black-hole/black-hole.svg" id="5_qhba8"]
+[ext_resource type="Texture2D" uid="uid://dys3w3d4coca0" path="res://black-hole/blackhole-centerai.png" id="4_gth32"]
+[ext_resource type="Texture2D" uid="uid://bskk8pehud7pp" path="res://black-hole/blackhole-01.png" id="4_sp8us"]
 
-[node name="BlackHole" type="Node2D" node_paths=PackedStringArray("BlackHoleImage", "gravityArea")]
+[node name="BlackHole" type="Node2D" node_paths=PackedStringArray("BlackHoleImage", "AccretionDiskImage", "gravityArea")]
+z_index = -2
 script = ExtResource("1_xma48")
 AttractingArea = ExtResource("2_6be06")
 BlackHoleArea = ExtResource("3_ol2gd")
 BlackHoleImage = NodePath("BlackHole/BlackHole")
+AccretionDiskImage = NodePath("BlackHole/AccretionDisk")
 gravityArea = NodePath("AttractingArea")
 
 [node name="AttractingArea" type="Area2D" parent="."]
@@ -33,10 +36,13 @@ collision_mask = 11
 
 [node name="BlackHole" type="Sprite2D" parent="BlackHole"]
 scale = Vector2(1.66, 1.66)
-texture = ExtResource("5_qhba8")
+texture = ExtResource("4_gth32")
 
 [node name="BlackHoleCollision" type="CollisionShape2D" parent="BlackHole"]
 shape = ExtResource("3_ol2gd")
 debug_color = Color(0.989531, 0, 0.289342, 0.42)
+
+[node name="AccretionDisk" type="Sprite2D" parent="BlackHole"]
+texture = ExtResource("4_sp8us")
 
 [connection signal="body_entered" from="BlackHole" to="." method="_on_area_body_entered"]
