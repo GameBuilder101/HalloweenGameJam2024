@@ -11,7 +11,6 @@ freeze = true
 freeze_mode = 1
 script = ExtResource("1_qmjlm")
 _speed = 0.01
-OrbitRadius = 4400.0
 CurrentObritAngle = 0.5
 
 [node name="Shape" type="CollisionShape2D" parent="."]

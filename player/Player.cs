@@ -166,6 +166,16 @@ public partial class Player : RigidBody2D, IDamageable
 			else if (PickedUpAsteroid != null)
 				DropAsteroid();
 		}
+		if (PickedUpAsteroid != null && IsInDropOffRadius) {
+			GameManager.Instance.AddScore(PickedUpAsteroid.Score);
+				GameManager.Instance.AsteroidsCollectedStat++;
+				Fuel += PickedUpAsteroid.DepositBonusFuel;
+				if (Fuel > MaxFuel)
+					Fuel = MaxFuel;
+
+                PickedUpAsteroid.QueueFree();
+				PickedUpAsteroid = null;
+		}
 	}
 
 	public void PickUpAsteroid(Asteroid asteroid)
