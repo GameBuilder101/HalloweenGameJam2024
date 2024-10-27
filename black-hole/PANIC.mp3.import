@@ -12,8 +12,8 @@ dest_files=["res://.godot/imported/PANIC.mp3-4fce74123d185bbfb61b3a64e2918d9e.mp
 
 [params]
 
-loop=false
-loop_offset=0
-bpm=0
+loop=true
+loop_offset=0.0
+bpm=0.0
 beat_count=0
 bar_beats=4
