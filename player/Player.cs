@@ -191,6 +191,7 @@ public partial class Player : RigidBody2D, IDamageable
 		RemainingSpinOutTime = duration;
 		AngularDamp = 0.0f;
 		ApplyTorqueImpulse(-Mathf.Sign(AngularVelocity) * SpinOutSpeed);
+		DropAsteroid();
 	}
 
 	private void UpdateSpinOut(double delta)
