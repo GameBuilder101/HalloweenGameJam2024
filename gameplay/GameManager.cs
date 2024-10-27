@@ -50,6 +50,7 @@ public partial class GameManager : Node
 	public List<Asteroid> Asteroids {  get { return _asteroids; } }
 
 	[Export] private PackedScene asteroidPrefab;
+	[Export] private Texture2D[] textures;
 
 	[Export] private int maxAsteroids = 100;
 	[Export] private float minAsteroidSpeed = 10;
@@ -197,6 +198,10 @@ public partial class GameManager : Node
 		asteroid.AngularVelocity = angularVelocity;
 
 		asteroid.SetScale(randomScale);
+
+		int randomTextureIndex = (int)GD.Randi() % textures.Length;
+
+		asteroid.GetChild<Sprite2D>(0, true).Texture = textures[randomTextureIndex];
 		
 		GetParent().CallDeferred("add_child", asteroid);
 	}
