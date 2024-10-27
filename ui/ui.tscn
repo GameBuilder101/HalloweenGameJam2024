@@ -1,19 +1,22 @@
-[gd_scene load_steps=11 format=3 uid="uid://3kgfug7qq7hc"]
+[gd_scene load_steps=13 format=3 uid="uid://3kgfug7qq7hc"]
 
 [ext_resource type="Script" path="res://ui/GameplayUI.cs" id="1_gebfo"]
 [ext_resource type="Material" path="res://ui/ui_yellow_shader.tres" id="1_rolr4"]
 [ext_resource type="Texture2D" uid="uid://d27b6p01b3b52" path="res://ui/radial_meter.png" id="3_he5po"]
+[ext_resource type="FontFile" uid="uid://cu5ih7ulae74f" path="res://ui/Geo-Regular.ttf" id="4_203pi"]
 [ext_resource type="Texture2D" uid="uid://dqlt4c16lieat" path="res://ui/mini-arrow.svg" id="4_thiv0"]
+[ext_resource type="Theme" uid="uid://cgkpf3snkxnom" path="res://ui/small_font.tres" id="5_ag7nf"]
 [ext_resource type="Script" path="res://ui/UIIndicator.cs" id="5_fhwlg"]
 [ext_resource type="Texture2D" uid="uid://c4dpmnpfwhr7v" path="res://ui/hud_warning.svg" id="7_3b28m"]
 [ext_resource type="Texture2D" uid="uid://c8sj1xsyoqnlb" path="res://ui/radial_ui_base.png" id="8_j2nhh"]
 [ext_resource type="Texture2D" uid="uid://cx8fucbvltsdb" path="res://ui/hud_box.png" id="8_vom8e"]
 [ext_resource type="Script" path="res://ui/StartFader.cs" id="9_6x8mf"]
 
-[sub_resource type="Theme" id="Theme_berws"]
-default_font_size = 30
+[sub_resource type="Theme" id="Theme_m3fj6"]
+default_font = ExtResource("4_203pi")
+default_font_size = 19
 
-[node name="UI" type="Control" node_paths=PackedStringArray("_fuelBar", "_pickUpLabel", "_dropOffLabel", "_statsLabel")]
+[node name="UI" type="Control" node_paths=PackedStringArray("_fuelBar", "_pickUpLabel", "_statsLabel")]
 material = ExtResource("1_rolr4")
 layout_mode = 3
 anchors_preset = 15
@@ -24,7 +27,6 @@ grow_vertical = 2
 script = ExtResource("1_gebfo")
 _fuelBar = NodePath("FuelBar")
 _pickUpLabel = NodePath("PickUpPrompt")
-_dropOffLabel = NodePath("DropOffPrompt")
 Coloring = ExtResource("1_rolr4")
 _statsLabel = NodePath("StatsCounter")
 
@@ -56,30 +58,15 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -100.0
-offset_top = -100.0
-offset_right = 116.105
-offset_bottom = -60.0
+offset_top = 79.0
+offset_right = 110.0
+offset_bottom = 119.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(100, 40)
-text = "Press E to pick up asteroid"
-
-[node name="DropOffPrompt" type="RichTextLabel" parent="."]
-use_parent_material = true
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -100.0
-offset_top = -100.0
-offset_right = 116.105
-offset_bottom = -60.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(100, 40)
-text = "Press E to drop off asteroid"
+theme = SubResource("Theme_m3fj6")
+bbcode_enabled = true
+text = "[center]Press E to pick up asteroid[/center]"
 
 [node name="StatsCounter" type="RichTextLabel" parent="."]
 layout_mode = 1
@@ -87,12 +74,24 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -108.052
+offset_top = 8.655
 offset_right = 108.052
-offset_bottom = 49.11
+offset_bottom = 57.765
 grow_horizontal = 2
 pivot_offset = Vector2(100, 40)
-theme = SubResource("Theme_berws")
-text = "Score: 0"
+theme = ExtResource("5_ag7nf")
+bbcode_enabled = true
+text = "[center]Score: 0[/center]"
+
+[node name="ColorRect" type="ColorRect" parent="StatsCounter"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+grow_horizontal = 2
+grow_vertical = 0
 
 [node name="TextureRect" type="TextureRect" parent="."]
 use_parent_material = true
