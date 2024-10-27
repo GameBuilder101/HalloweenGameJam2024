@@ -123,6 +123,11 @@ theme = SubResource("Theme_br60l")
 text = "W/S: Move Forward/Backward
 A/D: Rotate Left/Right
 Shift: Brake
-Control: Boost"
+Control: Boost
+
+Bring asteroids to the deposit station to gain points
+Avoid the black hole
+Avoid enemies
+Shoot obstacles to gain fuel"
 
 [connection signal="pressed" from="UIRenderLayer/UI/StartButton" to="UIRenderLayer/UI" method="Start"]
