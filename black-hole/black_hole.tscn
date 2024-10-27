@@ -1,8 +1,8 @@
 [gd_scene load_steps=11 format=3 uid="uid://ndav4jyl4cl0"]
 
 [ext_resource type="Script" path="res://black-hole/BlackHole.cs" id="1_xma48"]
-[ext_resource type="Shape2D" path="res://black-hole/gravity_range.tres" id="2_6be06"]
-[ext_resource type="Shape2D" path="res://black-hole/black_hole_radius.tres" id="3_ol2gd"]
+[ext_resource type="Shape2D" uid="uid://bi4im350t36mr" path="res://black-hole/gravity_range.tres" id="2_6be06"]
+[ext_resource type="Shape2D" uid="uid://bswumxnkbdvod" path="res://black-hole/black_hole_radius.tres" id="3_ol2gd"]
 [ext_resource type="Texture2D" uid="uid://dys3w3d4coca0" path="res://black-hole/blackhole-centerai.png" id="4_gth32"]
 [ext_resource type="Texture2D" uid="uid://bskk8pehud7pp" path="res://black-hole/blackhole-01.png" id="4_sp8us"]
 [ext_resource type="Script" path="res://black-hole/BlackHoleAudio.cs" id="5_v23r6"]
@@ -11,11 +11,12 @@
 [ext_resource type="AudioStream" uid="uid://bm13vtwvyqyv4" path="res://black-hole/PANIC2.mp3" id="8_ehdxd"]
 [ext_resource type="AudioStream" uid="uid://dtrrt6gh41ao7" path="res://black-hole/PANICMelody2.mp3" id="9_gkf2q"]
 
-[node name="BlackHole" type="Node2D" node_paths=PackedStringArray("BlackHoleImage", "gravityArea")]
+[node name="BlackHole" type="Node2D" node_paths=PackedStringArray("BlackHoleImage", "AccretionDiskImage", "gravityArea")]
 script = ExtResource("1_xma48")
 AttractingArea = ExtResource("2_6be06")
 BlackHoleArea = ExtResource("3_ol2gd")
 BlackHoleImage = NodePath("BlackHole/BlackHole")
+AccretionDiskImage = NodePath("BlackHole/AccretionDisk")
 gravityArea = NodePath("AttractingArea")
 
 [node name="AttractingArea" type="Area2D" parent="."]
@@ -52,7 +53,9 @@ texture = ExtResource("4_sp8us")
 
 [node name="BlackHoleAudio" type="AudioStreamPlayer2D" parent="BlackHole" node_paths=PackedStringArray("melody")]
 stream = ExtResource("7_jrilt")
+volume_db = 5.174
 autoplay = true
+panning_strength = 0.0
 script = ExtResource("5_v23r6")
 panicRadius = 768.0
 ambience = ExtResource("7_jrilt")
@@ -63,6 +66,7 @@ melody = NodePath("BlackHoleMelody")
 
 [node name="BlackHoleMelody" type="AudioStreamPlayer2D" parent="BlackHole/BlackHoleAudio"]
 stream = ExtResource("8_cruky")
+panning_strength = 0.0
 
 [connection signal="body_entered" from="BlackHole" to="." method="_on_area_body_entered"]
 [connection signal="finished" from="BlackHole/BlackHoleAudio" to="BlackHole/BlackHoleAudio" method="OnAudioFinished"]
