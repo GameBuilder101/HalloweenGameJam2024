@@ -7,6 +7,9 @@ public partial class DynamicCamera : Camera2D
 	[Export]
 	private Node2D TrackTarget { get; set; }
 
+	public float CurrentShakeDuration;
+	public float CurrentShakeDuration;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
