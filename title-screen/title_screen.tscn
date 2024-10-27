@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://b887seo13ynl2"]
+[gd_scene load_steps=6 format=3 uid="uid://b887seo13ynl2"]
 
 [ext_resource type="Script" path="res://title-screen/TitleScreen.cs" id="1_eu04y"]
 [ext_resource type="Script" path="res://ui/StartFader.cs" id="2_n6l1r"]
 [ext_resource type="FontFile" uid="uid://bm33g27p5k2kx" path="res://ui/Orbitron-Regular.ttf" id="3_7b1p2"]
+[ext_resource type="AudioStream" uid="uid://cv4it3e3fx61r" path="res://title-screen/DeepspaceTitle.mp3" id="4_gccsw"]
 
 [sub_resource type="Theme" id="Theme_2vwdb"]
 default_font = ExtResource("3_7b1p2")
@@ -69,5 +70,12 @@ bbcode_enabled = true
 text = "[center]DEPTHS OF
 NOWHERE[/center]"
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_gccsw")
+volume_db = 14.57
+autoplay = true
+panning_strength = 0.0
+
 [connection signal="pressed" from="UIRenderLayer/UI/StartButton" to="UIRenderLayer/UI" method="Start"]
 [connection signal="pressed" from="UIRenderLayer/UI/QuitButton" to="UIRenderLayer/UI" method="Quit"]
+[connection signal="finished" from="AudioStreamPlayer2D" to="AudioStreamPlayer2D" method="play"]
