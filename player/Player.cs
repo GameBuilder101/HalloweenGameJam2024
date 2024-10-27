@@ -10,8 +10,9 @@ public partial class Player : RigidBody2D, IDamageable
 	public float MaxFuel { get; private set; }
 	[Export]
 	public float Fuel { get; private set; }
+	[Export]
 
-	public const float FuelParticleWorth = 1.0f;
+	public float FuelParticleWorth { get; private set; } = 1.0f;
 
 	public bool IsFuelEmpty { get { return Fuel <= 0.0f; } }
 
@@ -207,7 +208,8 @@ public partial class Player : RigidBody2D, IDamageable
 		AngularDamp = 0.0f;
 		ApplyTorqueImpulse(-Mathf.Sign(AngularVelocity) * SpinOutSpeed);
 		DropAsteroid();
-	}
+        DynamicCamera.Instance.Shake(1.0, 30.0f);
+    }
 
 	private void UpdateSpinOut(double delta)
 	{

@@ -53,10 +53,10 @@ position = Vector2(0, 5000)
 
 [node name="Camera" type="Camera2D" parent="." node_paths=PackedStringArray("TrackTarget")]
 position = Vector2(0, 5000)
-position_smoothing_enabled = true
 position_smoothing_speed = 25.0
 script = ExtResource("3_6hycs")
 TrackTarget = NodePath("../Player")
+_ambientShakeIntensity = 12.0
 
 [node name="UIRenderLayer" type="CanvasLayer" parent="."]
 
