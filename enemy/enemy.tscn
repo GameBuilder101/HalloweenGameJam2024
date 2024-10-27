@@ -8,8 +8,11 @@ radius = 64.0
 
 [node name="Enemy" type="Node2D"]
 script = ExtResource("1_d5g40")
-cruiseSpeed = 400.0
+cruiseSpeed = 350.0
+_seekRange = 1000.0
 _spinOutTime = 5.0
+_minWanderCooldown = 2.0
+_maxWanderCooldown = 3.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_avqce")

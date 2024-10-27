@@ -19,18 +19,35 @@ public partial class Enemy : Node2D
         get
         {
             return !GameManager.Instance.Player.IsSpinningOut && 
-                Position.DistanceTo(GameManager.Instance.Player.Position) <= _seekRange;
+                Position.DistanceTo(GameManager.Instance.Player.Position) <= _seekRange &&
+                GameManager.Instance.Player.Position.Length() > EnemyManager.Instance.AvoidanceDist;
         }
     }
 
     [Export]
     private double _spinOutTime;
 
-    private Vector2 _curWanderDir;
+    private Vector2 _curWanderPos;
     private double _curWanderCooldown;
+    [Export]
+    private double _minWanderCooldown;
+    [Export]
+    private double _maxWanderCooldown;
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+    public override void _Ready()
+    {
+        base._Ready();
+        EnemyManager.Instance.Enemies.Add(this);
+    }
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        EnemyManager.Instance.Enemies.Remove(this);
+    }
+
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(double delta)
 	{
         base._Process(delta);
 
@@ -39,17 +56,31 @@ public partial class Enemy : Node2D
             Acceleration += Seek(GameManager.Instance.Player.Position);
         }
         else
-            Wander();
+            Wander(delta);
 
         LinearVelocity += Acceleration * (float)delta;
         Acceleration = Vector2.Zero;
         Position += LinearVelocity * (float)delta;
 	}
 
-    protected void Wander()
+    protected void Wander(double delta)
     {
-        _curWanderDir = Vector2.FromAngle(GD.Randf() * Mathf.Pi);
+        _curWanderCooldown -= delta;
 
+        if (_curWanderCooldown <= 0.0)
+        {
+            _curWanderCooldown = GD.RandRange(_minWanderCooldown, _maxWanderCooldown);
+
+            _curWanderPos = Position + Vector2.FromAngle(GD.Randf() * Mathf.Pi * 2.0f) * 1000.0f;
+
+            // If trying to move outside the game bounds, move inward
+            if (_curWanderPos.Length() >= GameManager.Instance.GameBoundsRadius)
+                _curWanderPos = Vector2.Zero;
+            else if (_curWanderPos.Length() <= EnemyManager.Instance.AvoidanceDist) // If trying to move into black hole, move outward
+                _curWanderPos = -Position.Normalized() * 1000.0f;
+        }
+
+        Acceleration += Seek(_curWanderPos);
     }
 
     protected Vector2 Seek(Vector2 targetPos)
