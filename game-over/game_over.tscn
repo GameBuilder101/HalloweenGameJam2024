@@ -1,13 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://d3kxaks48ej1m"]
+[gd_scene load_steps=7 format=3 uid="uid://d3kxaks48ej1m"]
 
 [ext_resource type="Script" path="res://game-over/GameOver.cs" id="1_1ac1j"]
+[ext_resource type="FontFile" uid="uid://bm33g27p5k2kx" path="res://ui/Orbitron-Regular.ttf" id="2_4vnw8"]
 [ext_resource type="Script" path="res://ui/StartFader.cs" id="2_x6rhl"]
+[ext_resource type="FontFile" uid="uid://cu5ih7ulae74f" path="res://ui/Geo-Regular.ttf" id="3_12jaj"]
 
 [sub_resource type="Theme" id="Theme_7cxh7"]
+default_font = ExtResource("2_4vnw8")
 default_font_size = 140
 
 [sub_resource type="Theme" id="Theme_mj1n1"]
-default_font_size = 45
+default_font = ExtResource("3_12jaj")
+default_font_size = 60
 
 [node name="GameOver" type="Node"]
 
@@ -30,25 +34,32 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 60.0
+offset_bottom = 60.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_7cxh7")
-text = "u ded lmao"
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 4
+bbcode_enabled = true
+text = "[center]GAME OVER[/center]"
 
 [node name="Stats Label" type="RichTextLabel" parent="UIRenderLayer/UI"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 191.525
-offset_bottom = 191.525
+offset_top = 270.0
+offset_bottom = 270.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_mj1n1")
-text = "Score: 0
+bbcode_enabled = true
+text = "[center]Score: 0
 Time Survived: 0
 Asteroids Collected: 0
-Asteroids Shot: 0"
+Asteroids Shot: 0[/center]"
 
 [node name="RestartButton" type="Button" parent="UIRenderLayer/UI"]
 layout_mode = 0

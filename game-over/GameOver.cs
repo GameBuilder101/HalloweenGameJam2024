@@ -19,7 +19,7 @@ public partial class GameOver : Control
     public override void _Ready()
     {
         base._Ready();
-        _statsLabel.Text = $"Score: {Score}\nTime Survived: {(TimeSurvived / 60.0).ToString("0.00")} Minutes\nAsteroids Collected: {AsteroidsCollected}\nAsteroids Shot: {AsteroidsShot}";
+        _statsLabel.Text = $"[center]Score: {Score}\nTime Survived: {(TimeSurvived / 60.0).ToString("0.00")} Minutes\nAsteroids Collected: {AsteroidsCollected}\nAsteroids Shot: {AsteroidsShot}[/center]";
     }
 
     public void Restart()
