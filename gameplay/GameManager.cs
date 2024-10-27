@@ -27,8 +27,8 @@ public partial class GameManager : Node
 	[Export] private Player _player;
 	[Export] private DepositPoint _depositPoint;
 	[Export] private Camera2D _camera;
-    [Export] private Sprite2D _boundarySprite;
-    private List<Asteroid> _asteroids;
+	[Export] private Sprite2D _boundarySprite;
+	private List<Asteroid> _asteroids;
 
 	/// <summary>
 	/// Gets a reference to the black hole
@@ -208,7 +208,9 @@ public partial class GameManager : Node
 		int randomTextureIndex = GD.RandRange(0, textures.Length - 1);
 
 		asteroid.GetChild<Sprite2D>(0, true).Texture = textures[randomTextureIndex];
-		
+
+		asteroid.Score = (int)(asteroid.Score * randomScale);
+
 		GetParent().CallDeferred("add_child", asteroid);
 	}
 
