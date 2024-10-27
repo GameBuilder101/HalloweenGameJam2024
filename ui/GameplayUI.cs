@@ -4,7 +4,7 @@ using System;
 public partial class GameplayUI : Control
 {
 	[Export]
-	private ProgressBar _fuelBar;
+	private TextureProgressBar _fuelBar;
 	[Export]
 	private RichTextLabel _pickUpLabel;
     [Export]
@@ -25,7 +25,7 @@ public partial class GameplayUI : Control
 
         _fuelBar.MaxValue = player.MaxFuel;
 		_fuelBar.Value = player.Fuel;
-		_fuelBar.Indeterminate = player.IsSpinningOut;
+		//_fuelBar.Indeterminate = player.IsSpinningOut;
 		this.Material = player.IsSpinningOut ? Coloring : null;
 		_pickUpLabel.Visible = player.InRadiusOfAsteroid && player.PickedUpAsteroid == null && !player.IsSpinningOut;
 		_dropOffLabel.Visible = player.IsInDropOffRadius && player.PickedUpAsteroid != null && !player.IsSpinningOut;
