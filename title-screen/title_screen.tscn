@@ -1,9 +1,37 @@
-[gd_scene load_steps=6 format=3 uid="uid://b887seo13ynl2"]
+[gd_scene load_steps=20 format=3 uid="uid://b887seo13ynl2"]
 
 [ext_resource type="Script" path="res://title-screen/TitleScreen.cs" id="1_eu04y"]
 [ext_resource type="Script" path="res://ui/StartFader.cs" id="2_n6l1r"]
+[ext_resource type="Texture2D" uid="uid://bh54uehnmuvyw" path="res://ui/Button.svg" id="2_xu2sj"]
 [ext_resource type="FontFile" uid="uid://bm33g27p5k2kx" path="res://ui/Orbitron-Regular.ttf" id="3_7b1p2"]
+[ext_resource type="FontFile" uid="uid://cu5ih7ulae74f" path="res://ui/Geo-Regular.ttf" id="3_566ty"]
 [ext_resource type="AudioStream" uid="uid://cv4it3e3fx61r" path="res://title-screen/DeepspaceTitle.mp3" id="4_gccsw"]
+
+[sub_resource type="Theme" id="Theme_5nbi6"]
+default_font = ExtResource("3_566ty")
+default_font_size = 40
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4eihk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lgvn7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eywlm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ut0wo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1ik8u"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3vywj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7fm70"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_val3k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iuycs"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gft2r"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fqu6w"]
 
 [sub_resource type="Theme" id="Theme_2vwdb"]
 default_font = ExtResource("3_7b1p2")
@@ -21,22 +49,94 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_eu04y")
-_gameplay = "res://gameplay/gameplay.tscn"
+_gameplay = "res://intro/intro.tscn"
+
+[node name="TextureRect" type="TextureRect" parent="UIRenderLayer/UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -132.0
+offset_top = -33.0
+offset_right = 132.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.2, 1.2)
+pivot_offset = Vector2(132, 33)
+texture = ExtResource("2_xu2sj")
+
+[node name="TextureRect2" type="TextureRect" parent="UIRenderLayer/UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -132.0
+offset_top = 85.0
+offset_right = 132.0
+offset_bottom = 151.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.2, 1.2)
+pivot_offset = Vector2(132, 33)
+texture = ExtResource("2_xu2sj")
 
 [node name="StartButton" type="Button" parent="UIRenderLayer/UI"]
-layout_mode = 0
-offset_left = 170.0
-offset_top = 549.0
-offset_right = 570.0
-offset_bottom = 629.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -40.0
+offset_right = 200.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_5nbi6")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_4eihk")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_lgvn7")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_eywlm")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_ut0wo")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_1ik8u")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_3vywj")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_7fm70")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_val3k")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_iuycs")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_gft2r")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_fqu6w")
 text = "Start"
 
-[node name="QuitButton" type="Button" parent="UIRenderLayer/UI"]
-layout_mode = 0
-offset_left = 170.0
-offset_top = 660.0
-offset_right = 570.0
-offset_bottom = 740.0
+[node name="Quit" type="Button" parent="UIRenderLayer/UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = 78.0
+offset_right = 200.0
+offset_bottom = 158.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_5nbi6")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_4eihk")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_lgvn7")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_eywlm")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_ut0wo")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_1ik8u")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_3vywj")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_7fm70")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_val3k")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_iuycs")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_gft2r")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_fqu6w")
 text = "Quit"
 
 [node name="Fader" type="ColorRect" parent="UIRenderLayer/UI"]
@@ -77,5 +177,5 @@ autoplay = true
 panning_strength = 0.0
 
 [connection signal="pressed" from="UIRenderLayer/UI/StartButton" to="UIRenderLayer/UI" method="Start"]
-[connection signal="pressed" from="UIRenderLayer/UI/QuitButton" to="UIRenderLayer/UI" method="Quit"]
+[connection signal="pressed" from="UIRenderLayer/UI/Quit" to="UIRenderLayer/UI" method="Quit"]
 [connection signal="finished" from="AudioStreamPlayer2D" to="AudioStreamPlayer2D" method="play"]

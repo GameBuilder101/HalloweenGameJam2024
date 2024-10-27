@@ -1,0 +1,128 @@
+[gd_scene load_steps=18 format=3 uid="uid://rcvxn1o5rg1w"]
+
+[ext_resource type="Script" path="res://intro/Intro.cs" id="1_asuht"]
+[ext_resource type="Texture2D" uid="uid://bh54uehnmuvyw" path="res://ui/Button.svg" id="2_ktohr"]
+[ext_resource type="FontFile" uid="uid://cu5ih7ulae74f" path="res://ui/Geo-Regular.ttf" id="3_o4b76"]
+[ext_resource type="Script" path="res://ui/StartFader.cs" id="4_owyq7"]
+
+[sub_resource type="Theme" id="Theme_7ej6s"]
+default_font = ExtResource("3_o4b76")
+default_font_size = 40
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_23m8a"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v4ujq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_asvfl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a4bjc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5t14h"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s57mh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_somna"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bx1ev"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nmo71"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gy0em"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q1o8f"]
+
+[sub_resource type="Theme" id="Theme_br60l"]
+default_font = ExtResource("3_o4b76")
+default_font_size = 40
+
+[node name="Intro" type="Node"]
+
+[node name="UIRenderLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="UIRenderLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_asuht")
+_gameplay = "res://gameplay/gameplay.tscn"
+
+[node name="TextureRect" type="TextureRect" parent="UIRenderLayer/UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -132.0
+offset_top = 360.0
+offset_right = 132.0
+offset_bottom = 426.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.2, 1.2)
+pivot_offset = Vector2(132, 33)
+texture = ExtResource("2_ktohr")
+
+[node name="StartButton" type="Button" parent="UIRenderLayer/UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = 353.0
+offset_right = 200.0
+offset_bottom = 433.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_7ej6s")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_23m8a")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_v4ujq")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_asvfl")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_a4bjc")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_5t14h")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_s57mh")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_somna")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_bx1ev")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nmo71")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_gy0em")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_q1o8f")
+text = "Begin
+"
+
+[node name="Fader" type="ColorRect" parent="UIRenderLayer/UI"]
+z_index = 100
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+script = ExtResource("4_owyq7")
+_duration = 1.0
+
+[node name="Stats Label" type="RichTextLabel" parent="UIRenderLayer/UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 761.0
+offset_top = 370.0
+offset_right = 761.0
+offset_bottom = 370.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_br60l")
+text = "W/S: Move Forward/Backward
+A/D: Rotate Left/Right
+Shift: Brake
+Control: Boost"
+
+[connection signal="pressed" from="UIRenderLayer/UI/StartButton" to="UIRenderLayer/UI" method="Start"]
