@@ -16,6 +16,11 @@ public partial class Player : RigidBody2D, IDamageable
 
 	public bool IsFuelEmpty { get { return Fuel <= 0.0f; } }
 
+	private bool Alive = true;
+	[Export]
+	private double DeathTimeDelay;
+	private double TimeDead = 0.0f;
+	
 	[Export]
 	public float Speed { get; set; }
 	[Export]
@@ -63,6 +68,14 @@ public partial class Player : RigidBody2D, IDamageable
 
 	public override void _PhysicsProcess(double delta)
 	{
+		if (!Alive) {
+			TimeDead += delta;
+			LinearVelocity = new Vector2(0, 0);
+			if (DeathTimeDelay < TimeDead) {
+				End();
+			}
+			return;
+		}
 		base._PhysicsProcess(delta);
 		
 		if (!IsSpinningOut)
@@ -235,6 +248,12 @@ public partial class Player : RigidBody2D, IDamageable
 	}
 	
 	public void Kill() {
+		Alive = false;
+		Visible = false;
+		SetDeferred("Freeze", true);
+	}
+	
+	private void End() {
 		GameManager.Instance.LoadGameOver();
 	}
 
