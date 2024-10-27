@@ -9,11 +9,13 @@ public partial class Fuel : RigidBody2D, IDamageable
 	public override void _IntegrateForces(PhysicsDirectBodyState2D state) {
 		if (Target != null) {
 			Vector2 TargetPos = Target.Position;
+			float distance = TargetPos.DistanceTo(Position);
 			Vector2 PosDiff = TargetPos - Position;
-			state.ApplyForce(PosDiff.Normalized()  * PullStrength / Math.Max(
-				(PosDiff.Dot(PosDiff)),
+			Vector2 Force = PosDiff.Normalized() * PullStrength / Math.Max(
+				distance,
 				1
-			) * state.Step);
+			) * state.Step;
+			state.ApplyForce(Force);
 		}
 	}
 	
