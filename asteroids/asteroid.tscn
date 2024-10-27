@@ -1,13 +1,46 @@
-[gd_scene load_steps=5 format=3 uid="uid://cydpa3f5dvkxe"]
+[gd_scene load_steps=12 format=3 uid="uid://cydpa3f5dvkxe"]
 
 [ext_resource type="Script" path="res://asteroids/Asteroid.cs" id="1_664pe"]
 [ext_resource type="PackedScene" uid="uid://du2huf3l5mlml" path="res://fuel/fuel.tscn" id="2_dm2ya"]
 [ext_resource type="Texture2D" uid="uid://cruipnuk58mhc" path="res://asteroids/asteriod-1-nobackdrop.svg" id="2_fjsen"]
+[ext_resource type="Texture2D" uid="uid://ctnnvutd0vjrb" path="res://player/irregular_dot.svg" id="4_lxwro"]
+[ext_resource type="Script" path="res://AutoDeleteParticles.cs" id="5_5r8ar"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pj61m"]
 radius = 75.58
 
-[node name="Asteroid" type="RigidBody2D"]
+[sub_resource type="Curve" id="Curve_k8b8v"]
+max_value = 100.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.994152, 100), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_mqg34"]
+curve = SubResource("Curve_k8b8v")
+
+[sub_resource type="Curve" id="Curve_nu2na"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_wabgk"]
+curve = SubResource("Curve_nu2na")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_il04u"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 1.0
+angle_min = -720.0
+angle_max = -720.0
+spread = 180.0
+initial_velocity_max = 600.53
+angular_velocity_min = -449.53
+angular_velocity_max = 381.32
+gravity = Vector3(0, 98, 0)
+damping_max = 2.0
+damping_curve = SubResource("CurveTexture_mqg34")
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_wabgk")
+
+[node name="Asteroid" type="RigidBody2D" node_paths=PackedStringArray("_killParticles")]
 collision_layer = 5
 collision_mask = 9
 gravity_scale = 0.05
@@ -17,12 +50,25 @@ max_contacts_reported = 8
 linear_damp_mode = 1
 angular_damp_mode = 1
 script = ExtResource("1_664pe")
+SpinOutDuration = 2.0
 FuelScene = ExtResource("2_dm2ya")
+_killParticles = NodePath("GPUParticles2D")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_fjsen")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_pj61m")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 48
+process_material = SubResource("ParticleProcessMaterial_il04u")
+texture = ExtResource("4_lxwro")
+one_shot = true
+explosiveness = 1.0
+visibility_rect = Rect2(-300, -300, 600, 600)
+trail_lifetime = 0.1
+script = ExtResource("5_5r8ar")
 
 [connection signal="body_entered" from="." to="." method="PickUpAreaBodyEntered"]

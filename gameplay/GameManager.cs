@@ -27,6 +27,7 @@ public partial class GameManager : Node
 	[Export] private Player _player;
 	[Export] private DepositPoint _depositPoint;
 	[Export] private Camera2D _camera;
+	[Export] private Sprite2D _boundarySprite;
 	private List<Asteroid> _asteroids;
 
 	/// <summary>
@@ -50,6 +51,7 @@ public partial class GameManager : Node
 	public List<Asteroid> Asteroids {  get { return _asteroids; } }
 
 	[Export] private PackedScene asteroidPrefab;
+	[Export] private Texture2D[] textures;
 
 	[Export] private int maxAsteroids = 100;
 	[Export] private float minAsteroidSpeed = 10;
@@ -78,6 +80,9 @@ public partial class GameManager : Node
 
 	public int Score { get { return score; } }
 	public float GameTime { get { return gameTime; } }
+
+	public int AsteroidsCollectedStat { get; set; }
+	public int AsteroidsShotStat { get; set; }
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -119,6 +124,8 @@ public partial class GameManager : Node
 		// grow the black hole
 		_blackHole.SetRadius(blackHoleRadius, gameBoundsRadius);
 		//GD.Print("blackHoleRadius" + _blackHole.BlackHoleRadius);
+
+		_boundarySprite.Scale = Vector2.One * (GameBoundsRadius / 4096.0f);
 	}
 
 	/// <summary>
@@ -165,7 +172,7 @@ public partial class GameManager : Node
 			// random angle to spawn the asteroid
 			randomPositionAngle = (float)GD.RandRange(0, 2 * MathF.PI);
 			// create a random vector 2 with a bias towards positions near the center
-			float distanceToCenter = GD.Randf() * GD.Randf() * GD.Randf() * (asteroidSpawnRadius - _blackHole.BlackHoleRadius) + _blackHole.BlackHoleRadius;
+			float distanceToCenter = GD.Randf() * GD.Randf() * (asteroidSpawnRadius - _blackHole.BlackHoleRadius) + _blackHole.BlackHoleRadius;
 			position = new Vector2(MathF.Cos(randomPositionAngle) * distanceToCenter, MathF.Sin(randomPositionAngle) * distanceToCenter);
 		} while (bufferRect.HasPoint(position));
 
@@ -197,12 +204,22 @@ public partial class GameManager : Node
 		asteroid.AngularVelocity = angularVelocity;
 
 		asteroid.SetScale(randomScale);
-		
+
+		int randomTextureIndex = GD.RandRange(0, textures.Length - 1);
+
+		asteroid.GetChild<Sprite2D>(0, true).Texture = textures[randomTextureIndex];
+
+		asteroid.Score = (int)(asteroid.Score * randomScale);
+
 		GetParent().CallDeferred("add_child", asteroid);
 	}
 
 	public void LoadGameOver()
 	{
+		GameOver.Score = score;
+		GameOver.TimeSurvived = GameTime;
+		GameOver.AsteroidsCollected = AsteroidsCollectedStat;
+		GameOver.AsteroidsShot = AsteroidsShotStat;
 		GetTree().CallDeferred("change_scene_to_packed", _gameOverScene);
 	}
 }

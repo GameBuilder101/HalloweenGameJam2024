@@ -73,7 +73,13 @@ public partial class Player : RigidBody2D, IDamageable
 			UpdateSpinOut(delta);
 			smoke.Emitting = false;
 		}
-	}
+
+        if (Position.DistanceTo(Vector2.Zero) > GameManager.Instance.GameBoundsRadius)
+        {
+            Position = Position.Normalized() * GameManager.Instance.GameBoundsRadius;
+            LinearVelocity = -Position.Normalized() * 500.0f;
+        }
+    }
 
 	private void UpdateMovement(double delta)
 	{
@@ -99,7 +105,7 @@ public partial class Player : RigidBody2D, IDamageable
 		if (Fuel < 0.0f)
 			Fuel = 0.0f;
 
-		if (isBreaking)
+		if (isBreaking && Fuel > 0.0f)
 			LinearDamp = BreakDamp;
 		else if (isBoosting)
 			LinearDamp = 0.0f;
@@ -112,13 +118,6 @@ public partial class Player : RigidBody2D, IDamageable
 
 		input = Input.GetAxis("left", "right");
 		ApplyTorque(input * AngularSpeed);
-
-
-		if (Position.DistanceTo(Vector2.Zero) > GameManager.Instance.GameBoundsRadius)
-		{
-			Position = Position.Normalized() * GameManager.Instance.GameBoundsRadius;
-			LinearVelocity = -Position.Normalized() * 500.0f;
-		}
 	}
 
 	private void UpdateShooting(double delta)
@@ -155,7 +154,12 @@ public partial class Player : RigidBody2D, IDamageable
 			else if (PickedUpAsteroid != null && IsInDropOffRadius)
 			{
 				GameManager.Instance.AddScore(PickedUpAsteroid.Score);
-				PickedUpAsteroid.QueueFree();
+				GameManager.Instance.AsteroidsCollectedStat++;
+				Fuel += PickedUpAsteroid.DepositBonusFuel;
+				if (Fuel > MaxFuel)
+					Fuel = MaxFuel;
+
+                PickedUpAsteroid.QueueFree();
 				PickedUpAsteroid = null;
 			}
 			else if (PickedUpAsteroid != null)
@@ -180,8 +184,8 @@ public partial class Player : RigidBody2D, IDamageable
 		if (PickedUpAsteroid == null)
 			return;
 
-		PickedUpAsteroid.Reparent(GetTree().Root);
-		PickedUpAsteroid.Freeze = false;
+		PickedUpAsteroid.CallDeferred("reparent", GetTree().Root);
+		PickedUpAsteroid.SetDeferred("freeze", false);
 
 		PickedUpAsteroid = null;
 	}
@@ -191,6 +195,7 @@ public partial class Player : RigidBody2D, IDamageable
 		RemainingSpinOutTime = duration;
 		AngularDamp = 0.0f;
 		ApplyTorqueImpulse(-Mathf.Sign(AngularVelocity) * SpinOutSpeed);
+		DropAsteroid();
 	}
 
 	private void UpdateSpinOut(double delta)

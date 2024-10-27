@@ -6,9 +6,8 @@ public partial class DepositPoint : RigidBody2D
 {
 	[Export]
 	private float _speed;
-	[Export]
-	public float OrbitRadius { get; set; }
-	[Export]
+	public float OrbitRadius { get { return GameManager.Instance.GameBoundsRadius * 0.85f; } }
+    [Export]
 	public float CurrentObritAngle { get; private set; }
 
 	// Called when the node enters the scene tree for the first time.

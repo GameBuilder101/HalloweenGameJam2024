@@ -11,6 +11,8 @@ public partial class GameplayUI : Control
     private RichTextLabel _dropOffLabel;
 	[Export]
 	private ShaderMaterial Coloring;
+	[Export]
+	private RichTextLabel _statsLabel;
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
@@ -27,5 +29,7 @@ public partial class GameplayUI : Control
 		this.Material = player.IsSpinningOut ? Coloring : null;
 		_pickUpLabel.Visible = player.InRadiusOfAsteroid && player.PickedUpAsteroid == null && !player.IsSpinningOut;
 		_dropOffLabel.Visible = player.IsInDropOffRadius && player.PickedUpAsteroid != null && !player.IsSpinningOut;
+
+		_statsLabel.Text = $"Score: {GameManager.Instance.Score}";
 	}
 }

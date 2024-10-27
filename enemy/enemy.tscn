@@ -1,23 +1,106 @@
-[gd_scene load_steps=4 format=3 uid="uid://4iacv1wcdwdp"]
+[gd_scene load_steps=16 format=3 uid="uid://4iacv1wcdwdp"]
 
-[ext_resource type="Texture2D" uid="uid://c205dlrvua2y4" path="res://icon.svg" id="1_avqce"]
 [ext_resource type="Script" path="res://enemy/Enemy.cs" id="1_d5g40"]
+[ext_resource type="Texture2D" uid="uid://5h55hvb6dk0g" path="res://enemy/enemy_inner.svg" id="2_jo0o6"]
+[ext_resource type="Texture2D" uid="uid://bgjvnjijfoygr" path="res://enemy/enemy_0.png" id="3_6a8cw"]
+[ext_resource type="Texture2D" uid="uid://dqjfobnj0klel" path="res://enemy/enemy_1.png" id="4_6eh1i"]
+[ext_resource type="Texture2D" uid="uid://dk74w8wgb8w6x" path="res://enemy/enemy_2.png" id="5_kf4fp"]
+[ext_resource type="Texture2D" uid="uid://vrbatceue0ai" path="res://enemy/enemy_3.png" id="6_vghdl"]
+[ext_resource type="Texture2D" uid="uid://ctnnvutd0vjrb" path="res://player/irregular_dot.svg" id="7_4n3ap"]
+[ext_resource type="Script" path="res://AutoDeleteParticles.cs" id="8_g3a5a"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dnfh3"]
-radius = 64.0
+radius = 53.91
 
-[node name="Enemy" type="Node2D"]
-script = ExtResource("1_d5g40")
-cruiseSpeed = 400.0
-_spinOutTime = 5.0
+[sub_resource type="SpriteFrames" id="SpriteFrames_08bie"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_6a8cw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_6eh1i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_kf4fp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_vghdl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 30.0
+}]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_avqce")
+[sub_resource type="Curve" id="Curve_ei08l"]
+max_value = 100.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.994152, 100), 0.0, 0.0, 0, 0]
+point_count = 2
 
-[node name="Area2D" type="Area2D" parent="."]
+[sub_resource type="CurveTexture" id="CurveTexture_iv24y"]
+curve = SubResource("Curve_ei08l")
+
+[sub_resource type="Curve" id="Curve_yrjpl"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_dqecy"]
+curve = SubResource("Curve_yrjpl")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_v1l8l"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 1.0
+angle_min = -720.0
+angle_max = -720.0
+spread = 180.0
+initial_velocity_max = 600.53
+angular_velocity_min = -449.53
+angular_velocity_max = 381.32
+gravity = Vector3(0, 98, 0)
+damping_max = 2.0
+damping_curve = SubResource("CurveTexture_iv24y")
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_dqecy")
+
+[node name="Enemy" type="Area2D" node_paths=PackedStringArray("_innerSprite", "_killParticles")]
 collision_layer = 128
+script = ExtResource("1_d5g40")
+Health = 2.0
+wanderSpeed = 350.0
+chaseSpeed = 450.0
+_seekRange = 1200.0
+_spinOutTime = 4.0
+_minWanderCooldown = 2.0
+_maxWanderCooldown = 3.0
+_innerSprite = NodePath("Sprite2D")
+_killParticles = NodePath("GPUParticles2D")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_dnfh3")
 
-[connection signal="body_entered" from="Area2D" to="." method="OnPlayerEntered"]
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("2_jo0o6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 1
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_08bie")
+autoplay = "default"
+frame = 1
+frame_progress = 0.773381
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_v1l8l")
+texture = ExtResource("7_4n3ap")
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+visibility_rect = Rect2(-300, -300, 600, 600)
+trail_lifetime = 0.1
+script = ExtResource("8_g3a5a")
+
+[connection signal="body_entered" from="." to="." method="OnPlayerEntered"]

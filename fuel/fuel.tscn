@@ -14,7 +14,7 @@ gravity_scale = 0.2
 linear_damp_mode = 1
 linear_damp = 2.0
 script = ExtResource("1_eh2xj")
-PullStrength = 1000.0
+PullStrength = 9000.0
 
 [node name="FuelCollision" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_sbldq")

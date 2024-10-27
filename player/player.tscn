@@ -40,10 +40,11 @@ linear_damp_mode = 1
 linear_damp = 1.0
 angular_damp = 8.0
 script = ExtResource("1_y2ncu")
-MaxFuel = 30.0
-Fuel = 30.0
+MaxFuel = 40.0
+Fuel = 40.0
 Speed = 400.0
 BoostSpeed = 500.0
+EmptySpeed = 20.0
 AngularSpeed = 17000.0
 BreakDamp = 2.0
 ShootDelay = 0.5
@@ -93,8 +94,7 @@ shape = ExtResource("5_ug1nb")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 position = Vector2(0, 43)
-emitting = false
-amount = 32
+amount = 48
 process_material = SubResource("ParticleProcessMaterial_0c06k")
 texture = ExtResource("6_jyeci")
 explosiveness = 0.13
