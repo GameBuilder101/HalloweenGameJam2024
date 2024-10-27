@@ -107,6 +107,7 @@ trail_lifetime = 0.1
 script = ExtResource("8_g3a5a")
 
 [node name="EnemyAudio" type="AudioStreamPlayer2D" parent="." node_paths=PackedStringArray("enemy")]
+stream = ExtResource("10_0stgd")
 script = ExtResource("9_cvbv7")
 enemy = NodePath("..")
 wander = ExtResource("10_0stgd")

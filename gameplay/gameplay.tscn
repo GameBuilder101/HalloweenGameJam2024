@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://crv5t88bt5spr"]
+[gd_scene load_steps=22 format=3 uid="uid://crv5t88bt5spr"]
 
 [ext_resource type="Script" path="res://gameplay/GameManager.cs" id="1_acxl8"]
 [ext_resource type="PackedScene" uid="uid://cwobamcwcxxdw" path="res://player/player.tscn" id="1_fegoe"]
@@ -14,10 +14,12 @@
 [ext_resource type="Texture2D" uid="uid://e8jch64hlenb" path="res://debris/rand-debris-1.svg" id="5_t6a2p"]
 [ext_resource type="Texture2D" uid="uid://dlgf0qnl6g8hy" path="res://asteroids/asteriod-3-nobackdrop.svg" id="6_54lmk"]
 [ext_resource type="Texture2D" uid="uid://c3mbs1xrrp7fx" path="res://debris/rand-debris-2.svg" id="6_u55b6"]
-[ext_resource type="Texture2D" uid="uid://c205dlrvua2y4" path="res://icon.svg" id="7_6myi8"]
 [ext_resource type="PackedScene" uid="uid://3kgfug7qq7hc" path="res://ui/ui.tscn" id="7_ola7h"]
 [ext_resource type="PackedScene" uid="uid://36kc6d68wpac" path="res://deposit-point/despoit_point.tscn" id="8_thndi"]
 [ext_resource type="PackedScene" uid="uid://4iacv1wcdwdp" path="res://enemy/enemy.tscn" id="9_omad1"]
+[ext_resource type="Texture2D" uid="uid://c71gsbnpwllit" path="res://asteroids/specialasteroid-1.png" id="11_0ioub"]
+[ext_resource type="Texture2D" uid="uid://bf782txuwnppl" path="res://asteroids/specialasteroid-2.png" id="12_441qd"]
+[ext_resource type="Texture2D" uid="uid://d17qiaju6231" path="res://asteroids/specialasteroid-3.png" id="13_w13mq"]
 [ext_resource type="Texture2D" uid="uid://cieo5skrn3k2y" path="res://gameplay/game-boundary.svg" id="14_cnx8s"]
 
 [node name="Gameplay" type="Node"]
@@ -37,7 +39,7 @@ maxDebrisSpeed = 1000.0
 maxDebrisScale = 1.0
 asteroidPrefab = ExtResource("2_kceje")
 asteroidtextures = Array[Texture2D]([ExtResource("4_dicts"), ExtResource("5_npl61"), ExtResource("6_54lmk")])
-specialAsteroidTextures = Array[Texture2D]([ExtResource("7_6myi8")])
+specialAsteroidTextures = Array[Texture2D]([ExtResource("11_0ioub"), ExtResource("12_441qd"), ExtResource("13_w13mq")])
 maxAsteroids = 140
 minAsteroidSpeed = 500.0
 maxAsteroidSpeed = 1000.0

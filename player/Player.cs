@@ -43,6 +43,7 @@ public partial class Player : RigidBody2D, IDamageable
 	public double RemainingSpinOutTime { get; private set; }
 	public bool IsSpinningOut { get { return RemainingSpinOutTime > 0.0f; } }
 	public bool isBoosting = false;
+	private bool wasBoosting = false;
 	[Export]
 	private float SpinOutSpeed { get; set; }
 	private float _origAngularDamp;
@@ -55,6 +56,9 @@ public partial class Player : RigidBody2D, IDamageable
 	
 	[Export]
 	private GpuParticles2D smoke;
+
+	[Export]
+	private PlayerAudio audio;
 
 	public bool IsInDropOffRadius { get; private set; }
 
@@ -94,6 +98,12 @@ public partial class Player : RigidBody2D, IDamageable
             Position = Position.Normalized() * GameManager.Instance.GameBoundsRadius;
             LinearVelocity = -Position.Normalized() * 500.0f;
         }
+
+		if (isBoosting && !wasBoosting)
+			audio.StartBoost();
+		else if (!isBoosting && wasBoosting)
+			audio.StopBoost();
+		wasBoosting = isBoosting;
     }
 
 	private void UpdateMovement(double delta)
@@ -152,6 +162,8 @@ public partial class Player : RigidBody2D, IDamageable
 
 	public void Shoot()
 	{
+		audio.Shoot();
+
 		Bullet bullet = (Bullet)_bulletScene.Instantiate();
 		bullet.Position = Position;
 		bullet.Rotation = Rotation;
@@ -221,7 +233,9 @@ public partial class Player : RigidBody2D, IDamageable
 
 	public void SpinOut(double duration)
 	{
-		RemainingSpinOutTime = duration;
+        audio.StopBoost();
+
+        RemainingSpinOutTime = duration;
 		AngularDamp = 0.0f;
 		ApplyTorqueImpulse(-Mathf.Sign(AngularVelocity) * SpinOutSpeed);
 		DropAsteroid();

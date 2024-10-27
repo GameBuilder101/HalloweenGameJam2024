@@ -29,7 +29,7 @@ public partial class GameManager : Node
 	[Export] private Camera2D _camera;
 	[Export] private Sprite2D _boundarySprite;
 	private List<Asteroid> _asteroids;
-	private List<RigidBody2D> _debris;
+	private List<Debris> _debris;
 
 	/// <summary>
 	/// Gets a reference to the black hole
@@ -50,6 +50,11 @@ public partial class GameManager : Node
 	/// Gets the list of asteroids in the scene
 	/// </summary>
 	public List<Asteroid> Asteroids {  get { return _asteroids; } }
+
+	/// <summary>
+	/// Gets the list of debris in the scene
+	/// </summary>
+	public List<Debris> Debris { get { return _debris; } }
 
 	[Export] private PackedScene debrisPrefab;
 	[Export] private Texture2D[] debrisTextures;
@@ -110,7 +115,7 @@ public partial class GameManager : Node
 
 		// initial values
 		_asteroids = new List<Asteroid>();
-		_debris = new List<RigidBody2D>();
+		_debris = new List<Debris>();
 		currentState = GameState.GamePlay;
 		score = 0;
 		asteroidSpawnRadius = asteroidSpawnStartRadius;
@@ -147,9 +152,6 @@ public partial class GameManager : Node
 		{
 			SpawnDebris();
 		}
-
-		GD.Print("Max Debris: " + maxDebris);
-		GD.Print("Current Debris: " + _debris.Count);
 
 		//grow game radius
 		asteroidSpawnRadius += radiusInrement * (float)delta;
@@ -244,7 +246,7 @@ public partial class GameManager : Node
 		// create a random scale
 		float randomScale = (float)GD.RandRange(minDebrisScale, minDebrisScale);
 
-		RigidBody2D debris = (RigidBody2D)debrisPrefab.Instantiate();
+		Debris debris = (Debris)debrisPrefab.Instantiate();
 		debris.Position = position;
 		debris.LinearVelocity = velocity;
 		debris.AngularVelocity = angularVelocity;
@@ -256,6 +258,7 @@ public partial class GameManager : Node
 
 		int randomTextureIndex = GD.RandRange(0, debrisTextures.Length - 1);
 		debris.GetChild<Sprite2D>(1, true).Texture = debrisTextures[randomTextureIndex];
+		debris.ZIndex = -1;
 
 		_debris.Add(debris);
 
@@ -354,6 +357,7 @@ public partial class GameManager : Node
 			int randomTextureIndex = GD.RandRange(0, asteroidtextures.Length - 1);
 			asteroid.GetChild<Sprite2D>(0, true).Texture = asteroidtextures[randomTextureIndex];
 			asteroid.Score = (int)(baseAsteroidScore * randomScale);
+			asteroid.FuelMultiplier = 3;
 		}
 
 		
