@@ -65,6 +65,9 @@ public partial class GameManager : Node
 	[Export] private float baseAsteroidScore = 100;
 	[Export] private float baseSpecialAsteroidScore = 1000;
 
+	[Export] private float asteroidIncrementTime = 3;
+	private float asteroidIncrementTimer;
+
 	[Export] private float asteroidSpawnStartRadius; // radius the ateroid spawn area starts at
 	[Export] private float gameBoundsStartRadius; // radius the bounds start at
 	[Export] private float radiusInrement; // amount the radius grows per second
@@ -101,6 +104,7 @@ public partial class GameManager : Node
 		gameBoundsRadius = gameBoundsStartRadius;
 		blackHoleRadius = blackHoleStartRadius;
 		gameTime = 0;
+		asteroidIncrementTimer = asteroidIncrementTime;
 
 		for (int i = 0; i < maxAsteroids; i++)
 		{
@@ -130,6 +134,15 @@ public partial class GameManager : Node
 		//GD.Print("blackHoleRadius" + _blackHole.BlackHoleRadius);
 
 		_boundarySprite.Scale = Vector2.One * (GameBoundsRadius / 4096.0f);
+
+		//increment the number of asteroids when the timer goes off
+		if(asteroidIncrementTimer < 0)
+		{
+			maxAsteroids++;
+			asteroidIncrementTimer = asteroidIncrementTime;
+		}
+
+		asteroidIncrementTimer -= (float)delta;
 	}
 
 	/// <summary>
