@@ -1,22 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://3kgfug7qq7hc"]
+[gd_scene load_steps=9 format=3 uid="uid://3kgfug7qq7hc"]
 
 [ext_resource type="Texture2D" uid="uid://dgeq2h11amc4o" path="res://ui/black-hole-pointer-placeholder.png" id="1_cgttk"]
 [ext_resource type="Script" path="res://ui/GameplayUI.cs" id="1_gebfo"]
+[ext_resource type="StyleBox" uid="uid://60vfyo25pb02" path="res://ui/fuelbar_backgrounds/background.tres" id="2_b7wep"]
+[ext_resource type="StyleBox" uid="uid://rfkn8r67skfn" path="res://ui/fuelbar_backgrounds/bar.tres" id="3_8avya"]
 [ext_resource type="Texture2D" uid="uid://dqlt4c16lieat" path="res://ui/mini-arrow.svg" id="4_thiv0"]
 [ext_resource type="Script" path="res://ui/UIIndicator.cs" id="5_fhwlg"]
 [ext_resource type="Texture2D" uid="uid://sojt8gydrxr8" path="res://ui/dropoff-pointer-placeholder.png" id="6_nidf7"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p27ut"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(1, 1, 1, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w7npl"]
-bg_color = Color(1, 1, 1, 1)
-border_color = Color(0, 0, 0, 1)
+[sub_resource type="Theme" id="Theme_38txm"]
 
 [node name="UI" type="Control" node_paths=PackedStringArray("_fuelBar", "_pickUpLabel", "_dropOffLabel")]
 layout_mode = 3
@@ -29,6 +21,9 @@ script = ExtResource("1_gebfo")
 _fuelBar = NodePath("FuelBar")
 _pickUpLabel = NodePath("PickUpPrompt")
 _dropOffLabel = NodePath("DropOffPrompt")
+Colors = PackedColorArray(1, 1, 1, 1, 1, 1, 0, 1)
+background = ExtResource("2_b7wep")
+bar = ExtResource("3_8avya")
 
 [node name="FuelBar" type="ProgressBar" parent="."]
 layout_mode = 1
@@ -44,8 +39,9 @@ offset_bottom = 100.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(75, 0)
-theme_override_styles/background = SubResource("StyleBoxFlat_p27ut")
-theme_override_styles/fill = SubResource("StyleBoxFlat_w7npl")
+theme = SubResource("Theme_38txm")
+theme_override_styles/background = ExtResource("2_b7wep")
+theme_override_styles/fill = ExtResource("3_8avya")
 value = 49.23
 show_percentage = false
 
