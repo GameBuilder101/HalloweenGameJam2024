@@ -15,7 +15,7 @@ config/version="1.0.0"
 run/main_scene="res://title-screen/title_screen.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 boot_splash/bg_color=Color(0, 0, 0, 1)
-config/icon="res://icon.svg"
+config/icon="res://gameicon.png"
 
 [display]
 
