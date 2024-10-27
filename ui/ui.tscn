@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://3kgfug7qq7hc"]
+[gd_scene load_steps=11 format=3 uid="uid://3kgfug7qq7hc"]
 
 [ext_resource type="Texture2D" uid="uid://dgeq2h11amc4o" path="res://ui/black-hole-pointer-placeholder.png" id="1_cgttk"]
 [ext_resource type="Script" path="res://ui/GameplayUI.cs" id="1_gebfo"]
@@ -26,6 +26,7 @@ script = ExtResource("1_gebfo")
 _fuelBar = NodePath("FuelBar")
 _pickUpLabel = NodePath("PickUpPrompt")
 _dropOffLabel = NodePath("DropOffPrompt")
+Coloring = ExtResource("1_rolr4")
 _statsLabel = NodePath("StatsCounter")
 
 [node name="FuelBar" type="ProgressBar" parent="."]
