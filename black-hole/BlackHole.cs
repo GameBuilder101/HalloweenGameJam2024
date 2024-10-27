@@ -33,7 +33,7 @@ public partial class BlackHole : Node2D
 
 		// set the new gravity
 		gravityArea.GravityPointUnitDistance = blackHoleRadius;
-		gravityArea.Gravity = blackHoleRadius * 2;
+		//gravityArea.Gravity = blackHoleRadius * 2;
 	}
 	
 	// Called when the node enters the scene tree for the first time.
