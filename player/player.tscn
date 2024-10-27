@@ -1,12 +1,38 @@
-[gd_scene load_steps=6 format=3 uid="uid://cwobamcwcxxdw"]
+[gd_scene load_steps=10 format=3 uid="uid://cwobamcwcxxdw"]
 
 [ext_resource type="Script" path="res://player/Player.cs" id="1_y2ncu"]
 [ext_resource type="PackedScene" uid="uid://dnto3k50i7fyw" path="res://player/bullet.tscn" id="2_5xnwp"]
 [ext_resource type="Shape2D" uid="uid://dt28udpdk42m8" path="res://player/player_radius.tres" id="2_b7m2q"]
 [ext_resource type="Texture2D" uid="uid://daspphthhq6ao" path="res://player/ship-nobackdrop2pt.svg" id="4_vlqdv"]
 [ext_resource type="Shape2D" uid="uid://olo13apwvx3u" path="res://player/player_pickup_radius.tres" id="5_ug1nb"]
+[ext_resource type="Texture2D" uid="uid://ctnnvutd0vjrb" path="res://player/irregular_dot.svg" id="6_jyeci"]
 
-[node name="Player" type="RigidBody2D" node_paths=PackedStringArray("_pickedUpPivot")]
+[sub_resource type="Curve" id="Curve_j0kle"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_5kkya"]
+curve = SubResource("Curve_j0kle")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0c06k"]
+lifetime_randomness = 0.25
+particle_flag_disable_z = true
+angle_min = 1.07288e-05
+angle_max = 80.0
+inherit_velocity_ratio = 0.5
+direction = Vector3(0, 1, 0)
+spread = 15.0
+initial_velocity_min = 65.38
+initial_velocity_max = 103.85
+angular_velocity_min = 51.46
+angular_velocity_max = 204.92
+gravity = Vector3(0, 0, 0)
+damping_min = 0.1
+damping_max = 0.1
+scale_min = 0.0
+scale_curve = SubResource("CurveTexture_5kkya")
+
+[node name="Player" type="RigidBody2D" node_paths=PackedStringArray("_pickedUpPivot", "smoke")]
 gravity_scale = 0.2
 contact_monitor = true
 max_contacts_reported = 8
@@ -25,6 +51,7 @@ _bulletScene = ExtResource("2_5xnwp")
 _bulletSpeed = 1000.0
 SpinOutSpeed = 10000.0
 _pickedUpPivot = NodePath("PickedUpAsteroidPivot")
+smoke = NodePath("GPUParticles2D")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 shape = ExtResource("2_b7m2q")
@@ -63,6 +90,15 @@ collision_mask = 8
 
 [node name="Collision" type="CollisionShape2D" parent="FuelStartTracking"]
 shape = ExtResource("5_ug1nb")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(0, 43)
+emitting = false
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_0c06k")
+texture = ExtResource("6_jyeci")
+explosiveness = 0.13
+randomness = 0.5
 
 [connection signal="body_entered" from="PickUpArea" to="." method="PickUpAreaBodyEntered"]
 [connection signal="body_exited" from="PickUpArea" to="." method="PickUpAreaBodyExited"]

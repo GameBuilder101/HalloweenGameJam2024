@@ -45,6 +45,9 @@ public partial class Player : RigidBody2D, IDamageable
     public Asteroid PickedUpAsteroid { get; private set; }
     [Export]
     private Node2D _pickedUpPivot;
+	
+	[Export]
+	private GpuParticles2D smoke;
 
     public bool IsInDropOffRadius { get; private set; }
 
@@ -66,8 +69,10 @@ public partial class Player : RigidBody2D, IDamageable
             UpdateShooting(delta);
             UpdateAsteroidPickUp(delta);
         }
-        else
+        else {
             UpdateSpinOut(delta);
+			smoke.Emitting = false;
+		}
     }
 
     private void UpdateMovement(double delta)
@@ -81,11 +86,15 @@ public partial class Player : RigidBody2D, IDamageable
         {
             speed = BoostSpeed;
             Fuel -= (float)delta * _boostFuelConsumption;
+			smoke.AmountRatio = 1.0f;
         }
-        else if (Fuel <= 0.0f)
+        else if (Fuel <= 0.0f) {
             speed = EmptySpeed;
-        else if (input != 0.0f)
+			smoke.AmountRatio = 0.125f;
+        } else if (input != 0.0f) {
             Fuel -= (float)delta;
+			smoke.AmountRatio = 0.375f;
+		}
 
         if (Fuel < 0.0f)
             Fuel = 0.0f;
@@ -98,6 +107,8 @@ public partial class Player : RigidBody2D, IDamageable
             LinearDamp = 1.0f;
 
         ApplyForce(Transform.BasisXform(Vector2.Up) * input * speed);
+		
+		smoke.Emitting = input != 0;
 
         input = Input.GetAxis("left", "right");
         ApplyTorque(input * AngularSpeed);
