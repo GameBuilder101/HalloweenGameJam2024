@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 141.24 97.26">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #000;
+      }
+
+      .cls-1, .cls-2 {
+        stroke: #fff;
+        stroke-miterlimit: 10;
+        stroke-width: 2px;
+      }
+
+      .cls-2 {
+        fill: none;
+      }
+    </style>
+  </defs>
+  <rect class="cls-1" x="46.62" y="23.91" width="49.81" height="49.81" transform="translate(-14.77 41.64) rotate(-29.56)"/>
+  <rect class="cls-1" x="89.79" y="11.13" width="46.58" height="26.52" transform="translate(2.69 58.96) rotate(-29.56)"/>
+  <rect class="cls-1" x="44.5" y="16.54" width="23.11" height="11.56" transform="translate(-3.71 30.56) rotate(-29.56)"/>
+  <polyline class="cls-1" points="48.66 58.98 54.52 55.65 60.5 57.3 66.74 53.76 68.18 48.53 73.02 45.79 78.45 47.29 85.61 43.23 86.98 38.24 92.41 35.16"/>
+  <polyline class="cls-2" points="86.28 24.34 119.74 34.86 126.8 1.36"/>
+  <polyline class="cls-2" points="139.88 24.43 107.09 13.2 99.36 47.41"/>
+  <rect class="cls-1" x="74.95" y="69.82" width="23.11" height="11.56" transform="translate(-26.03 52.51) rotate(-29.56)"/>
+  <rect class="cls-1" x="4.87" y="59.61" width="46.58" height="26.52" transform="translate(-32.28 23.38) rotate(-29.56)"/>
+  <polyline class="cls-2" points="1.36 72.83 34.82 83.34 41.88 49.85"/>
+  <polyline class="cls-2" points="54.97 72.92 22.17 61.68 14.45 95.9"/>
+</svg>
