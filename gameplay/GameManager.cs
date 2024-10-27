@@ -49,8 +49,6 @@ public partial class GameManager : Node
 	/// </summary>
 	public List<Asteroid> Asteroids {  get { return _asteroids; } }
 
-	private int score;
-
 	[Export] private PackedScene asteroidPrefab;
 
 	[Export] private int maxAsteroids = 100;
@@ -75,7 +73,11 @@ public partial class GameManager : Node
 	/// </summary>
 	public float GameBoundsRadius { get { return gameBoundsRadius; } }
 
+	private int score;
 	private float gameTime;
+
+	public int Score { get { return score; } }
+	public float GameTime { get { return gameTime; } }
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
