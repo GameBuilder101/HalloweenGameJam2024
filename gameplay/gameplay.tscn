@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cydpa3f5dvkxe" path="res://asteroids/asteroid.tscn" id="2_kceje"]
 [ext_resource type="PackedScene" uid="uid://d3kxaks48ej1m" path="res://game-over/game_over.tscn" id="2_mqs8h"]
 [ext_resource type="Script" path="res://player/DynamicCamera.cs" id="3_6hycs"]
-[ext_resource type="PackedScene" uid="uid://ndav4jyl4cl0" path="res://black-hole/black_hole.tscn" id="4_cfu0t"]
+[ext_resource type="PackedScene" uid="uid://ns8281dgmie7" path="res://black-hole/black_hole.tscn" id="4_cfu0t"]
 [ext_resource type="Texture2D" uid="uid://cruipnuk58mhc" path="res://asteroids/asteriod-1-nobackdrop.svg" id="4_dicts"]
 [ext_resource type="Script" path="res://enemy/EnemyManager.cs" id="4_eeysb"]
 [ext_resource type="Texture2D" uid="uid://dini1jdtbxv7a" path="res://asteroids/asteriod-2-nobackdrop.svg" id="5_npl61"]
