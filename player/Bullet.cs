@@ -26,6 +26,8 @@ public partial class Bullet : RigidBody2D, IDamageable
 		{
 			(body as IDamageable).ChangeHealth(-damage);
 			QueueFree();
+			if (body is Asteroid)
+				GameManager.Instance.AsteroidsShotStat++;
 		}
 	}
 	

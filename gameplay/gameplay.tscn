@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://crv5t88bt5spr"]
+[gd_scene load_steps=15 format=3 uid="uid://crv5t88bt5spr"]
 
 [ext_resource type="Script" path="res://gameplay/GameManager.cs" id="1_acxl8"]
 [ext_resource type="PackedScene" uid="uid://cwobamcwcxxdw" path="res://player/player.tscn" id="1_fegoe"]
@@ -13,39 +13,41 @@
 [ext_resource type="PackedScene" uid="uid://3kgfug7qq7hc" path="res://ui/ui.tscn" id="7_ola7h"]
 [ext_resource type="PackedScene" uid="uid://36kc6d68wpac" path="res://deposit-point/despoit_point.tscn" id="8_thndi"]
 [ext_resource type="PackedScene" uid="uid://4iacv1wcdwdp" path="res://enemy/enemy.tscn" id="9_omad1"]
+[ext_resource type="Texture2D" uid="uid://cieo5skrn3k2y" path="res://gameplay/game-boundary.svg" id="14_cnx8s"]
 
 [node name="Gameplay" type="Node"]
 
-[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("_blackHole", "_player", "_depositPoint", "_camera")]
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("_blackHole", "_player", "_depositPoint", "_camera", "_boundarySprite")]
 script = ExtResource("1_acxl8")
 _gameOverScene = ExtResource("2_mqs8h")
 _blackHole = NodePath("../BlackHole")
 _player = NodePath("../Player")
 _depositPoint = NodePath("../DespoitPoint")
 _camera = NodePath("../Camera")
+_boundarySprite = NodePath("../BoundarySprite")
 asteroidPrefab = ExtResource("2_kceje")
 textures = Array[Texture2D]([ExtResource("4_dicts"), ExtResource("5_npl61"), ExtResource("6_54lmk")])
+maxAsteroids = 140
 minAsteroidSpeed = 500.0
 maxAsteroidSpeed = 1000.0
 minAsteroidAngularVelocity = 0.0
 maxAsteroidAngularVelocity = 5.0
-minAsteroidScale = 0.1
+minAsteroidScale = 0.4
 maxAsteroidScale = 1.0
 asteroidSpawnStartRadius = 8000.0
 gameBoundsStartRadius = 9000.0
 radiusInrement = 10.0
 blackHoleStartRadius = 1000.0
 
-[node name="EnemyManager" type="Node" parent="." node_paths=PackedStringArray("_camera")]
+[node name="EnemyManager" type="Node" parent="."]
 script = ExtResource("4_eeysb")
-intensityTimeRange = 100.0
-rangeDelay = 15.0
+intensityTimeRange = 120.0
+rangeDelay = 4.0
 maxEnemyCountOverTime = 15
 _enemyPrefab = ExtResource("9_omad1")
-_camera = NodePath("../Camera")
 
 [node name="Player" parent="." instance=ExtResource("1_fegoe")]
-position = Vector2(0, 4000)
+position = Vector2(0, 5000)
 
 [node name="Camera" type="Camera2D" parent="." node_paths=PackedStringArray("TrackTarget")]
 script = ExtResource("3_6hycs")
@@ -58,5 +60,9 @@ TrackTarget = NodePath("../Player")
 [node name="DespoitPoint" parent="." instance=ExtResource("8_thndi")]
 
 [node name="BlackHole" parent="." instance=ExtResource("4_cfu0t")]
+
+[node name="BoundarySprite" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("14_cnx8s")
 
 [editable path="UIRenderLayer/UI"]

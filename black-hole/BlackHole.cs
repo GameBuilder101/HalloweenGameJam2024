@@ -32,6 +32,7 @@ public partial class BlackHole : Node2D
 		BlackHoleImage.Scale = scale;
 
 		// set the new gravity
+		gravityArea.GravityPointUnitDistance = blackHoleRadius;
 		gravityArea.Gravity = blackHoleRadius * 2;
 	}
 	

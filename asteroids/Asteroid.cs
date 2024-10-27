@@ -10,7 +10,12 @@ public partial class Asteroid : RigidBody2D, IDamageable
 	[Export] private PackedScene FuelScene;
 
     [Export]
-    public int Score { get; set; } = 100; 
+    public int Score { get; set; } = 100;
+    [Export]
+    public int DepositBonusFuel { get; set; } = 0;
+
+    [Export]
+    private GpuParticles2D _killParticles;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -31,7 +36,7 @@ public partial class Asteroid : RigidBody2D, IDamageable
         base._Process(delta);
 
         // if the asteroid goes outside the game radius, destroy it
-        if (Position.Length() > GameManager.Instance.GameBoundsRadius) 
+        if (Position.Length() > GameManager.Instance.GameBoundsRadius + 800.0f) 
         {
             QueueFree();
         }
@@ -59,6 +64,9 @@ public partial class Asteroid : RigidBody2D, IDamageable
 			);
 			GetParent().CallDeferred("add_child", fuel);
 		}
+
+        _killParticles.Reparent(GetTree().Root);
+        _killParticles.Emitting = true;
         QueueFree();
     }
 

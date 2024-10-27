@@ -2,8 +2,11 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class Enemy : Node2D
+public partial class Enemy : Area2D, IDamageable
 {
+    [Export]
+    public float Health { get; private set; } = 1.0f;
+
     [Export]
     public float wanderSpeed;
     [Export]
@@ -35,6 +38,12 @@ public partial class Enemy : Node2D
     private double _minWanderCooldown;
     [Export]
     private double _maxWanderCooldown;
+    private bool _curWanderState = true;
+
+    [Export]
+    private Sprite2D _innerSprite;
+    [Export]
+    private GpuParticles2D _killParticles;
 
     public override void _Ready()
     {
@@ -64,7 +73,7 @@ public partial class Enemy : Node2D
         Acceleration = Vector2.Zero;
         Position += LinearVelocity * (float)delta;
 
-        GD.Print(EnemyManager.Instance.IntensityScale);
+        _innerSprite.Rotation += (float)delta * Mathf.Pi;
 	}
 
     protected void Wander(double delta)
@@ -75,15 +84,17 @@ public partial class Enemy : Node2D
         {
             _curWanderCooldown = GD.RandRange(_minWanderCooldown, _maxWanderCooldown);
 
-            _curWanderPos = Position + Vector2.FromAngle(GD.Randf() * Mathf.Pi * 2.0f) * 200.0f;
+            Vector2 randOffset = Vector2.FromAngle(GD.Randf() * Mathf.Pi * 2.0f) * 150.0f;
 
-            //GD.Print(GameManager.Instance.GameBoundsRadius + ", " + _curWanderPos.Length());
+            if (Position.Length() <= EnemyManager.Instance.AvoidanceDist * 1.7f)
+                _curWanderState = false;
+            else if (Position.Length() >= GameManager.Instance.GameBoundsRadius * 0.9f)
+                _curWanderState = true;
 
-            // If trying to move outside the game bounds, move inward
-            if (_curWanderPos.Length() >= GameManager.Instance.GameBoundsRadius)
-                _curWanderPos = Vector2.Zero;
-            else if (_curWanderPos.Length() <= EnemyManager.Instance.AvoidanceDist) // If trying to move into black hole, move outward
-                _curWanderPos = -Position.Normalized() * 200.0f;
+            if (_curWanderState)
+                _curWanderPos = Position + -Position.Normalized() * 700.0f + randOffset;
+            else
+                _curWanderPos = Position + Position.Normalized() * 700.0f + randOffset;
         }
 
         Acceleration += Seek(_curWanderPos, wanderSpeed);
@@ -159,5 +170,20 @@ public partial class Enemy : Node2D
     {
         if (body is Player)
             ((Player)body).SpinOut(_spinOutTime);
+    }
+
+    public void ChangeHealth(float value)
+    {
+        Health += value;
+        if (Health <= 0.0f)
+            Kill();
+        LinearVelocity = Vector2.Zero;
+    }
+
+    public void Kill()
+    {
+        _killParticles.Reparent(GetTree().Root);
+        _killParticles.Emitting = true;
+        QueueFree();
     }
 }
