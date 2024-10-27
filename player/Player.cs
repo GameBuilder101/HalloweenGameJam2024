@@ -36,6 +36,7 @@ public partial class Player : RigidBody2D, IDamageable
 
 	public double RemainingSpinOutTime { get; private set; }
 	public bool IsSpinningOut { get { return RemainingSpinOutTime > 0.0f; } }
+	public bool isBoosting = false;
 	[Export]
 	private float SpinOutSpeed { get; set; }
 	private float _origAngularDamp;
@@ -84,7 +85,7 @@ public partial class Player : RigidBody2D, IDamageable
 	private void UpdateMovement(double delta)
 	{
 		float input = Input.GetAxis("backward", "forward");
-		bool isBoosting = Input.IsActionPressed("boost") && !IsFuelEmpty;
+		isBoosting = Input.IsActionPressed("boost") && !IsFuelEmpty;
 		bool isBreaking = Input.IsActionPressed("break");
 
 		float speed = Speed;
