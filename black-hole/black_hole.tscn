@@ -1,11 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://ndav4jyl4cl0"]
+[gd_scene load_steps=11 format=3 uid="uid://ndav4jyl4cl0"]
 
 [ext_resource type="Script" path="res://black-hole/BlackHole.cs" id="1_xma48"]
 [ext_resource type="Shape2D" uid="uid://bi4im350t36mr" path="res://black-hole/gravity_range.tres" id="2_6be06"]
 [ext_resource type="Shape2D" uid="uid://bswumxnkbdvod" path="res://black-hole/black_hole_radius.tres" id="3_ol2gd"]
 [ext_resource type="Texture2D" uid="uid://dys3w3d4coca0" path="res://black-hole/blackhole-centerai.png" id="4_gth32"]
 [ext_resource type="Texture2D" uid="uid://bskk8pehud7pp" path="res://black-hole/blackhole-01.png" id="4_sp8us"]
-
 [ext_resource type="Script" path="res://black-hole/BlackHoleAudio.cs" id="5_v23r6"]
 [ext_resource type="AudioStream" uid="uid://dn7okwdoabev7" path="res://black-hole/BlackHole2.mp3" id="7_jrilt"]
 [ext_resource type="AudioStream" uid="uid://bhdlryfo2gfq8" path="res://black-hole/BlackHoleMelody2.mp3" id="8_cruky"]
@@ -37,7 +36,7 @@ debug_color = Color(0, 0.388235, 0.454902, 0.176471)
 
 [node name="BlackHole" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 11
+collision_mask = 75
 
 [node name="BlackHole" type="Sprite2D" parent="BlackHole"]
 z_index = 4
@@ -51,6 +50,7 @@ debug_color = Color(0.989531, 0, 0.289342, 0.42)
 [node name="AccretionDisk" type="Sprite2D" parent="BlackHole"]
 z_index = -2
 texture = ExtResource("4_sp8us")
+
 [node name="BlackHoleAudio" type="AudioStreamPlayer2D" parent="BlackHole" node_paths=PackedStringArray("melody")]
 stream = ExtResource("7_jrilt")
 autoplay = true
