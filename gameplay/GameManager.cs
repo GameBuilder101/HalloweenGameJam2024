@@ -29,6 +29,7 @@ public partial class GameManager : Node
 	[Export] private Camera2D _camera;
 	[Export] private Sprite2D _boundarySprite;
 	private List<Asteroid> _asteroids;
+	private List<RigidBody2D> _debris;
 
 	/// <summary>
 	/// Gets a reference to the black hole
@@ -49,6 +50,17 @@ public partial class GameManager : Node
 	/// Gets the list of asteroids in the scene
 	/// </summary>
 	public List<Asteroid> Asteroids {  get { return _asteroids; } }
+
+	[Export] private PackedScene debrisPrefab;
+	[Export] private Texture2D[] debrisTextures;
+
+	[Export] private int maxDebris = 500;
+	[Export] private float minDebrisSpeed = 10;
+	[Export] private float maxDebrisSpeed = 50;
+	[Export] private float minDebrisAngularVelocity = 0;
+	[Export] private float maxDebrisAngularVelocity = 5;
+	[Export] private float minDebrisScale = 0.5f;
+	[Export] private float maxDebrisScale = 5;
 
 	[Export] private PackedScene asteroidPrefab;
 	[Export] private Texture2D[] asteroidtextures;
@@ -98,6 +110,7 @@ public partial class GameManager : Node
 
 		// initial values
 		_asteroids = new List<Asteroid>();
+		_debris = new List<RigidBody2D>();
 		currentState = GameState.GamePlay;
 		score = 0;
 		asteroidSpawnRadius = asteroidSpawnStartRadius;
@@ -109,6 +122,11 @@ public partial class GameManager : Node
 		for (int i = 0; i < maxAsteroids; i++)
 		{
 			SpawnAsteroid();
+		}
+
+		for (int i = 0; i < maxDebris; i++)
+		{
+			SpawnDebris();
 		}
 	}
 
@@ -123,6 +141,15 @@ public partial class GameManager : Node
 		{
 			SpawnAsteroid();
 		}
+
+		// spawn debris until the number of debris is equal to the max
+		for (uint i = 0; i < maxDebris - _debris.Count; i++)
+		{
+			SpawnDebris();
+		}
+
+		GD.Print("Max Debris: " + maxDebris);
+		GD.Print("Current Debris: " + _debris.Count);
 
 		//grow game radius
 		asteroidSpawnRadius += radiusInrement * (float)delta;
@@ -166,6 +193,75 @@ public partial class GameManager : Node
 	}
 	*/
 
+	public void SpawnDebris()
+	{
+		//get the viewport bounding box
+		Vector2 viewportSize = GetViewport().GetVisibleRect().Size;
+		Vector2 camPosition = _camera.Position;
+		Vector2 halfSize = (viewportSize / 2.0f) * _camera.Zoom;
+		Rect2 boundingBox = new Rect2(camPosition - halfSize, viewportSize * _camera.Zoom);
+
+		// Scale the bounding box to add extra buffer
+		Vector2 newSize = boundingBox.Size * 1.5f;
+		Vector2 newPosition = camPosition - (newSize / 2.0f);
+
+		// rectangle that asteroids can't spawn in
+		Rect2 bufferRect = new Rect2(newPosition, newSize);
+
+		// keep trying to create a position until one is created outside the buffer rectangle
+		float randomPositionAngle;
+		Vector2 position;
+		do
+		{
+			// random angle to spawn the debris
+			randomPositionAngle = (float)GD.RandRange(0, 2 * MathF.PI);
+			
+			
+			// create a random vector 2 with a bias towards positions near the center
+			float distanceToCenter = GD.Randf() * (gameBoundsRadius - _blackHole.BlackHoleRadius) + _blackHole.BlackHoleRadius;
+		   
+			position = new Vector2(MathF.Cos(randomPositionAngle) * distanceToCenter, MathF.Sin(randomPositionAngle) * distanceToCenter);
+		} while (bufferRect.HasPoint(position));
+
+		// create a random angle within 90 degrees in either direction of the opposite of the random angle
+		float randomVelocityAngle = randomPositionAngle + (MathF.PI / 2) + (float)GD.RandRange(-MathF.PI / 4, MathF.PI / 4);
+
+		// create a random speed
+		float speed = (float)GD.RandRange(minDebrisSpeed, maxDebrisSpeed);
+
+		// speed multiplier is a number from 0-1 based on the position compared to the upper and lower bounds of the asteroid spawn area
+		float speedMultiplier = position.Length() / (gameBoundsRadius - _blackHole.BlackHoleRadius);
+
+		// speed should be greater the closer an asteroid spawns to the edge of the black hole
+		speed *= speedMultiplier;
+
+		// create a velocity
+		Vector2 velocity = new Vector2(MathF.Cos(randomVelocityAngle) * speed, MathF.Sin(randomVelocityAngle) * speed);
+
+		// create a random angular velocity
+		float angularVelocity = (float)GD.RandRange(minDebrisAngularVelocity, maxDebrisAngularVelocity);
+
+		// create a random scale
+		float randomScale = (float)GD.RandRange(minDebrisScale, minDebrisScale);
+
+		RigidBody2D debris = (RigidBody2D)debrisPrefab.Instantiate();
+		debris.Position = position;
+		debris.LinearVelocity = velocity;
+		debris.AngularVelocity = angularVelocity;
+
+		foreach (Node2D child in debris.GetChildren())
+		{
+			child.Scale = new Vector2(child.Scale.X * randomScale, child.Scale.Y * randomScale);
+		}
+
+		int randomTextureIndex = GD.RandRange(0, debrisTextures.Length - 1);
+		debris.GetChild<Sprite2D>(1, true).Texture = debrisTextures[randomTextureIndex];
+
+		_debris.Add(debris);
+
+		GetParent().CallDeferred("add_child", debris);
+	}
+
 	public void SpawnAsteroid()
 	{
 		// decide if the spawned asteroid is special
@@ -179,7 +275,6 @@ public partial class GameManager : Node
 			isSpecial = false;
 		}
 
-		// decide whether this asteroid will be special
 		//get the viewport bounding box
 		Vector2 viewportSize = GetViewport().GetVisibleRect().Size;
 		Vector2 camPosition = _camera.Position;
