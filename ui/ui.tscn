@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://3kgfug7qq7hc"]
+[gd_scene load_steps=11 format=3 uid="uid://3kgfug7qq7hc"]
 
 [ext_resource type="Script" path="res://ui/GameplayUI.cs" id="1_gebfo"]
 [ext_resource type="Material" path="res://ui/ui_yellow_shader.tres" id="1_rolr4"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://c4dpmnpfwhr7v" path="res://ui/hud_warning.svg" id="7_3b28m"]
 [ext_resource type="Texture2D" uid="uid://c8sj1xsyoqnlb" path="res://ui/radial_ui_base.png" id="8_j2nhh"]
 [ext_resource type="Texture2D" uid="uid://cx8fucbvltsdb" path="res://ui/hud_box.png" id="8_vom8e"]
+[ext_resource type="Script" path="res://ui/StartFader.cs" id="9_6x8mf"]
 
 [sub_resource type="Theme" id="Theme_berws"]
 default_font_size = 30
@@ -140,3 +141,15 @@ use_parent_material = true
 position = Vector2(0, -180)
 scale = Vector2(0.45, 0.45)
 texture = ExtResource("8_vom8e")
+
+[node name="Fader" type="ColorRect" parent="."]
+z_index = 100
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+script = ExtResource("9_6x8mf")

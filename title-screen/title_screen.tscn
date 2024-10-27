@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://b887seo13ynl2"]
+[gd_scene load_steps=4 format=3 uid="uid://b887seo13ynl2"]
 
 [ext_resource type="Script" path="res://title-screen/TitleScreen.cs" id="1_eu04y"]
+[ext_resource type="Script" path="res://ui/StartFader.cs" id="2_n6l1r"]
 
 [sub_resource type="Theme" id="Theme_7cxh7"]
 default_font_size = 140
@@ -48,6 +49,19 @@ offset_top = 660.0
 offset_right = 570.0
 offset_bottom = 740.0
 text = "Quit"
+
+[node name="Fader" type="ColorRect" parent="UIRenderLayer/UI"]
+z_index = 100
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+script = ExtResource("2_n6l1r")
+_duration = 1.0
 
 [connection signal="pressed" from="UIRenderLayer/UI/StartButton" to="UIRenderLayer/UI" method="Start"]
 [connection signal="pressed" from="UIRenderLayer/UI/QuitButton" to="UIRenderLayer/UI" method="Quit"]
