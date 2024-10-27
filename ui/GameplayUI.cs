@@ -10,11 +10,7 @@ public partial class GameplayUI : Control
     [Export]
     private RichTextLabel _dropOffLabel;
 	[Export]
-	private Color[] Colors;
-	[Export]
-	private StyleBoxFlat background;
-	[Export]
-	private StyleBoxFlat bar;
+	private ShaderMaterial Coloring;
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
@@ -27,10 +23,8 @@ public partial class GameplayUI : Control
 
         _fuelBar.MaxValue = player.MaxFuel;
 		_fuelBar.Value = player.Fuel;
-		_fuelBar.Indeterminate = player.IsSpinningOut;
-		Color color = Colors[player.IsSpinningOut ? 1 : 0];
-		background.BorderColor = color;
-		bar.BgColor = color;
+		//_fuelBar.Indeterminate = player.IsSpinningOut;
+		this.Material = player.IsSpinningOut ? Coloring : null;
 		_pickUpLabel.Visible = player.InRadiusOfAsteroid && player.PickedUpAsteroid == null && !player.IsSpinningOut;
 		_dropOffLabel.Visible = player.IsInDropOffRadius && player.PickedUpAsteroid != null && !player.IsSpinningOut;
 	}
