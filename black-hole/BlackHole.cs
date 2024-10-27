@@ -9,6 +9,8 @@ public partial class BlackHole : Node2D
 	private CircleShape2D BlackHoleArea;
 	[Export]
 	private Sprite2D BlackHoleImage;
+	[Export]
+	private Area2D gravityArea;
 	
 	private const long HoleImageSize = 600; 
 	
@@ -28,6 +30,9 @@ public partial class BlackHole : Node2D
 		scale.X = HoleScale;
 		scale.Y = HoleScale;
 		BlackHoleImage.Scale = scale;
+
+		// set the new gravity
+		gravityArea.Gravity = blackHoleRadius * 2;
 	}
 	
 	// Called when the node enters the scene tree for the first time.
