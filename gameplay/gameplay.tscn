@@ -1,13 +1,14 @@
-[gd_scene load_steps=16 format=3 uid="uid://crv5t88bt5spr"]
+[gd_scene load_steps=18 format=3 uid="uid://crv5t88bt5spr"]
 
 [ext_resource type="Script" path="res://gameplay/GameManager.cs" id="1_acxl8"]
 [ext_resource type="PackedScene" uid="uid://cwobamcwcxxdw" path="res://player/player.tscn" id="1_fegoe"]
 [ext_resource type="PackedScene" uid="uid://cydpa3f5dvkxe" path="res://asteroids/asteroid.tscn" id="2_kceje"]
 [ext_resource type="PackedScene" uid="uid://d3kxaks48ej1m" path="res://game-over/game_over.tscn" id="2_mqs8h"]
-[ext_resource type="Script" path="res://player/DynamicCamera.cs" id="3_6hycs"]
-[ext_resource type="PackedScene" uid="uid://ns8281dgmie7" path="res://black-hole/black_hole.tscn" id="4_cfu0t"]
+[ext_resource type="PackedScene" uid="uid://brosk26lv1pou" path="res://debris/Debris.tscn" id="3_n6pgi"]
+[ext_resource type="PackedScene" uid="uid://ndav4jyl4cl0" path="res://black-hole/black_hole.tscn" id="4_cfu0t"]
 [ext_resource type="Texture2D" uid="uid://cruipnuk58mhc" path="res://asteroids/asteriod-1-nobackdrop.svg" id="4_dicts"]
 [ext_resource type="Script" path="res://enemy/EnemyManager.cs" id="4_eeysb"]
+[ext_resource type="Texture2D" uid="uid://ctnnvutd0vjrb" path="res://player/irregular_dot.svg" id="4_x8osl"]
 [ext_resource type="Texture2D" uid="uid://dini1jdtbxv7a" path="res://asteroids/asteriod-2-nobackdrop.svg" id="5_npl61"]
 [ext_resource type="Texture2D" uid="uid://dlgf0qnl6g8hy" path="res://asteroids/asteriod-3-nobackdrop.svg" id="6_54lmk"]
 [ext_resource type="Texture2D" uid="uid://c205dlrvua2y4" path="res://icon.svg" id="7_6myi8"]
@@ -26,6 +27,11 @@ _player = NodePath("../Player")
 _depositPoint = NodePath("../DespoitPoint")
 _camera = NodePath("../Camera")
 _boundarySprite = NodePath("../BoundarySprite")
+debrisPrefab = ExtResource("3_n6pgi")
+debrisTextures = Array[Texture2D]([ExtResource("4_x8osl")])
+minDebrisSpeed = 500.0
+maxDebrisSpeed = 1000.0
+maxDebrisScale = 1.0
 asteroidPrefab = ExtResource("2_kceje")
 asteroidtextures = Array[Texture2D]([ExtResource("4_dicts"), ExtResource("5_npl61"), ExtResource("6_54lmk")])
 specialAsteroidTextures = Array[Texture2D]([ExtResource("7_6myi8")])
