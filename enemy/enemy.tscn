@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://4iacv1wcdwdp"]
+[gd_scene load_steps=19 format=3 uid="uid://4iacv1wcdwdp"]
 
 [ext_resource type="Script" path="res://enemy/Enemy.cs" id="1_d5g40"]
 [ext_resource type="Texture2D" uid="uid://5h55hvb6dk0g" path="res://enemy/enemy_inner.svg" id="2_jo0o6"]
@@ -8,6 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://vrbatceue0ai" path="res://enemy/enemy_3.png" id="6_vghdl"]
 [ext_resource type="Texture2D" uid="uid://ctnnvutd0vjrb" path="res://player/irregular_dot.svg" id="7_4n3ap"]
 [ext_resource type="Script" path="res://AutoDeleteParticles.cs" id="8_g3a5a"]
+[ext_resource type="Script" path="res://enemy/EnemyAudio.cs" id="9_cvbv7"]
+[ext_resource type="AudioStream" uid="uid://c0d3tkfg2sbj8" path="res://enemy/EnemyWander.mp3" id="10_0stgd"]
+[ext_resource type="AudioStream" uid="uid://dhod7t5lxwip5" path="res://enemy/EnemyChase.mp3" id="11_st7k0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dnfh3"]
 radius = 53.91
@@ -102,5 +105,11 @@ explosiveness = 1.0
 visibility_rect = Rect2(-300, -300, 600, 600)
 trail_lifetime = 0.1
 script = ExtResource("8_g3a5a")
+
+[node name="EnemyAudio" type="AudioStreamPlayer2D" parent="." node_paths=PackedStringArray("enemy")]
+script = ExtResource("9_cvbv7")
+enemy = NodePath("..")
+wander = ExtResource("10_0stgd")
+chase = ExtResource("11_st7k0")
 
 [connection signal="body_entered" from="." to="." method="OnPlayerEntered"]

@@ -2,7 +2,7 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-uid="uid://csn2ovcyqaq3t"
+uid="uid://c0d3tkfg2sbj8"
 path="res://.godot/imported/EnemyWander.mp3-7c9b43074d10a1c53b235b9fb7bd61cd.mp3str"
 
 [deps]
@@ -12,8 +12,8 @@ dest_files=["res://.godot/imported/EnemyWander.mp3-7c9b43074d10a1c53b235b9fb7bd6
 
 [params]
 
-loop=false
-loop_offset=0
-bpm=0
+loop=true
+loop_offset=0.0
+bpm=0.0
 beat_count=0
 bar_beats=4

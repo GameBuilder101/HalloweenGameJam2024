@@ -29,10 +29,12 @@ public partial class BlackHoleAudio : AudioStreamPlayer2D
 	public override void _Process(double delta)
 	{
 		MaxDistance = GameManager.Instance.GameBoundsRadius;
-        if (Stream != panic && (blackHole.Position - player.Position).Length() <= panicRadius + blackHole.BlackHoleRadius)
-            PlayPanic();
+		if (Stream != panic && (blackHole.Position - player.Position).Length() <= panicRadius + blackHole.BlackHoleRadius)
+			PlayPanic();
 		else if (Stream != ambience && (blackHole.Position - player.Position).Length() > panicRadius + blackHole.BlackHoleRadius)
 			PlayAmbience();
+		else if (GetPlaybackPosition() <= delta)
+			OnAudioFinished();
 	}
 
 	public void PlayAmbience()
