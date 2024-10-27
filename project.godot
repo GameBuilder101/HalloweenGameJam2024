@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="HalloweenGameJam2024"
+config/name="DepthsOfNowhere"
 config/version="1.0.0"
 run/main_scene="res://title-screen/title_screen.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
