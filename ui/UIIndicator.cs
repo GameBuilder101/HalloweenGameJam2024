@@ -26,7 +26,6 @@ public partial class UIIndicator : Sprite2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		GD.Print(target.Name);
 		direction = target.Position - player.Position;
 		angle = direction.Angle() + Mathf.Pi / 2;
 		if (Rotation != angle)

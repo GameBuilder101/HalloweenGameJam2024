@@ -1,12 +1,23 @@
-[gd_scene load_steps=2 format=3 uid="uid://4iacv1wcdwdp"]
+[gd_scene load_steps=4 format=3 uid="uid://4iacv1wcdwdp"]
 
 [ext_resource type="Texture2D" uid="uid://c205dlrvua2y4" path="res://icon.svg" id="1_avqce"]
+[ext_resource type="Script" path="res://enemy/Enemy.cs" id="1_d5g40"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dnfh3"]
+radius = 64.0
 
 [node name="Enemy" type="Node2D"]
+script = ExtResource("1_d5g40")
+cruiseSpeed = 400.0
+_spinOutTime = 5.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_avqce")
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 128
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_dnfh3")
+
+[connection signal="body_entered" from="Area2D" to="." method="OnPlayerEntered"]
