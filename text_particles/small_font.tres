@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cgkpf3snkxnom"]
+
+[ext_resource type="FontFile" uid="uid://cb262qsyjo05v" path="res://ui/hemi_head_bd_it.otf" id="1_ba865"]
+
+[resource]
+default_font = ExtResource("1_ba865")
+default_font_size = 40
