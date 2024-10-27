@@ -153,9 +153,6 @@ public partial class GameManager : Node
 			SpawnDebris();
 		}
 
-		GD.Print("Max Debris: " + maxDebris);
-		GD.Print("Current Debris: " + _debris.Count);
-
 		//grow game radius
 		asteroidSpawnRadius += radiusInrement * (float)delta;
 		gameBoundsRadius += radiusInrement * (float)delta;
