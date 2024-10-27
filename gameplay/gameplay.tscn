@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://crv5t88bt5spr"]
+[gd_scene load_steps=14 format=3 uid="uid://crv5t88bt5spr"]
 
 [ext_resource type="Script" path="res://gameplay/GameManager.cs" id="1_acxl8"]
 [ext_resource type="PackedScene" uid="uid://cwobamcwcxxdw" path="res://player/player.tscn" id="1_fegoe"]
@@ -7,10 +7,12 @@
 [ext_resource type="Script" path="res://player/DynamicCamera.cs" id="3_6hycs"]
 [ext_resource type="PackedScene" uid="uid://ndav4jyl4cl0" path="res://black-hole/black_hole.tscn" id="4_cfu0t"]
 [ext_resource type="Texture2D" uid="uid://cruipnuk58mhc" path="res://asteroids/asteriod-1-nobackdrop.svg" id="4_dicts"]
+[ext_resource type="Script" path="res://enemy/EnemyManager.cs" id="4_eeysb"]
 [ext_resource type="Texture2D" uid="uid://dini1jdtbxv7a" path="res://asteroids/asteriod-2-nobackdrop.svg" id="5_npl61"]
 [ext_resource type="Texture2D" uid="uid://dlgf0qnl6g8hy" path="res://asteroids/asteriod-3-nobackdrop.svg" id="6_54lmk"]
 [ext_resource type="PackedScene" uid="uid://3kgfug7qq7hc" path="res://ui/ui.tscn" id="7_ola7h"]
 [ext_resource type="PackedScene" uid="uid://36kc6d68wpac" path="res://deposit-point/despoit_point.tscn" id="8_thndi"]
+[ext_resource type="PackedScene" uid="uid://4iacv1wcdwdp" path="res://enemy/enemy.tscn" id="9_omad1"]
 
 [node name="Gameplay" type="Node"]
 
@@ -34,8 +36,16 @@ gameBoundsStartRadius = 9000.0
 radiusInrement = 10.0
 blackHoleStartRadius = 1000.0
 
+[node name="EnemyManager" type="Node" parent="." node_paths=PackedStringArray("_camera")]
+script = ExtResource("4_eeysb")
+intensityTimeRange = 100.0
+rangeDelay = 15.0
+maxEnemyCountOverTime = 15
+_enemyPrefab = ExtResource("9_omad1")
+_camera = NodePath("../Camera")
+
 [node name="Player" parent="." instance=ExtResource("1_fegoe")]
-position = Vector2(-18, 4000)
+position = Vector2(0, 4000)
 
 [node name="Camera" type="Camera2D" parent="." node_paths=PackedStringArray("TrackTarget")]
 script = ExtResource("3_6hycs")

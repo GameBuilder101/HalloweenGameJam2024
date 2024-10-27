@@ -31,8 +31,8 @@ public partial class EnemyManager : Node
 		{
 			float gameBounds = GameManager.Instance.GameBoundsRadius;
 			float blackHole = GameManager.Instance.BlackHole.BlackHoleRadius;
-            float from = (gameBounds - blackHole) * 0.5f + blackHole;
-            float to = (gameBounds - blackHole) * 0.1f + blackHole;
+            float from = (gameBounds - blackHole) * 0.3f + blackHole;
+            float to = (gameBounds - blackHole) * 0.075f + blackHole;
             return Mathf.Lerp(from, to, (float)IntensityScale);
 		}
 	}

@@ -5,7 +5,9 @@ using System.Collections.Generic;
 public partial class Enemy : Node2D
 {
     [Export]
-    public float cruiseSpeed;
+    public float wanderSpeed;
+    [Export]
+    public float chaseSpeed;
     [Export]
     public float separationDistance;
 
@@ -53,7 +55,7 @@ public partial class Enemy : Node2D
 
         if (IsSeekingPlayer)
         {
-            Acceleration += Seek(GameManager.Instance.Player.Position);
+            Acceleration += Seek(GameManager.Instance.Player.Position, chaseSpeed);
         }
         else
             Wander(delta);
@@ -61,6 +63,8 @@ public partial class Enemy : Node2D
         LinearVelocity += Acceleration * (float)delta;
         Acceleration = Vector2.Zero;
         Position += LinearVelocity * (float)delta;
+
+        GD.Print(EnemyManager.Instance.IntensityScale);
 	}
 
     protected void Wander(double delta)
@@ -71,22 +75,24 @@ public partial class Enemy : Node2D
         {
             _curWanderCooldown = GD.RandRange(_minWanderCooldown, _maxWanderCooldown);
 
-            _curWanderPos = Position + Vector2.FromAngle(GD.Randf() * Mathf.Pi * 2.0f) * 1000.0f;
+            _curWanderPos = Position + Vector2.FromAngle(GD.Randf() * Mathf.Pi * 2.0f) * 200.0f;
+
+            //GD.Print(GameManager.Instance.GameBoundsRadius + ", " + _curWanderPos.Length());
 
             // If trying to move outside the game bounds, move inward
             if (_curWanderPos.Length() >= GameManager.Instance.GameBoundsRadius)
                 _curWanderPos = Vector2.Zero;
             else if (_curWanderPos.Length() <= EnemyManager.Instance.AvoidanceDist) // If trying to move into black hole, move outward
-                _curWanderPos = -Position.Normalized() * 1000.0f;
+                _curWanderPos = -Position.Normalized() * 200.0f;
         }
 
-        Acceleration += Seek(_curWanderPos);
+        Acceleration += Seek(_curWanderPos, wanderSpeed);
     }
 
-    protected Vector2 Seek(Vector2 targetPos)
+    protected Vector2 Seek(Vector2 targetPos, float speed)
     {
         // calculate a desired velocity which is the vector from the object to it's target scaled by the max speed
-        Vector2 desiredVelocity = (targetPos - Position).Normalized() * cruiseSpeed;
+        Vector2 desiredVelocity = (targetPos - Position).Normalized() * speed;
 
         // return the force vector required to achive the desired velocity
         return desiredVelocity - LinearVelocity;
@@ -97,10 +103,10 @@ public partial class Enemy : Node2D
     /// </summary>
     /// <param name="targetPos">Position to flee from</param>
     /// <returns>A force vector that will steer the agent away from a location</returns>
-    protected Vector2 Flee(Vector2 targetPos)
+    protected Vector2 Flee(Vector2 targetPos, float speed)
     {
         // calculate a desired velocity which is the vector from the target to this object scaled by the max speed
-        Vector2 desiredVelocity = (Position - targetPos).Normalized() * cruiseSpeed;
+        Vector2 desiredVelocity = (Position - targetPos).Normalized() * speed;
 
         // return the force vector required to achive the desired velocity
         return (desiredVelocity - LinearVelocity);
@@ -112,12 +118,12 @@ public partial class Enemy : Node2D
     /// <param name="target">Target object</param>
     /// <param name="time">amount of time ahead the target's position will be calculated</param>
     /// <returns>Steering force which seeks an object's future position</returns>
-    protected Vector2 Pursue(RigidBody2D target, float time)
+    protected Vector2 Pursue(RigidBody2D target, float time, float speed)
     {
         Vector2 futurePos = target.Position;
         futurePos += target.LinearVelocity * time;
 
-        return Seek(futurePos);
+        return Seek(futurePos, speed);
     }
 
     /// <summary>
@@ -125,7 +131,7 @@ public partial class Enemy : Node2D
     /// </summary>
     /// <param name="others">list of other objects to separate from</param>
     /// <returns>a separating steering force vector</returns>
-    protected Vector2 Separate(List<Node2D> others)
+    protected Vector2 Separate(List<Node2D> others, float speed)
     {
         Vector2 sum = Vector2.Zero;
         int count = 0;
@@ -135,7 +141,7 @@ public partial class Enemy : Node2D
             // check for agents within the separation distance and ensure agent does not attempt to separate from itself
             if (other != this && Position.DistanceTo(other.Position) < separationDistance)
             {
-                sum += Flee(other.Position) / Position.DistanceTo(other.Position); // separation force is greater if they are closer
+                sum += Flee(other.Position, speed) / Position.DistanceTo(other.Position); // separation force is greater if they are closer
                 count++;
             }
         }
