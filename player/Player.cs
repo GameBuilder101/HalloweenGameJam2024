@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+using System;
 
 [GlobalClass]
 public partial class Player : RigidBody2D, IDamageable
@@ -10,9 +11,8 @@ public partial class Player : RigidBody2D, IDamageable
 	public float MaxFuel { get; private set; }
 	[Export]
 	public float Fuel { get; private set; }
-	[Export]
 
-	public float FuelParticleWorth { get; private set; } = 1.0f;
+	public const float FuelParticleWorth = 1.0f;
 
 	public bool IsFuelEmpty { get { return Fuel <= 0.0f; } }
 
@@ -155,28 +155,32 @@ public partial class Player : RigidBody2D, IDamageable
 				PickUpAsteroid(_asteroidsInRadius[0]);
 			else if (PickedUpAsteroid != null && IsInDropOffRadius)
 			{
-				GameManager.Instance.AddScore(PickedUpAsteroid.Score);
-				GameManager.Instance.AsteroidsCollectedStat++;
-				Fuel += PickedUpAsteroid.DepositBonusFuel;
-				if (Fuel > MaxFuel)
-					Fuel = MaxFuel;
-
-                PickedUpAsteroid.QueueFree();
-				PickedUpAsteroid = null;
+				DepositAsteroid();
 			}
 			else if (PickedUpAsteroid != null)
 				DropAsteroid();
 		}
 		if (PickedUpAsteroid != null && IsInDropOffRadius) {
-			GameManager.Instance.AddScore(PickedUpAsteroid.Score);
-				GameManager.Instance.AsteroidsCollectedStat++;
-				Fuel += PickedUpAsteroid.DepositBonusFuel;
-				if (Fuel > MaxFuel)
-					Fuel = MaxFuel;
-
-                PickedUpAsteroid.QueueFree();
-				PickedUpAsteroid = null;
+			DepositAsteroid();
 		}
+	}
+	
+	private void DepositAsteroid() {
+		GameManager.Instance.AddScore(PickedUpAsteroid.Score);
+		
+		GameManager.Instance.GetParent().CallDeferred("add_child", new TextParticle(
+			"+" + PickedUpAsteroid.Score,
+			Position,
+			1 * Math.Log(PickedUpAsteroid.Score)
+		));
+		
+		GameManager.Instance.AsteroidsCollectedStat++;
+		Fuel += PickedUpAsteroid.DepositBonusFuel;
+		if (Fuel > MaxFuel)
+			Fuel = MaxFuel;
+
+        PickedUpAsteroid.QueueFree();
+		PickedUpAsteroid = null;
 	}
 
 	public void PickUpAsteroid(Asteroid asteroid)
@@ -208,8 +212,7 @@ public partial class Player : RigidBody2D, IDamageable
 		AngularDamp = 0.0f;
 		ApplyTorqueImpulse(-Mathf.Sign(AngularVelocity) * SpinOutSpeed);
 		DropAsteroid();
-        DynamicCamera.Instance.Shake(1.0, 30.0f);
-    }
+	}
 
 	private void UpdateSpinOut(double delta)
 	{
