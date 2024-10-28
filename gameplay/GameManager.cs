@@ -124,6 +124,8 @@ public partial class GameManager : Node
 		gameTime = 0;
 		asteroidIncrementTimer = asteroidIncrementTime;
 
+		_blackHole.SetRadius(blackHoleRadius, gameBoundsRadius);
+
 		for (int i = 0; i < maxAsteroids; i++)
 		{
 			SpawnAsteroid();
@@ -372,5 +374,10 @@ public partial class GameManager : Node
 		GameOver.AsteroidsCollected = AsteroidsCollectedStat;
 		GameOver.AsteroidsShot = AsteroidsShotStat;
 		GetTree().CallDeferred("change_scene_to_packed", _gameOverScene);
+	}
+
+	public override void _ExitTree()
+	{
+		_instance = null;
 	}
 }
