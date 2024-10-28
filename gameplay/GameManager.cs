@@ -92,7 +92,7 @@ public partial class GameManager : Node
 
 	private float asteroidSpawnRadius; // current radius within which asteroids spawn
 	private float gameBoundsRadius; // current radius of the bounds
-	private float blackHoleRadius; // current radius of the black hole
+	//private float blackHoleRadius; // current radius of the black hole
 
 	/// <summary>
 	/// Gets the outer bounds of the map
@@ -120,11 +120,11 @@ public partial class GameManager : Node
 		score = 0;
 		asteroidSpawnRadius = asteroidSpawnStartRadius;
 		gameBoundsRadius = gameBoundsStartRadius;
-		blackHoleRadius = blackHoleStartRadius;
+		//blackHoleRadius = blackHoleStartRadius;
 		gameTime = 0;
 		asteroidIncrementTimer = asteroidIncrementTime;
 
-		_blackHole.SetRadius(blackHoleRadius, gameBoundsRadius);
+		_blackHole.SetRadius(blackHoleStartRadius, gameBoundsRadius);
 
 		for (int i = 0; i < maxAsteroids; i++)
 		{
@@ -158,10 +158,10 @@ public partial class GameManager : Node
 		//grow game radius
 		asteroidSpawnRadius += radiusInrement * (float)delta;
 		gameBoundsRadius += radiusInrement * (float)delta;
-		blackHoleRadius += radiusInrement * (float)delta;
+		//blackHoleRadius += radiusInrement * (float)delta;
 		
 		// grow the black hole
-		_blackHole.SetRadius(blackHoleRadius, gameBoundsRadius);
+		_blackHole.SetRadius(_blackHole.BlackHoleRadius + (radiusInrement * (float)delta), gameBoundsRadius);
 		//GD.Print("blackHoleRadius" + _blackHole.BlackHoleRadius);
 
 		_boundarySprite.Scale = Vector2.One * (GameBoundsRadius / 4096.0f);
